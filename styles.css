@@ -435,7 +435,8 @@ html[data-lang="zh"] .pain { font-style: normal; }
 .contact { margin: 0; }
 .contact > div {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 140px 1fr auto;
+  align-items: start;
   gap: 16px;
   padding: 18px 0;
   border-top: 1px solid var(--line);
@@ -445,6 +446,44 @@ html[data-lang="zh"] .pain { font-style: normal; }
 .contact dd { margin: 0; font-size: 18px; }
 .contact dd > a { font-weight: 600; }
 .small-link { font-size: 15px; display: inline-block; margin-top: 6px; }
+
+/* 复制按钮 */
+.copy {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7FCBF0;
+  background: transparent;
+  border: 1px solid #2C4467;
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.copy:hover { background: #7FCBF0; color: var(--ink); border-color: #7FCBF0; }
+
+/* “已复制”提示 */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 50;
+  transform: translate(-50%, 16px);
+  width: max-content;              /* 按内容宽度显示，不要被挤成两行 */
+  max-width: calc(100vw - 32px);
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 28px rgba(10, 28, 51, 0.28);
+  border-left: 4px solid var(--cyan);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  overflow-wrap: anywhere;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- 页脚 ---------- */
 .footer {
@@ -461,6 +500,9 @@ html[data-lang="zh"] .pain { font-style: normal; }
   padding-bottom: 28px;
 }
 .footer p { margin: 0; }
+.footer-info p + p, .footer-meta p + p { margin-top: 4px; }
+.footer-name { color: var(--paper); font-weight: 700; letter-spacing: 0.02em; }
+.footer-meta { text-align: right; }
 .footer a { color: #FFFFFF; }
 
 /* ---------- 手机和平板 ---------- */
@@ -488,7 +530,9 @@ html[data-lang="zh"] .pain { font-style: normal; }
   .bl-grid > div { border-left: 0 !important; }
   .bl-grid > div + div { border-top: 1px solid var(--line); }
   .pt-mid { display: none; }
-  .contact > div { grid-template-columns: 1fr; gap: 2px; }
+  .contact > div { grid-template-columns: 1fr auto; gap: 2px 12px; }
+  .contact dt { grid-column: 1 / -1; }
+  .footer-meta { text-align: left; }
   .steps { grid-template-columns: 1fr; gap: 24px; }
   .gallery { gap: 6px; }
   .section-sub { margin-top: -20px; font-size: 16px; }
@@ -501,5 +545,6 @@ html[data-lang="zh"] .pain { font-style: normal; }
 /* 用户系统设置了“减少动画”时，直接显示航线，不播放动画 */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .toast { transition: none; }
   .route .arc { animation: none; stroke-dashoffset: 0; }
 }
