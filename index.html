@@ -14,24 +14,31 @@
   <!-- 语言切换：在页面显示前就决定语言，避免先闪一下英文 -->
   <script>
     (function () {
+      // 三种语言：en = English，zh = 简体中文，zht = 繁體中文
+      var ok = { en: 1, zh: 1, zht: 1 };
       var lang = "en";
       try {
         var q = new URLSearchParams(location.search).get("lang");
         var saved = localStorage.getItem("awell-lang");
-        if (q === "zh" || q === "en") lang = q;
-        else if (saved === "zh" || saved === "en") lang = saved;
-        else if ((navigator.language || "").toLowerCase().indexOf("zh") === 0) lang = "zh";
+        var nav = (navigator.language || "").toLowerCase();
+        if (ok[q]) lang = q;
+        else if (ok[saved]) lang = saved;
+        else if (/^zh-(hk|tw|mo)|hant/.test(nav)) lang = "zht";   // 香港、台湾、澳门的浏览器 → 繁体
+        else if (nav.indexOf("zh") === 0) lang = "zh";            // 其他中文浏览器 → 简体
       } catch (e) {}
+      var html = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
       document.documentElement.setAttribute("data-lang", lang);
-      document.documentElement.setAttribute("lang", lang === "zh" ? "zh-CN" : "en");
+      document.documentElement.setAttribute("lang", html[lang]);
     })();
   </script>
 </head>
 <body>
 
 <!-- =========================================================
-     维护说明：每段文字都有英文 (class="en") 和中文 (class="zh") 两份，
+     维护说明：每段文字都有英文 (class="en") 和简体中文 (class="zh") 两份，
      改内容时两份一起改。
+     繁體中文不用写：选“繁”时，程序会把简体自动转换成香港繁体
+     （转换库在 vendor/opencc-cn2t.js）。
      ========================================================= -->
 
 <header class="topbar">
@@ -45,9 +52,11 @@
       <a href="#how"><span class="en">How it works</span><span class="zh">合作流程</span></a>
       <a href="#contact"><span class="en">Contact</span><span class="zh">联系我们</span></a>
       <a class="nav-cta" href="#contact"><span class="en">Free quote</span><span class="zh">免费报价</span></a>
-      <button class="lang-toggle" type="button" id="langToggle">
-        <span class="en">中文</span><span class="zh">English</span>
-      </button>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" data-set-lang="zh" lang="zh-CN" aria-label="简体中文">简</button>
+        <button type="button" data-set-lang="zht" lang="zh-Hant" aria-label="繁體中文">繁</button>
+      </div>
     </nav>
   </div>
 </header>
@@ -74,7 +83,7 @@
       <ul class="trust">
         <li><span class="en">FMC-licensed NVOCC #017712</span><span class="zh">FMC 注册 NVOCC #017712</span></li>
         <li><span class="en">Cleared by licensed US customs brokers</span><span class="zh">美国持牌报关行清关</span></li>
-        <li><span class="en">Service in English and 中文</span><span class="zh">中英文专人服务</span></li>
+        <li><span class="en">English, Mandarin and Cantonese</span><span class="zh">英语、普通话、粤语专人服务</span></li>
       </ul>
     </div>
 
@@ -194,8 +203,8 @@
         <li>
           <p class="pain en">“Nobody answers when something goes wrong.”</p>
           <p class="pain zh">“出了问题找不到人。”</p>
-          <p class="fix en">One contact person follows your shipment from booking to delivery, in English or Chinese.</p>
-          <p class="fix zh">从订舱到签收，全程专人对接，中英文都能沟通。</p>
+          <p class="fix en">One contact person follows your shipment from booking to delivery, in English, Mandarin or Cantonese.</p>
+          <p class="fix zh">从订舱到签收，全程专人对接，英语、普通话、粤语都能沟通。</p>
         </li>
       </ul>
     </div>
@@ -373,14 +382,65 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // 切换语言按钮
-  document.getElementById("langToggle").addEventListener("click", function () {
-    var root = document.documentElement;
-    var next = root.getAttribute("data-lang") === "zh" ? "en" : "zh";
-    root.setAttribute("data-lang", next);
-    root.setAttribute("lang", next === "zh" ? "zh-CN" : "en");
-    try { localStorage.setItem("awell-lang", next); } catch (e) {}
+  // ===== 语言切换 =====
+  var root = document.documentElement;
+  var HTML_LANG = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
+
+  // 繁体：把页面上所有 .zh 里的简体字转换成香港繁体。
+  // 第一次转换前，先把每段文字的简体原文存起来，切回“简”时还原。
+  var originals = null;     // Map：文字节点 → 简体原文
+  var toTrad = null;        // 转换函数，第一次选“繁”时才加载（转换库 1MB，平时不加载，网页更快）
+  function zhTextNodes() {
+    var nodes = [];
+    document.querySelectorAll(".zh").forEach(function (el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+    });
+    return nodes;
+  }
+  function loadConverter() {
+    if (toTrad) return Promise.resolve(toTrad);
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "vendor/opencc-cn2t.js";
+      s.onload = function () {
+        toTrad = window.OpenCC.Converter({ from: "cn", to: "hk" });   // cn = 大陆简体，hk = 香港繁体
+        resolve(toTrad);
+      };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  function applyChinese(lang) {
+    if (lang === "zht") {
+      return loadConverter().then(function (convert) {
+        if (!originals) {
+          originals = new Map();
+          zhTextNodes().forEach(function (n) { originals.set(n, n.nodeValue); });
+        }
+        originals.forEach(function (text, n) { n.nodeValue = convert(text); });
+      });
+    }
+    if (originals) originals.forEach(function (text, n) { n.nodeValue = text; });   // 还原简体
+    return Promise.resolve();
+  }
+  function setLang(lang, save) {
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", HTML_LANG[lang]);
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
+    });
+    if (save) { try { localStorage.setItem("awell-lang", lang); } catch (e) {} }
+    applyChinese(lang).then(function () {
+      root.classList.add("lang-ready");
+    }, function () {
+      root.classList.add("lang-ready");    // 转换库加载失败时，至少显示简体，不让页面空白
+    });
+  }
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang"), true); });
   });
+  setLang(root.getAttribute("data-lang"), false);   // 页面打开时按自动判断的语言显示
   // 点击照片放大
   var box = document.getElementById("lightbox");
   var boxImg = document.getElementById("lightboxImg");
@@ -401,8 +461,9 @@
   var toast = document.getElementById("toast");
   var toastTimer;
   function showToast(text) {
-    var zh = document.documentElement.getAttribute("data-lang") === "zh";
-    toast.textContent = (zh ? "已复制：" : "Copied: ") + text;
+    var lang = root.getAttribute("data-lang");
+    var label = { en: "Copied: ", zh: "已复制：", zht: "已複製：" }[lang];
+    toast.textContent = label + text;
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2200);

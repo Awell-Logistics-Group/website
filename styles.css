@@ -33,10 +33,18 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-/* ---------- 中英文切换 ---------- */
+/* ---------- 语言切换 ----------
+   en 显示 .en；zh 和 zht（繁体）都显示 .zh，繁体由程序自动转换 */
 html[data-lang="en"] .zh { display: none !important; }
-html[data-lang="zh"] .en { display: none !important; }
-html[data-lang="zh"] body { line-height: 1.75; }
+html[data-lang="zh"] .en,
+html[data-lang="zht"] .en { display: none !important; }
+html[data-lang="zh"] body,
+html[data-lang="zht"] body { line-height: 1.75; }
+
+/* 繁体转换完成前先隐藏页面，避免先闪一下简体（最多 0.3 秒左右） */
+html[data-lang="zht"]:not(.lang-ready) main,
+html[data-lang="zht"]:not(.lang-ready) header,
+html[data-lang="zht"]:not(.lang-ready) footer { visibility: hidden; }
 
 /* ---------- 通用 ---------- */
 .wrap {
@@ -94,18 +102,25 @@ section[id] { scroll-margin-top: 72px; }   /* 点菜单跳转时不被顶栏挡�
 }
 .nav a.nav-cta:hover { background: var(--ink); color: var(--paper); }
 
-.lang-toggle {
+.lang-switch {
+  display: inline-flex;
+  border: 1.5px solid var(--blue);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang-switch button {
   font: inherit;
   font-size: 14px;
   font-weight: 600;
   color: var(--blue);
   background: none;
-  border: 1.5px solid var(--blue);
-  border-radius: 999px;
-  padding: 5px 14px;
+  border: 0;
+  padding: 5px 11px;
   cursor: pointer;
 }
-.lang-toggle:hover { background: var(--blue); color: var(--paper); }
+.lang-switch button + button { border-left: 1px solid var(--line); }
+.lang-switch button:hover { background: var(--mist); }
+.lang-switch button[aria-pressed="true"] { background: var(--blue); color: var(--paper); }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -121,7 +136,8 @@ section[id] { scroll-margin-top: 72px; }   /* 点菜单跳转时不被顶栏挡�
   letter-spacing: -0.01em;
   max-width: 14ch;
 }
-html[data-lang="zh"] .hero h1 {
+html[data-lang="zh"] .hero h1,
+html[data-lang="zht"] .hero h1 {
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.02em;
@@ -320,7 +336,8 @@ html[data-lang="zh"] .hero h1 {
 .pains li:last-child { border-bottom: 1px solid var(--line); }
 .pains p { margin: 0; }
 .pain { color: var(--steel); font-style: italic; font-size: 17px; }
-html[data-lang="zh"] .pain { font-style: normal; }
+html[data-lang="zh"] .pain,
+html[data-lang="zht"] .pain { font-style: normal; }
 .fix { font-weight: 600; font-size: 17px; padding-left: 26px; position: relative; }
 .fix::before {
   content: "";
@@ -523,6 +540,7 @@ html[data-lang="zh"] .pain { font-style: normal; }
   body { font-size: 16px; }
   .nav { gap: 14px; }
   .nav a.nav-cta { padding: 6px 12px; font-size: 14px; }
+  .lang-switch button { padding: 5px 9px; }
   .hero { padding-top: 48px; }
   .lede { font-size: 17px; }
   .services { grid-template-columns: 1fr; }
