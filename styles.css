@@ -417,7 +417,7 @@ html[data-lang="zht"] .pain { font-style: normal; }
 }
 .lightbox::backdrop { background: rgba(10, 28, 51, 0.88); }
 .lightbox img { display: block; max-width: 100%; max-height: 92vh; border-radius: 4px; }
-.lightbox-close {
+.lightbox-close-old {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -675,3 +675,102 @@ body:has(.quote-page) .quote-page { flex: 1; }
 
 .send-reason { display: block; margin-top: 6px; font-weight: 500; font-size: 13px; color: var(--steel); overflow-wrap: anywhere; }
 .form-note { margin: 0 0 16px; padding: 12px 14px; border-left: 4px solid var(--cyan); background: var(--mist); font-size: 15px; font-weight: 550; }
+
+/* =========================================================
+   照片放大：左右切换（首页和相册页共用）
+   ========================================================= */
+.lightbox { overflow: visible; }
+.lb-btn {
+  position: absolute;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+}
+.lb-close { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 26px; }
+.lb-prev, .lb-next { top: 50%; transform: translateY(-50%); width: 48px; height: 48px; font-size: 32px; padding-bottom: 4px; }
+.lb-prev { left: 10px; }
+.lb-next { right: 10px; }
+.lb-btn:hover { background: var(--paper); }
+.lb-count {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(10, 28, 51, 0.7);
+  color: var(--paper);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 首页照片区：标题右边的“查看全部” */
+.section-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px 32px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.section-head-row .section-title { margin-bottom: 0; }
+.section-head-row + .section-sub { margin-top: 0; }
+.see-all { flex: none; padding: 10px 20px; }
+
+/* =========================================================
+   相册页 photos.html
+   ========================================================= */
+.gallery-page { padding: 56px 0 96px; }
+.crumb { margin: 0 0 18px; font-size: 15px; color: var(--steel); }
+.crumb a { color: var(--steel); }
+.page-title {
+  font-size: clamp(34px, 4.6vw, 56px);
+  line-height: 1.05;
+  font-weight: 760;
+  font-variation-settings: "wdth" 78;
+  margin-bottom: 18px;
+}
+.gallery-page .section-sub { margin: 0 0 28px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.filters button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.filters button b { font-weight: 600; color: var(--steel); margin-left: 4px; }
+.filters button:hover { border-color: var(--blue); }
+.filters button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: var(--paper); }
+.filters button[aria-pressed="true"] b { color: #CFE3F7; }
+.gallery-all { grid-template-columns: repeat(4, 1fr); margin-bottom: 0; }
+.gallery-all figure[hidden] { display: none; }
+.gallery-cta {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1.5px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.gallery-cta p { margin: 0; font-size: 22px; font-weight: 680; }
+
+@media (max-width: 900px) {
+  .gallery-all { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .gallery-all { grid-template-columns: 1fr 1fr; }
+  .see-all { width: 100%; text-align: center; }
+  .lb-prev, .lb-next { width: 40px; height: 40px; font-size: 26px; }
+  .gallery-page { padding-top: 36px; }
+}

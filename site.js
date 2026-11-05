@@ -61,20 +61,58 @@
     b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang"), true); });
   });
   setLang(root.getAttribute("data-lang"), false);   // 页面打开时按自动判断的语言显示
-  // 点击照片放大
-  var box = document.getElementById("lightbox");
-  var boxImg = document.getElementById("lightboxImg");
-  if (box) {
-  document.querySelectorAll(".zoom").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var img = btn.querySelector("img");
-      boxImg.src = img.src;
+  // ===== 照片放大（首页和相册页共用） =====
+  // 点任意 .zoom 照片打开大图；左右箭头或键盘 ← → 切换；Esc 或点背景关闭。
+  // 大图地址优先用 data-full（相册页的缩略图用这个指向原图），没有就用 img 本身。
+  var zooms = Array.prototype.slice.call(document.querySelectorAll(".zoom"));
+  if (zooms.length) {
+    var box = document.createElement("dialog");
+    box.className = "lightbox";
+    box.innerHTML =
+      '<img alt="">' +
+      '<button type="button" class="lb-btn lb-close" aria-label="Close">×</button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="Previous photo">‹</button>' +
+      '<button type="button" class="lb-btn lb-next" aria-label="Next photo">›</button>' +
+      '<p class="lb-count"></p>';
+    document.body.appendChild(box);
+    var boxImg = box.querySelector("img");
+    var count = box.querySelector(".lb-count");
+    var current = 0;
+
+    function visibleZooms() {      // 相册页筛选后，只在当前显示的照片里切换
+      return zooms.filter(function (z) { return z.offsetParent !== null; });
+    }
+    function show(i) {
+      var list = visibleZooms();
+      current = (i + list.length) % list.length;   // 到最后一张再往后，回到第一张
+      var img = list[current].querySelector("img");
+      boxImg.src = img.getAttribute("data-full") || img.src;
       boxImg.alt = img.alt;
-      box.showModal();
+      count.textContent = (current + 1) + " / " + list.length;
+    }
+    zooms.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        show(visibleZooms().indexOf(btn));
+        box.showModal();
+      });
     });
-  });
-  document.getElementById("lightboxClose").addEventListener("click", function () { box.close(); });
-  box.addEventListener("click", function (e) { if (e.target === box) box.close(); });  // 点黑色背景也能关
+    box.querySelector(".lb-close").addEventListener("click", function () { box.close(); });
+    box.querySelector(".lb-prev").addEventListener("click", function () { show(current - 1); });
+    box.querySelector(".lb-next").addEventListener("click", function () { show(current + 1); });
+    box.addEventListener("click", function (e) { if (e.target === box) box.close(); });   // 点黑色背景关闭
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") show(current - 1);
+      if (e.key === "ArrowRight") show(current + 1);
+    });
+    // 手机上左右滑动切换
+    var startX = null;
+    box.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
   }
 
   // ===== 复制功能 =====
