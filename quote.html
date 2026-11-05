@@ -200,7 +200,8 @@
 <script src="site.js"></script>
 <script>
   // ===== 询价表单 =====
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/imports@awellus.com";
+  var FORM_ENDPOINT    = "https://formsubmit.co/ajax/imports@awellus.com";   // 后台发送（不跳转页面）
+  var FALLBACK_ENDPOINT = "https://formsubmit.co/imports@awellus.com";       // 备用：传统表单提交
 
   var form = document.getElementById("quoteForm");
   var btn = document.getElementById("submitBtn");
@@ -209,6 +210,31 @@
   var done = document.getElementById("quoteDone");
   var sendReason = document.getElementById("sendReason");
   var activateNote = document.getElementById("activateNote");
+
+  // 备用方式提交成功后，FormSubmit 会跳回这个页面并带上 ?sent=1，直接显示“已提交”
+  if (new URLSearchParams(location.search).get("sent") === "1") {
+    form.hidden = true;
+    done.hidden = false;
+  }
+
+  // 备用发送：后台请求被插件、公司网络或跨域限制拦住时，改用传统表单提交。
+  // 浏览器会跳到 FormSubmit，发完再跳回本页（_next）。这种方式不受跨域限制。
+  function fallbackSubmit(data) {
+    var f = document.createElement("form");
+    f.method = "POST";
+    f.action = FALLBACK_ENDPOINT;
+    f.style.display = "none";
+    data._next = location.origin + location.pathname + "?sent=1&lang=" + document.documentElement.getAttribute("data-lang");
+    Object.keys(data).forEach(function (k) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = k;
+      input.value = data[k];
+      f.appendChild(input);
+    });
+    document.body.appendChild(f);
+    f.submit();
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();               // 不跳转页面，用 JavaScript 在后台发送
@@ -270,7 +296,13 @@
         }
       })
       .catch(function (err) {
-        // 把具体原因显示出来，方便排查
+        // “Failed to fetch” = 请求没发出去（被拦截），自动改用备用方式
+        if (err instanceof TypeError) {
+          console.warn("AJAX blocked, using fallback form submit:", err);
+          fallbackSubmit(data);
+          return;
+        }
+        // 其他错误：把具体原因显示出来，方便排查
         sendReason.textContent = "Reason: " + (err && err.message ? err.message : err);
         sendError.hidden = false;
         console.error("Quote form error:", err);
