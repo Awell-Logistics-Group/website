@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AWELL Logistics Group | China to USA Freight, Door to Door</title>
-  <meta name="description" content="Ocean freight, air freight, customs clearance and US trucking from China to the United States. FMC-licensed NVOCC in San Mateo, CA. 23,000+ shipments into the US since 2006.">
+  <meta name="description" content="Ocean freight, air freight, customs clearance and US trucking from China to the United States. FMC-licensed NVOCC in San Mateo, CA. 50,000+ shipments into the US, 100+ every week.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@
       <a href="#photos"><span class="en">Photos</span><span class="zh">实拍</span></a>
       <a href="#how"><span class="en">How it works</span><span class="zh">合作流程</span></a>
       <a href="#contact"><span class="en">Contact</span><span class="zh">联系我们</span></a>
-      <a class="nav-cta" href="#contact"><span class="en">Free quote</span><span class="zh">免费报价</span></a>
+      <a class="nav-cta" href="quote.html"><span class="en">Free quote</span><span class="zh">免费报价</span></a>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-set-lang="en" lang="en">EN</button>
         <button type="button" data-set-lang="zh" lang="zh-CN" aria-label="简体中文">简</button>
@@ -70,10 +70,10 @@
         <span class="en">China to USA freight, handled door to door.</span>
         <span class="zh">中国到美国，门到门一站搞定</span>
       </h1>
-      <p class="lede en">Ocean, air, customs clearance and trucking: one team, one quote. <strong>23,000+ shipments into the US since 2006.</strong></p>
-      <p class="lede zh">海运、空运、清关、卡车派送，一个团队、一张报价全包。<strong>自 2006 年起已向美国运送 23,000+ 票货物。</strong></p>
+      <p class="lede en">Ocean, air, customs clearance and trucking: one team, one quote. <strong>50,000+ shipments into the US, and 100+ more every week.</strong></p>
+      <p class="lede zh">海运、空运、清关、卡车派送，一个团队、一张报价全包。<strong>已向美国运送 50,000+ 票货物，每周 100+ 票持续出运。</strong></p>
       <div class="actions">
-        <a class="btn btn-primary btn-big" href="mailto:imports@awellus.com?subject=Free%20quote%20request" data-copy="imports@awellus.com">
+        <a class="btn btn-primary btn-big" href="quote.html">
           <span class="en">Get a free quote</span><span class="zh">免费获取报价</span>
         </a>
         <a class="btn btn-quiet btn-big" href="tel:+14158595706" data-copy="415-859-5706">
@@ -113,29 +113,27 @@
     </figure>
   </section>
 
-  <!-- ===== 硬数字（数据来自美国海关公开进口记录，见下方脚注） ===== -->
+  <!-- ===== 硬数字 ===== -->
   <section class="docket" aria-label="AWELL in numbers">
     <div class="wrap">
       <dl class="bl-grid stats">
         <div>
+          <dt><span class="en">shipments every week</span><span class="zh">每周出运票数</span></dt>
+          <dd>100+</dd>
+        </div>
+        <div>
           <dt><span class="en">shipments into the US</span><span class="zh">票美国进口货物</span></dt>
-          <dd>23,000+</dd>
+          <dd>50,000+</dd>
         </div>
         <div>
           <dt><span class="en">containers moved</span><span class="zh">个集装箱</span></dt>
-          <dd>20,000+</dd>
-        </div>
-        <div>
-          <dt><span class="en">shipping into the US, since 2006</span><span class="zh">美国进口操作经验，始于 2006</span></dt>
-          <dd><span class="en">20 years</span><span class="zh">20 年</span></dd>
+          <dd>55,000+</dd>
         </div>
         <div>
           <dt><span class="en">FMC-licensed NVOCC</span><span class="zh">FMC 注册 NVOCC 编号</span></dt>
           <dd>#017712</dd>
         </div>
       </dl>
-      <p class="footnote en">Shipment, container and year figures are based on public US customs import records.</p>
-      <p class="footnote zh">货量、柜量及年份数据来自美国海关公开进口记录。</p>
     </div>
   </section>
 
@@ -299,8 +297,8 @@
         <h2><span class="en">Get your free quote today</span><span class="zh">今天就免费获取报价</span></h2>
         <p class="en">Tell us what you're shipping, where it's coming from, and when it needs to arrive. We'll reply with options and an all-in price.</p>
         <p class="zh">告诉我们货物品名、起运地和期望到达时间，我们会回复可选方案和全包价格。</p>
-        <a class="btn btn-light btn-big" href="mailto:imports@awellus.com?subject=Free%20quote%20request" data-copy="imports@awellus.com">
-          <span class="en">Email imports@awellus.com</span><span class="zh">发邮件至 imports@awellus.com</span>
+        <a class="btn btn-light btn-big" href="quote.html">
+          <span class="en">Request a quote online</span><span class="zh">在线提交询价</span>
         </a>
       </div>
 
@@ -381,121 +379,6 @@
 <!-- “已复制”提示 -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script>
-  // ===== 语言切换 =====
-  var root = document.documentElement;
-  var HTML_LANG = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
-
-  // 繁体：把页面上所有 .zh 里的简体字转换成香港繁体。
-  // 第一次转换前，先把每段文字的简体原文存起来，切回“简”时还原。
-  var originals = null;     // Map：文字节点 → 简体原文
-  var toTrad = null;        // 转换函数，第一次选“繁”时才加载（转换库 1MB，平时不加载，网页更快）
-  function zhTextNodes() {
-    var nodes = [];
-    document.querySelectorAll(".zh").forEach(function (el) {
-      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-    });
-    return nodes;
-  }
-  function loadConverter() {
-    if (toTrad) return Promise.resolve(toTrad);
-    return new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = "vendor/opencc-cn2t.js";
-      s.onload = function () {
-        toTrad = window.OpenCC.Converter({ from: "cn", to: "hk" });   // cn = 大陆简体，hk = 香港繁体
-        resolve(toTrad);
-      };
-      s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
-  function applyChinese(lang) {
-    if (lang === "zht") {
-      return loadConverter().then(function (convert) {
-        if (!originals) {
-          originals = new Map();
-          zhTextNodes().forEach(function (n) { originals.set(n, n.nodeValue); });
-        }
-        originals.forEach(function (text, n) { n.nodeValue = convert(text); });
-      });
-    }
-    if (originals) originals.forEach(function (text, n) { n.nodeValue = text; });   // 还原简体
-    return Promise.resolve();
-  }
-  function setLang(lang, save) {
-    root.setAttribute("data-lang", lang);
-    root.setAttribute("lang", HTML_LANG[lang]);
-    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
-    });
-    if (save) { try { localStorage.setItem("awell-lang", lang); } catch (e) {} }
-    applyChinese(lang).then(function () {
-      root.classList.add("lang-ready");
-    }, function () {
-      root.classList.add("lang-ready");    // 转换库加载失败时，至少显示简体，不让页面空白
-    });
-  }
-  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang"), true); });
-  });
-  setLang(root.getAttribute("data-lang"), false);   // 页面打开时按自动判断的语言显示
-  // 点击照片放大
-  var box = document.getElementById("lightbox");
-  var boxImg = document.getElementById("lightboxImg");
-  document.querySelectorAll(".zoom").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var img = btn.querySelector("img");
-      boxImg.src = img.src;
-      boxImg.alt = img.alt;
-      box.showModal();
-    });
-  });
-  document.getElementById("lightboxClose").addEventListener("click", function () { box.close(); });
-  box.addEventListener("click", function (e) { if (e.target === box) box.close(); });  // 点黑色背景也能关
-
-  // ===== 复制功能 =====
-  // 任何带 data-copy 的元素：点击时复制内容，并弹出“已复制”提示。
-  // 邮件和电话按钮同时保留原来的功能（打开邮件 / 拨号），电脑上没装邮件软件时也能直接粘贴。
-  var toast = document.getElementById("toast");
-  var toastTimer;
-  function showToast(text) {
-    var lang = root.getAttribute("data-lang");
-    var label = { en: "Copied: ", zh: "已复制：", zht: "已複製：" }[lang];
-    toast.textContent = label + text;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2200);
-  }
-  function copyText(text) {
-    // 新浏览器用 Clipboard API；旧浏览器或本地打开文件时用备用方法
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function (resolve, reject) {
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.setAttribute("readonly", "");
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      var ok = false;
-      try { ok = document.execCommand("copy"); } catch (e) {}
-      document.body.removeChild(ta);
-      ok ? resolve() : reject();
-    });
-  }
-  document.querySelectorAll("[data-copy]").forEach(function (el) {
-    el.addEventListener("click", function () {
-      var text = el.getAttribute("data-copy");
-      copyText(text).then(function () { showToast(text); }, function () {});
-    });
-  });
-
-  // 页脚年份自动更新
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="site.js"></script>
 </body>
 </html>
