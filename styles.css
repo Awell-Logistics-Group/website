@@ -672,3 +672,6 @@ html[data-lang="zht"] .pain { font-style: normal; }
 /* 询价页内容少时，页脚也贴在最底部 */
 body:has(.quote-page) { min-height: 100vh; display: flex; flex-direction: column; }
 body:has(.quote-page) .quote-page { flex: 1; }
+
+.send-reason { display: block; margin-top: 6px; font-weight: 500; font-size: 13px; color: var(--steel); overflow-wrap: anywhere; }
+.form-note { margin: 0 0 16px; padding: 12px 14px; border-left: 4px solid var(--cyan); background: var(--mist); font-size: 15px; font-weight: 550; }

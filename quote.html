@@ -145,6 +145,12 @@
         <p class="form-error" id="sendError" hidden>
           <span class="en">We couldn't send your request. Please try again, or email it to</span><span class="zh">提交没有成功，请再试一次，或直接发邮件到</span>
           <a href="mailto:imports@awellus.com" data-copy="imports@awellus.com">imports@awellus.com</a>
+          <small class="send-reason" id="sendReason"></small>
+        </p>
+        <!-- 第一次使用时 FormSubmit 要求激活，显示这条提示 -->
+        <p class="form-note" id="activateNote" hidden>
+          <span class="en">Almost there: this form needs a one-time activation. An email with an “Activate Form” link was sent to imports@awellus.com. Click it, then send this request again.</span>
+          <span class="zh">表单需要先激活一次：FormSubmit 已向 imports@awellus.com 发送了一封带 “Activate Form” 链接的邮件，点击激活后，再提交一次即可。</span>
         </p>
 
         <button type="submit" class="btn btn-primary btn-big btn-submit" id="submitBtn">
@@ -201,11 +207,21 @@
   var formError = document.getElementById("formError");
   var sendError = document.getElementById("sendError");
   var done = document.getElementById("quoteDone");
+  var sendReason = document.getElementById("sendReason");
+  var activateNote = document.getElementById("activateNote");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();               // 不跳转页面，用 JavaScript 在后台发送
     formError.hidden = true;
     sendError.hidden = true;
+    activateNote.hidden = true;
+
+    // 本地双击打开的文件（file://）无法提交，FormSubmit 只接受真实网址
+    if (location.protocol === "file:") {
+      sendReason.textContent = "Open this page from the live website to send (not from a local file).";
+      sendError.hidden = false;
+      return;
+    }
 
     // 1. 检查必填项，没填的标红，并把光标移到第一个
     var missing = Array.prototype.filter.call(form.querySelectorAll("[required]"), function (el) {
@@ -239,18 +255,25 @@
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(data)
     })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        return res.json().catch(function () { throw new Error("HTTP " + res.status); });
+      })
       .then(function (json) {
         if (json.success === true || json.success === "true") {
           form.hidden = true;
           done.hidden = false;
           done.focus();
+        } else if (/activat/i.test(json.message || "")) {
+          activateNote.hidden = false;          // 还没激活
         } else {
-          throw new Error(json.message || "failed");
+          throw new Error(json.message || "Unknown error");
         }
       })
-      .catch(function () {
+      .catch(function (err) {
+        // 把具体原因显示出来，方便排查
+        sendReason.textContent = "Reason: " + (err && err.message ? err.message : err);
         sendError.hidden = false;
+        console.error("Quote form error:", err);
       })
       .then(function () {
         btn.disabled = false;
