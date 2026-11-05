@@ -5,7 +5,7 @@ Static one-page site, English + Chinese.
 ## Files
 
 - `index.html` — all page content. Every piece of text has an English copy (`class="en"`) and a Chinese copy (`class="zh"`). Change both together.
-- `quote.html` — quote request page. The form sends to imports@awellus.com through FormSubmit (free). To change the address, edit `FORM_ENDPOINT` near the bottom of the file.
+- `quote.html` — quote request page. The form sends to imports@awellus.com through Web3Forms (free, 250 submissions/month). The access key is `WEB3FORMS_KEY` near the bottom of the file; the receiving address is whichever email the key was created with.
 - `site.js` — shared script for both pages: language switch, photo zoom, copy buttons.
 - `styles.css` — design. Brand colors are at the top in `:root`.
 - `logo.png` — logo from the old site (small, 117×45). Replace with a high-resolution version if one exists.

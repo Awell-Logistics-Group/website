@@ -75,8 +75,8 @@
     </aside>
 
     <!-- 右边：表单
-         提交方式：用 FormSubmit 免费服务，把表单内容发到 imports@awellus.com。
-         要换收件邮箱，改下面 FORM_ENDPOINT 里的邮箱即可。 -->
+         提交方式：用 Web3Forms 免费服务，把表单内容发到 imports@awellus.com。
+         设置在页面最下面的 WEB3FORMS_KEY。 -->
     <div class="quote-card">
       <form id="quoteForm" novalidate>
 
@@ -147,11 +147,6 @@
           <a href="mailto:imports@awellus.com" data-copy="imports@awellus.com">imports@awellus.com</a>
           <small class="send-reason" id="sendReason"></small>
         </p>
-        <!-- 第一次使用时 FormSubmit 要求激活，显示这条提示 -->
-        <p class="form-note" id="activateNote" hidden>
-          <span class="en">Almost there: this form needs a one-time activation. An email with an “Activate Form” link was sent to imports@awellus.com. Click it, then send this request again.</span>
-          <span class="zh">表单需要先激活一次：FormSubmit 已向 imports@awellus.com 发送了一封带 “Activate Form” 链接的邮件，点击激活后，再提交一次即可。</span>
-        </p>
 
         <button type="submit" class="btn btn-primary btn-big btn-submit" id="submitBtn">
           <span class="idle"><span class="en">Send my request</span><span class="zh">提交询价</span></span>
@@ -200,8 +195,11 @@
 <script src="site.js"></script>
 <script>
   // ===== 询价表单 =====
-  var FORM_ENDPOINT    = "https://formsubmit.co/ajax/imports@awellus.com";   // 后台发送（不跳转页面）
-  var FALLBACK_ENDPOINT = "https://formsubmit.co/imports@awellus.com";       // 备用：传统表单提交
+  // 用 Web3Forms 免费服务把表单内容发到 imports@awellus.com。
+  // 密钥（access key）是在 web3forms.com 用 imports@awellus.com 申请的，
+  // 收件邮箱就是申请时填的那个。要换邮箱，就用新邮箱重新申请一个密钥，替换下面这行。
+  var WEB3FORMS_KEY = "259c9583-4e66-4cb3-9ebc-6764bc5d88cc";
+  var FORM_ENDPOINT = "https://api.web3forms.com/submit";
 
   var form = document.getElementById("quoteForm");
   var btn = document.getElementById("submitBtn");
@@ -209,45 +207,11 @@
   var sendError = document.getElementById("sendError");
   var done = document.getElementById("quoteDone");
   var sendReason = document.getElementById("sendReason");
-  var activateNote = document.getElementById("activateNote");
-
-  // 备用方式提交成功后，FormSubmit 会跳回这个页面并带上 ?sent=1，直接显示“已提交”
-  if (new URLSearchParams(location.search).get("sent") === "1") {
-    form.hidden = true;
-    done.hidden = false;
-  }
-
-  // 备用发送：后台请求被插件、公司网络或跨域限制拦住时，改用传统表单提交。
-  // 浏览器会跳到 FormSubmit，发完再跳回本页（_next）。这种方式不受跨域限制。
-  function fallbackSubmit(data) {
-    var f = document.createElement("form");
-    f.method = "POST";
-    f.action = FALLBACK_ENDPOINT;
-    f.style.display = "none";
-    data._next = location.origin + location.pathname + "?sent=1&lang=" + document.documentElement.getAttribute("data-lang");
-    Object.keys(data).forEach(function (k) {
-      var input = document.createElement("input");
-      input.type = "hidden";
-      input.name = k;
-      input.value = data[k];
-      f.appendChild(input);
-    });
-    document.body.appendChild(f);
-    f.submit();
-  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();               // 不跳转页面，用 JavaScript 在后台发送
     formError.hidden = true;
     sendError.hidden = true;
-    activateNote.hidden = true;
-
-    // 本地双击打开的文件（file://）无法提交，FormSubmit 只接受真实网址
-    if (location.protocol === "file:") {
-      sendReason.textContent = "Open this page from the live website to send (not from a local file).";
-      sendError.hidden = false;
-      return;
-    }
 
     // 1. 检查必填项，没填的标红，并把光标移到第一个
     var missing = Array.prototype.filter.call(form.querySelectorAll("[required]"), function (el) {
@@ -268,10 +232,11 @@
     });
     if (data._honey) return;          // 机器人填了隐藏框，直接忽略
     delete data._honey;
-    data._subject = "Quote request: " + data.From + " to " + data.To + " (" + data.Name + ")";
-    data._template = "table";         // 邮件里用表格显示，方便阅读
-    data._captcha = "false";
+    data.access_key = WEB3FORMS_KEY;
+    data.subject = "Quote request: " + data.From + " to " + data.To + " (" + data.Name + ")";
+    data.from_name = "AWELL website";
     data.Language = document.documentElement.getAttribute("data-lang");
+    // 表单里叫 email 的字段，Web3Forms 会自动设成回复地址，点“回复”就是回给客户
 
     // 3. 发送
     btn.disabled = true;
@@ -285,24 +250,16 @@
         return res.json().catch(function () { throw new Error("HTTP " + res.status); });
       })
       .then(function (json) {
-        if (json.success === true || json.success === "true") {
+        if (json.success) {
           form.hidden = true;
           done.hidden = false;
           done.focus();
-        } else if (/activat/i.test(json.message || "")) {
-          activateNote.hidden = false;          // 还没激活
         } else {
           throw new Error(json.message || "Unknown error");
         }
       })
       .catch(function (err) {
-        // “Failed to fetch” = 请求没发出去（被拦截），自动改用备用方式
-        if (err instanceof TypeError) {
-          console.warn("AJAX blocked, using fallback form submit:", err);
-          fallbackSubmit(data);
-          return;
-        }
-        // 其他错误：把具体原因显示出来，方便排查
+        // 把具体原因显示出来，方便排查
         sendReason.textContent = "Reason: " + (err && err.message ? err.message : err);
         sendError.hidden = false;
         console.error("Quote form error:", err);
