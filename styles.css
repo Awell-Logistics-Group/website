@@ -191,59 +191,6 @@ html[data-lang="zht"] .hero h1 {
 .btn-quiet { background: transparent; color: var(--blue); }
 .btn-quiet:hover { background: var(--paper); color: var(--ink); border-color: var(--ink); }
 
-/* ---------- 跨太平洋航线 ---------- */
-.route {
-  position: relative;
-  margin-top: 56px;
-  margin-bottom: 0;
-  padding-bottom: 32px;
-}
-.route svg {
-  display: block;
-  width: 100%;
-  height: clamp(120px, 20vw, 220px);
-  overflow: visible;
-}
-.route .grid {
-  stroke: var(--line);
-  stroke-width: 1;
-  stroke-dasharray: 2 6;
-  vector-effect: non-scaling-stroke;
-}
-.route .arc {
-  fill: none;
-  stroke: var(--cyan);
-  stroke-width: 2.5;
-  vector-effect: non-scaling-stroke;
-  /* 用 3 而不是 1：缩放后路径会变长，留足余量保证最后整条线都显示 */
-  stroke-dasharray: 3;
-  stroke-dashoffset: 3;
-  animation: draw 2.2s cubic-bezier(.6, .1, .2, 1) .3s forwards;
-}
-@keyframes draw { to { stroke-dashoffset: 0; } }
-
-.route-labels {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: -7px;   /* 圆点中心正好压在航线两端 */
-}
-.pt { display: flex; flex-direction: column; gap: 2px; }
-.pt strong { font-size: 18px; font-weight: 700; }
-.pt small { font-size: 14px; color: var(--steel); }
-.pt-right { align-items: flex-end; text-align: right; }
-.pt-mid { padding-top: 18px; }
-.pt-mid small { font-style: italic; }
-.dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 3px solid var(--blue);
-  margin-bottom: 10px;
-}
-.pt-right .dot { background: var(--blue); }
-
 /* ---------- 资质格子（提单样式） ---------- */
 .docket { background: var(--mist); padding-bottom: 72px; }
 .bl-grid {
@@ -547,7 +494,6 @@ html[data-lang="zht"] .pain { font-style: normal; }
   .bl-grid { grid-template-columns: 1fr; }
   .bl-grid > div { border-left: 0 !important; }
   .bl-grid > div + div { border-top: 1px solid var(--line); }
-  .pt-mid { display: none; }
   .contact > div { grid-template-columns: 1fr auto; gap: 2px 12px; }
   .contact dt { grid-column: 1 / -1; }
   .footer-meta { text-align: left; }
@@ -564,7 +510,6 @@ html[data-lang="zht"] .pain { font-style: normal; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .toast { transition: none; }
-  .route .arc { animation: none; stroke-dashoffset: 0; }
 }
 
 /* =========================================================
@@ -773,4 +718,168 @@ body:has(.quote-page) .quote-page { flex: 1; }
   .see-all { width: 100%; text-align: center; }
   .lb-prev, .lb-next { width: 40px; height: 40px; font-size: 26px; }
   .gallery-page { padding-top: 36px; }
+}
+
+/* =========================================================
+   首页服务动画（海运 / 空运 / 卡车 / 仓储）
+   图形由 route.js 控制播放；这里只管外观和小循环动作
+   ========================================================= */
+.lanes { margin-top: 48px; padding-bottom: 36px; }
+
+.lane-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.lane-tab {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .2s, background-color .2s, color .2s;
+}
+.lane-tab svg { width: 20px; height: 20px; flex: none; }
+.lane-tab svg * { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.lane-tab:hover { border-color: var(--blue); }
+.lane-tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.lane-stage { position: relative; }
+.lane-stage > svg { display: block; width: 100%; height: auto; overflow: hidden; }   /* 推近镜头时，地图不溢出到上下文字 */
+
+/* 点阵地图 */
+.map-dots { fill: none; stroke: #C3CEDB; stroke-width: 2.6; stroke-linecap: round; opacity: 0; vector-effect: non-scaling-stroke; }
+
+/* 航线 */
+.lane { opacity: 0; }
+/* 线宽写在每条线的 style 里（推近的镜头会按比例调细），这里不设 */
+.lane .arc { fill: none; stroke: var(--blue); stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .55; }
+.lane .arc-main { stroke: var(--cyan); opacity: 1; }
+.lane .node { fill: var(--paper); stroke: var(--blue); stroke-width: 1.6; opacity: 0; vector-effect: non-scaling-stroke; }
+.lane .node-to { fill: var(--blue); }
+.lane .city { font-size: 12.5px; font-weight: 600; fill: var(--ink); opacity: 0; paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+html[data-lang="en"] .lane .city.zh { display: none; }
+html[data-lang="zh"] .lane .city.en,
+html[data-lang="zht"] .lane .city.en { display: none; }
+
+/* 主航线的发光尾迹：跟着光点一起画出来 */
+.lane .arc-glow { fill: none; stroke: var(--cyan); stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .45; }
+
+/* 空运：3D 画面 + 白光 + 光点 */
+.lane-3d { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.lane-3d.is-on { opacity: 1; }
+.lane-white {
+  position: absolute;
+  inset: -8% -4%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, #fff 45%, rgba(255,255,255,.85) 62%, rgba(255,255,255,0) 100%);
+}
+.lane-fx { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.spark { opacity: 0; }
+.spark-halo { fill: var(--cyan); opacity: .55; }
+.spark-core { fill: #fff; stroke: var(--cyan); stroke-width: 2; }
+
+/* 沿航线移动的点 */
+.marker { opacity: 0; }
+.marker-dot { fill: var(--paper); stroke: var(--cyan); stroke-width: 2.6; vector-effect: non-scaling-stroke; }
+.marker-ring { fill: var(--cyan); opacity: .25; transform-box: fill-box; transform-origin: center; }
+.marker.is-arrived .marker-ring { animation: lane-pulse 2.2s ease-out infinite; }
+@keyframes lane-pulse { 0% { transform: scale(.6); opacity: .45; } 100% { transform: scale(2.6); opacity: 0; } }
+
+/* ---------- 等轴测小场景 ---------- */
+.vignette { opacity: 0; }
+.vignette polygon, .vignette path { stroke: var(--ink); stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+/* 面的颜色：ft = 顶面，fl = 左侧面，fr = 右侧面 */
+.t-white.ft, .t-neutral.ft, .deck.ft { fill: #FFFFFF; }
+.t-neutral.ft2 { fill: #EEF3F8; }
+.t-white.fl, .t-neutral.fl { fill: #F1F5F9; }
+.t-white.fr, .t-neutral.fr { fill: #DCE5EF; }
+.t-blue.ft { fill: #DCEBF8; }  .t-blue.fl { fill: #A9CDEE; }  .t-blue.fr { fill: #5F9BD8; }
+.t-deep.ft { fill: #C7D6E8; }  .t-deep.fl { fill: #1F5FAE; }  .t-deep.fr { fill: #16457F; }
+.t-cyan.ft { fill: #D8F1FB; }  .t-cyan.fl { fill: #8CD3F2; }  .t-cyan.fr { fill: #1E9BD7; }
+.t-ink.ft  { fill: #3A4F6E; }  .t-ink.fl  { fill: #0F2744; }  .t-ink.fr  { fill: #0A1C33; }
+.hull.fl { fill: var(--ink); } .hull.fr { fill: #0A1C33; }
+.stripe { fill: none; stroke: var(--cyan) !important; stroke-width: 2 !important; }
+.mast, .rib, .slat, .window { fill: none; }
+.rib { stroke: #3D79BF !important; stroke-width: .8 !important; }
+.window { stroke-width: 2.4 !important; }
+.glass { fill: #0F2744; }
+.wheel { fill: var(--ink); stroke: none !important; }
+.road { fill: #F4F7FA; stroke: none !important; }
+.pad { fill: #F4F7FA; stroke: none !important; }
+.opening { fill: #0F2744; }
+.panel { fill: #E6EDF5; }
+.slat { stroke: #9FB1C7 !important; stroke-width: .8 !important; }
+.shadow { fill: #0F2744; opacity: .07; stroke: none !important; }
+
+/* 小循环动作：只在场景显示时运行（.is-live） */
+.vignette .flow { fill: none; stroke: #8FB6DE !important; stroke-width: 1.2 !important; stroke-dasharray: 34 22; animation: lane-flow 1.1s linear infinite paused; }
+.vignette .wake { fill: none; stroke: #8FB6DE !important; stroke-width: 1 !important; stroke-dasharray: 10 8; animation: lane-flow .9s linear infinite paused; }
+.vignette .lane-dash { fill: none; stroke: #B9C7D6 !important; stroke-width: 2 !important; stroke-dasharray: 22 18; animation: lane-flow .6s linear infinite paused; }
+.vignette .streak { fill: none; stroke: #B9D3EC !important; stroke-width: 1.4 !important; animation: lane-streak 1.1s linear infinite paused; }
+.vignette .bob { animation: lane-bob 2.4s ease-in-out infinite paused; }
+.vignette .bob-air { animation: lane-bob 3s ease-in-out infinite paused; }
+.vignette .bob-truck { animation: lane-rumble .35s ease-in-out infinite paused; }
+.vignette .door { animation: lane-door 1.6s cubic-bezier(.6,0,.2,1) .2s both paused; }
+.vignette .door.d1 { animation-delay: .45s; }
+.vignette .pallet { animation: lane-pallet 1.8s cubic-bezier(.5,0,.3,1) both paused; }
+.vignette .pallet.p1 { animation-delay: .35s; }
+.vignette .pallet.p2 { animation-delay: .7s; }
+.vignette.is-live *, .vignette.is-live { animation-play-state: running !important; }
+
+@keyframes lane-flow { to { stroke-dashoffset: 56; } }
+@keyframes lane-streak { from { transform: translate(60px, 35px); opacity: 0; } 30% { opacity: 1; } to { transform: translate(-120px, -70px); opacity: 0; } }
+@keyframes lane-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes lane-rumble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.8px); } }
+@keyframes lane-door { from { transform: translateY(0); } to { transform: translateY(-40px); } }
+/* 托盘沿着 -y 方向（画面上是往右上）滑进门里 */
+@keyframes lane-pallet { from { transform: translate(-30px, 17px); opacity: 0; } 25% { opacity: 1; } 85% { opacity: 1; } to { transform: translate(17px, -10px); opacity: 0; } }
+
+/* 动画下面的文字说明：只显示当前选中的那一组 */
+.lane-labels { position: relative; margin-top: 10px; min-height: 52px; }
+.lane-label-set {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .35s, transform .35s;
+  pointer-events: none;
+}
+.lane-label-set.is-active { opacity: 1; transform: none; }
+.lane-label-set .pt-right { text-align: right; }
+.lane-label-set .pt strong { display: block; font-size: 17px; font-weight: 700; }
+.lane-label-set .pt small { display: block; font-size: 14px; color: var(--steel); }
+.lane-label-set .pt-mid { padding-top: 0; text-align: center; }
+.lane-label-set .pt-mid small { font-style: normal; }
+
+@media (max-width: 600px) {
+  .lanes { margin-top: 32px; }
+  /* 手机：一排 4 格，图标在上、文字在下 */
+  .lane-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .lane-tab { flex-direction: column; gap: 4px; padding: 8px 4px; border-radius: 10px; font-size: 13px; line-height: 1.2; text-align: center; }
+  .lane .city { display: none; }
+  .lane-label-set .pt-mid { display: none; }
+  .lane-label-set .pt strong { font-size: 15px; }
+  .lane-labels { min-height: 64px; }
+}
+
+/* 系统设置了“减少动画”：不播放转场，直接显示地图和航线 */
+@media (prefers-reduced-motion: reduce) {
+  .vignette { display: none; }
+  .lane-label-set { transition: none; }
 }
