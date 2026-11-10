@@ -1,17 +1,33 @@
 // =========================================================
-// 第二屏（物流网络地图）的出场动画
-// 滚动到能看见地图时，给 section 加上 .is-in，CSS 就按顺序播放：
-// 文字 → 地图 → 城市点 → 航线 → 圆形图标 → 说明。播一次，之后静止。
+// 前两屏的出场动画：每次翻到这一屏都从头播一遍；停在这一屏时播完就静止
+//   首屏：页面一打开就播；离开后再回来，重新播
+//   第二屏（地图）：文字 → 地图 → 城市点 → 航线 → 圆形图标 → 说明
+// 做法：这一屏完全离开屏幕时把动画“复位”（这时看不见，所以复位不会被看到），
+//       再翻回来、露出大半屏时重新开始。
 // =========================================================
 (function () {
-  var sec = document.querySelector(".network");
-  if (!sec) return;
-  sec.classList.add("js");                       // 有 JS 才先把元素藏起来，没 JS 时直接显示
-  if (!("IntersectionObserver" in window)) { sec.classList.add("is-in"); return; }
+  var hero = document.querySelector(".hero-frame");
+  var net = document.querySelector(".network");
+  if (net) net.classList.add("js");              // 有 JS 才先把地图元素藏起来，没 JS 时直接显示
+  if (!("IntersectionObserver" in window)) { if (net) net.classList.add("is-in"); return; }
+
+  function play(el) {
+    if (el === net) el.classList.add("is-in");
+    else el.classList.remove("is-out");          // 首屏：去掉 is-out，CSS 动画重新开始
+  }
+  function reset(el) {
+    if (el === net) el.classList.remove("is-in");
+    else el.classList.add("is-out");             // 首屏：is-out 会暂时去掉动画
+  }
+
   var io = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting) { sec.classList.add("is-in"); io.disconnect(); }
-  }, { threshold: 0.3 });
-  io.observe(sec.querySelector(".net-map"));
+    entries.forEach(function (e) {
+      // 只剩一条边（不到 3%）也算离开：两屏紧挨着，翻过去后上一屏会“贴着”屏幕边，浏览器仍算它可见
+      if (!e.isIntersecting || e.intersectionRatio < 0.03) reset(e.target);   // 离开了：复位
+      else if (e.intersectionRatio >= 0.6) play(e.target);                    // 露出 60% 以上：播放（已经在播就不会重复）
+    });
+  }, { threshold: [0, 0.03, 0.6] });
+  [hero, net].forEach(function (el) { if (el) io.observe(el); });
 })();
 
 // ===== 前两屏：滚轮 / 触控板滚一下就翻一整屏 =====

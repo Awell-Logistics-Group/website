@@ -813,7 +813,7 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
 }
 .hero-frame .scroll-cue:hover { color: var(--ink); }
 
-/* 入场动画：一次，之后静止 */
+/* 入场动画：每次翻到首屏播一次，之后静止（重播的逻辑在 network.js） */
 @media (prefers-reduced-motion: no-preference) {
   .hero-frame .eyebrow { animation: riseIn .55s cubic-bezier(.33,.9,.35,1) .15s both; }
   .hero-frame .headline .hl { animation: lineIn .9s cubic-bezier(.16,1,.3,1) both; }
@@ -826,6 +826,7 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   .hero-frame .f-right { animation: blockInR .75s cubic-bezier(.16,1,.3,1) .9s both; }
   .hero-frame .scroll-cue { animation: riseIn .6s ease 1.6s both; }
 }
+.hero-frame.is-out * { animation: none !important; }   /* 首屏离开时复位动画，回来时重新播 */
 @keyframes riseIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes lineIn {
   0%   { opacity: 0; transform: translateY(.26em); clip-path: inset(100% -30% 0% -30%); }
