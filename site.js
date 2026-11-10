@@ -156,3 +156,12 @@
 
   // 页脚年份自动更新
   document.getElementById("year").textContent = new Date().getFullYear();
+
+// ===== 首页：顶栏一开始透明压在首屏上，往下滚就变成实色 =====
+(function () {
+  if (!document.body.classList.contains("has-hero")) return;
+  var bar = document.querySelector(".topbar");
+  function upd() { bar.classList.toggle("is-solid", window.scrollY > 40); }
+  window.addEventListener("scroll", upd, { passive: true });
+  upd();
+})();

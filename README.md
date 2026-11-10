@@ -1,6 +1,6 @@
 # AWELL Logistics Group website
 
-Static one-page site, English + Chinese.
+Static site, English + Chinese. Dark theme; homepage first screen has a placeholder background (see the comment in `index.html` to swap in a video).
 
 ## Files
 
@@ -8,7 +8,8 @@ Static one-page site, English + Chinese.
 - `quote.html` — quote request page. The form sends to imports@awellus.com through Web3Forms (free, 250 submissions/month). The access key is `WEB3FORMS_KEY` near the bottom of the file; the receiving address is whichever email the key was created with.
 - `site.js` — shared script for both pages: language switch, photo zoom, copy buttons.
 - `styles.css` — design. Brand colors are at the top in `:root`.
-- `logo.png` — logo from the old site (small, 117×45). Replace with a high-resolution version if one exists.
+- `logo-light.png` — logo recoloured for the dark background (used on every page). `logo.png` is the original.
+- `network.js` — starts the map animation on the homepage when it scrolls into view.
 - `favicon.svg` — browser tab icon.
 - `terms-and-conditions.pdf` — terms from the old site.
 - `photos/` — real cargo photos.
