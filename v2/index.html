@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AWELL Logistics Group | No chasing. No surprises. Your cargo, delivered.</title>
+  <meta name="description" content="Ocean, air, customs clearance and US trucking from Asia to your door. Documents checked before cargo sails, one team following every shipment, answers within 24 hours. FMC-licensed NVOCC in San Mateo, CA.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 语言切换：在页面显示前就决定语言，避免先闪一下英文 -->
+  <script>
+    (function () {
+      // 三种语言：en = English，zh = 简体中文，zht = 繁體中文
+      var ok = { en: 1, zh: 1, zht: 1 };
+      var lang = "en";
+      try {
+        var q = new URLSearchParams(location.search).get("lang");
+        var saved = localStorage.getItem("awell-lang");
+        var nav = (navigator.language || "").toLowerCase();
+        if (ok[q]) lang = q;
+        else if (ok[saved]) lang = saved;
+        else if (/^zh-(hk|tw|mo)|hant/.test(nav)) lang = "zht";   // 香港、台湾、澳门的浏览器 → 繁体
+        else if (nav.indexOf("zh") === 0) lang = "zh";            // 其他中文浏览器 → 简体
+      } catch (e) {}
+      var html = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", html[lang]);
+    })();
+  </script>
+</head>
+<body class="has-hero">
+
+<!-- =========================================================
+     维护说明：每段文字都有英文 (class="en") 和简体中文 (class="zh") 两份，
+     改内容时两份一起改。
+     繁體中文不用写：选“繁”时，程序会把简体自动转换成香港繁体
+     （转换库在 vendor/opencc-cn2t.js）。
+     ========================================================= -->
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#top" aria-label="AWELL Logistics Group home">
+      <img src="logo-light.png" alt="AWELL Logistics Group, Inc." width="117" height="45">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#network"><span class="en">Network</span><span class="zh">航线网络</span></a>
+      <a href="#photos"><span class="en">Photos</span><span class="zh">实拍</span></a>
+      <a href="#services"><span class="en">Services</span><span class="zh">服务</span></a>
+      <a href="#how"><span class="en">How it works</span><span class="zh">合作流程</span></a>
+      <a href="#contact"><span class="en">Contact</span><span class="zh">联系我们</span></a>
+      <a class="nav-cta" href="quote.html"><span class="en">Free quote</span><span class="zh">免费报价</span></a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" data-set-lang="zh" lang="zh-CN" aria-label="简体中文">简</button>
+        <button type="button" data-set-lang="zht" lang="zh-Hant" aria-label="繁體中文">繁</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== 首屏 =====
+       背景视频：hero.mp4（10 秒，无声）。播完停在最后一帧；翻走再翻回首屏时从头重播（network.js）。hero-poster.jpg 是视频加载出来之前先显示的第一帧。
+       换视频：把新文件也命名为 hero.mp4 覆盖即可；记得同时更新 hero-poster.jpg。 -->
+  <section class="hero-frame" aria-label="AWELL Logistics Group">
+    <video class="bg" src="hero.mp4" poster="hero-poster.jpg" autoplay muted playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
+    <div class="tint"></div>
+    <div class="stage">
+      <p class="eyebrow"><span><span class="en">Why us</span><span class="zh">为什么选择我们</span></span></p>
+
+      <h1 class="headline">
+        <span class="hl hl1"><span class="en">No chasing.</span><span class="zh">不用催，</span></span>
+        <span class="hl hl2"><span class="en">No surprises.</span><span class="zh">不出意外，</span></span>
+        <span class="hl hl3"><span class="en">Your cargo,</span><span class="zh">你的货，</span></span>
+        <span class="hl hl4"><span class="en">delivered.</span><span class="zh">稳稳送到。</span></span>
+      </h1>
+
+      <!-- 左：文件齐全、货物安全 -->
+      <section class="feature f-left">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#F9F9F9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 4h18l8 8v30H11z"/><path d="M29 4v8h8"/>
+          <path d="M17 19h14M17 25h14M17 31h7"/>
+          <circle cx="35" cy="36" r="8" fill="#F9F9F9" stroke="none"/>
+          <path d="M31.5 36.2l2.4 2.4 4.6-4.8" stroke="#101215" stroke-width="2"/>
+        </svg>
+        <h2>
+          <span class="en"><span class="ln">Paperwork done right, </span><span class="ln">cargo kept safe </span></span>
+          <span class="zh"><span class="ln">文件齐全</span><span class="ln">货物安全</span></span>
+        </h2>
+        <p>
+          <span class="en"><span class="ln">Every document checked before it sails: </span><span class="ln">ISF, customs entry, licensed US brokers. </span><span class="ln">Loads strapped and secured for the trip. </span></span>
+          <span class="zh"><span class="ln">开船前所有单证逐一核对，</span><span class="ln">ISF、报关由持牌美国报关行办理；</span><span class="ln">装柜加固到位，一路稳稳当当。</span></span>
+        </p>
+      </section>
+
+      <!-- 右：随时联系、24 小时内答复 -->
+      <section class="feature f-right">
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#F9F9F9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 8h32a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H22l-9 7v-7H8a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z"/>
+          <circle cx="24" cy="21" r="8"/><path d="M24 16.5V21l3 2"/>
+        </svg>
+        <h2>
+          <span class="en"><span class="ln">Real answers </span><span class="ln">within 24 hours </span></span>
+          <span class="zh"><span class="ln">随时联系</span><span class="ln">24 小时内答复</span></span>
+        </h2>
+        <p>
+          <span class="en"><span class="ln">Call or email us any time. One team follows </span><span class="ln">your shipment from pickup to your door </span><span class="ln">and tells you what's next before you ask. </span></span>
+          <span class="zh"><span class="ln">电话、邮件随时找得到人，</span><span class="ln">同一个团队从提货跟到派送，</span><span class="ln">不用你催，进展我们主动告诉你。</span></span>
+        </p>
+      </section>
+    </div>
+    <a class="scroll-cue" href="#network"><span class="en">Scroll</span><span class="zh">向下</span></a>
+  </section>
+
+  <!-- ===== 第二屏：物流网络地图 =====
+       地图、航线、图标是生成好的 SVG；出场动画由 network.js 触发，样式在 styles.css “第二屏”部分 -->
+  <section class="network" id="network">
+    <div class="wrap net-layout">
+      <h2 class="net-title">
+        <span class="ln ln1"><span class="en">From across Asia</span><span class="zh">从亚洲各地出发</span></span>
+        <span class="ln ln2"><span class="en">to every door</span><span class="zh">送到美国</span></span>
+        <span class="ln ln3"><span class="en">in America</span><span class="zh">每一个门口</span></span>
+      </h2>
+      <div class="net-map">
+        <svg viewBox="0 0 1000 470" role="img" aria-label="Shipping routes from China, Vietnam, Thailand, Singapore, India, Korea and Japan to US ports, then trucking across the US">
+<path class="net-dots" d="M0 21.7h0M0 38.3h0M0 54.9h0M0 71.5h0M0 88.1h0M0 104.7h0M0 121.4h0M0 138h0M0 154.6h0M0 171.2h0M0 204.4h0M0 221.1h0M4.5 13.3h0M4.5 30h0M4.5 46.6h0M4.5 63.2h0M4.5 79.8h0M4.5 96.4h0M4.5 113.1h0M4.5 129.7h0M4.5 146.3h0M4.5 162.9h0M4.5 179.5h0M4.5 212.8h0M4.5 229.4h0M9 5h0M9 21.7h0M9 38.3h0M9 54.9h0M9 71.5h0M9 88.1h0M9 104.7h0M9 121.4h0M9 138h0M9 154.6h0M9 171.2h0M9 187.8h0M9 204.4h0M9 221.1h0M13.5 30h0M13.5 46.6h0M13.5 63.2h0M13.5 79.8h0M13.5 96.4h0M13.5 113.1h0M13.5 129.7h0M13.5 146.3h0M13.5 162.9h0M13.5 179.5h0M13.5 196.1h0M13.5 212.8h0M18 5h0M18 21.7h0M18 38.3h0M18 54.9h0M18 71.5h0M18 88.1h0M18 104.7h0M18 121.4h0M18 138h0M18 154.6h0M18 171.2h0M18 187.8h0M18 204.4h0M18 221.1h0M22.5 30h0M22.5 46.6h0M22.5 63.2h0M22.5 79.8h0M22.5 96.4h0M22.5 113.1h0M22.5 129.7h0M22.5 146.3h0M22.5 162.9h0M22.5 179.5h0M22.5 212.8h0M27 21.7h0M27 38.3h0M27 54.9h0M27 71.5h0M27 88.1h0M27 104.7h0M27 121.4h0M27 138h0M27 154.6h0M27 171.2h0M27 187.8h0M27 204.4h0M31.5 30h0M31.5 46.6h0M31.5 63.2h0M31.5 79.8h0M31.5 96.4h0M31.5 113.1h0M31.5 129.7h0M31.5 146.3h0M31.5 162.9h0M31.5 179.5h0M36 21.7h0M36 38.3h0M36 54.9h0M36 71.5h0M36 88.1h0M36 104.7h0M36 121.4h0M36 138h0M36 154.6h0M36 171.2h0M36 187.8h0M40.5 13.3h0M40.5 30h0M40.5 46.6h0M40.5 63.2h0M40.5 79.8h0M40.5 96.4h0M40.5 113.1h0M40.5 129.7h0M40.5 146.3h0M40.5 162.9h0M40.5 179.5h0M40.5 196.1h0M45 21.7h0M45 38.3h0M45 54.9h0M45 71.5h0M45 88.1h0M45 104.7h0M45 121.4h0M45 138h0M45 154.6h0M45 171.2h0M45 187.8h0M49.5 13.3h0M49.5 30h0M49.5 46.6h0M49.5 63.2h0M49.5 79.8h0M49.5 96.4h0M49.5 113.1h0M49.5 129.7h0M49.5 146.3h0M49.5 162.9h0M49.5 179.5h0M49.5 196.1h0M54 21.7h0M54 38.3h0M54 54.9h0M54 71.5h0M54 88.1h0M54 104.7h0M54 121.4h0M54 138h0M54 154.6h0M54 171.2h0M54 187.8h0M58.5 13.3h0M58.5 30h0M58.5 46.6h0M58.5 63.2h0M58.5 79.8h0M58.5 96.4h0M58.5 113.1h0M58.5 129.7h0M58.5 146.3h0M58.5 162.9h0M58.5 179.5h0M63 5h0M63 21.7h0M63 38.3h0M63 54.9h0M63 71.5h0M63 88.1h0M63 104.7h0M63 121.4h0M63 138h0M63 154.6h0M63 171.2h0M63 187.8h0M67.5 30h0M67.5 46.6h0M67.5 63.2h0M67.5 79.8h0M67.5 96.4h0M67.5 113.1h0M67.5 129.7h0M67.5 146.3h0M67.5 162.9h0M67.5 179.5h0M67.5 196.1h0M72 5h0M72 21.7h0M72 38.3h0M72 54.9h0M72 71.5h0M72 88.1h0M72 104.7h0M72 121.4h0M72 138h0M72 154.6h0M72 171.2h0M72 187.8h0M72 204.4h0M76.5 13.3h0M76.5 30h0M76.5 46.6h0M76.5 63.2h0M76.5 79.8h0M76.5 96.4h0M76.5 113.1h0M76.5 129.7h0M76.5 146.3h0M76.5 162.9h0M76.5 179.5h0M76.5 196.1h0M76.5 212.8h0M81 5h0M81 38.3h0M81 54.9h0M81 71.5h0M81 88.1h0M81 104.7h0M81 121.4h0M81 138h0M81 154.6h0M81 171.2h0M81 187.8h0M81 204.4h0M85.5 30h0M85.5 46.6h0M85.5 63.2h0M85.5 79.8h0M85.5 96.4h0M85.5 113.1h0M85.5 129.7h0M85.5 146.3h0M85.5 162.9h0M85.5 179.5h0M85.5 196.1h0M85.5 212.8h0M85.5 229.4h0M90 5h0M90 21.7h0M90 38.3h0M90 54.9h0M90 71.5h0M90 88.1h0M90 104.7h0M90 121.4h0M90 138h0M90 154.6h0M90 171.2h0M90 187.8h0M90 204.4h0M90 221.1h0M90 237.7h0M94.5 13.3h0M94.5 30h0M94.5 46.6h0M94.5 63.2h0M94.5 79.8h0M94.5 96.4h0M94.5 113.1h0M94.5 129.7h0M94.5 146.3h0M94.5 162.9h0M94.5 179.5h0M94.5 196.1h0M94.5 212.8h0M94.5 229.4h0M94.5 246h0M99 5h0M99 21.7h0M99 38.3h0M99 54.9h0M99 71.5h0M99 88.1h0M99 104.7h0M99 121.4h0M99 138h0M99 154.6h0M99 171.2h0M99 187.8h0M99 204.4h0M99 221.1h0M99 237.7h0M99 254.3h0M103.5 13.3h0M103.5 30h0M103.5 46.6h0M103.5 63.2h0M103.5 79.8h0M103.5 96.4h0M103.5 113.1h0M103.5 129.7h0M103.5 146.3h0M103.5 162.9h0M103.5 179.5h0M103.5 196.1h0M103.5 212.8h0M103.5 229.4h0M103.5 246h0M103.5 262.6h0M108 5h0M108 21.7h0M108 38.3h0M108 54.9h0M108 71.5h0M108 88.1h0M108 104.7h0M108 121.4h0M108 138h0M108 154.6h0M108 171.2h0M108 187.8h0M108 204.4h0M108 221.1h0M108 237.7h0M108 254.3h0M112.5 13.3h0M112.5 30h0M112.5 46.6h0M112.5 63.2h0M112.5 79.8h0M112.5 96.4h0M112.5 113.1h0M112.5 129.7h0M112.5 146.3h0M112.5 162.9h0M112.5 179.5h0M112.5 196.1h0M112.5 212.8h0M112.5 229.4h0M112.5 246h0M112.5 262.6h0M117 5h0M117 21.7h0M117 38.3h0M117 54.9h0M117 71.5h0M117 88.1h0M117 104.7h0M117 121.4h0M117 138h0M117 154.6h0M117 171.2h0M117 187.8h0M117 204.4h0M117 221.1h0M117 270.9h0M121.5 13.3h0M121.5 30h0M121.5 46.6h0M121.5 63.2h0M121.5 79.8h0M121.5 96.4h0M121.5 113.1h0M121.5 129.7h0M121.5 146.3h0M121.5 162.9h0M121.5 179.5h0M121.5 196.1h0M121.5 212.8h0M121.5 229.4h0M126 21.7h0M126 38.3h0M126 54.9h0M126 71.5h0M126 88.1h0M126 104.7h0M126 121.4h0M126 138h0M126 154.6h0M126 171.2h0M126 187.8h0M126 204.4h0M126 221.1h0M130.5 13.3h0M130.5 30h0M130.5 46.6h0M130.5 63.2h0M130.5 79.8h0M130.5 96.4h0M130.5 113.1h0M130.5 129.7h0M130.5 146.3h0M130.5 162.9h0M130.5 179.5h0M130.5 196.1h0M130.5 212.8h0M135 5h0M135 21.7h0M135 38.3h0M135 54.9h0M135 71.5h0M135 88.1h0M135 104.7h0M135 121.4h0M135 138h0M135 154.6h0M135 171.2h0M135 187.8h0M135 204.4h0M139.5 13.3h0M139.5 30h0M139.5 46.6h0M139.5 63.2h0M139.5 79.8h0M139.5 96.4h0M139.5 113.1h0M139.5 129.7h0M139.5 146.3h0M139.5 162.9h0M139.5 179.5h0M139.5 196.1h0M139.5 212.8h0M144 5h0M144 21.7h0M144 38.3h0M144 54.9h0M144 71.5h0M144 88.1h0M144 104.7h0M144 121.4h0M144 138h0M144 154.6h0M144 171.2h0M144 187.8h0M144 204.4h0M148.5 13.3h0M148.5 30h0M148.5 46.6h0M148.5 63.2h0M148.5 79.8h0M148.5 96.4h0M148.5 113.1h0M148.5 129.7h0M148.5 146.3h0M148.5 162.9h0M148.5 179.5h0M148.5 196.1h0M153 5h0M153 21.7h0M153 38.3h0M153 54.9h0M153 71.5h0M153 88.1h0M153 104.7h0M153 121.4h0M153 138h0M153 154.6h0M153 171.2h0M153 187.8h0M153 204.4h0M157.5 13.3h0M157.5 30h0M157.5 46.6h0M157.5 63.2h0M157.5 79.8h0M157.5 96.4h0M157.5 113.1h0M157.5 129.7h0M157.5 146.3h0M157.5 162.9h0M157.5 179.5h0M157.5 196.1h0M162 5h0M162 21.7h0M162 38.3h0M162 54.9h0M162 71.5h0M162 88.1h0M162 104.7h0M162 121.4h0M162 138h0M162 154.6h0M162 171.2h0M162 187.8h0M162 204.4h0M166.5 13.3h0M166.5 30h0M166.5 46.6h0M166.5 63.2h0M166.5 79.8h0M166.5 96.4h0M166.5 113.1h0M166.5 129.7h0M166.5 146.3h0M166.5 162.9h0M166.5 179.5h0M166.5 196.1h0M166.5 212.8h0M171 5h0M171 21.7h0M171 38.3h0M171 54.9h0M171 71.5h0M171 88.1h0M171 104.7h0M171 121.4h0M171 138h0M171 154.6h0M171 171.2h0M171 187.8h0M171 204.4h0M171 221.1h0M175.5 13.3h0M175.5 30h0M175.5 46.6h0M175.5 63.2h0M175.5 79.8h0M175.5 96.4h0M175.5 113.1h0M175.5 129.7h0M175.5 146.3h0M175.5 162.9h0M175.5 179.5h0M175.5 196.1h0M175.5 212.8h0M175.5 229.4h0M175.5 279.2h0M180 5h0M180 21.7h0M180 38.3h0M180 54.9h0M180 71.5h0M180 88.1h0M180 104.7h0M180 121.4h0M180 138h0M180 154.6h0M180 171.2h0M180 187.8h0M180 204.4h0M180 221.1h0M184.5 13.3h0M184.5 30h0M184.5 46.6h0M184.5 63.2h0M184.5 79.8h0M184.5 96.4h0M184.5 113.1h0M184.5 129.7h0M184.5 146.3h0M184.5 162.9h0M184.5 179.5h0M184.5 196.1h0M184.5 212.8h0M184.5 229.4h0M189 5h0M189 21.7h0M189 38.3h0M189 54.9h0M189 71.5h0M189 88.1h0M189 104.7h0M189 121.4h0M189 138h0M189 154.6h0M189 171.2h0M189 187.8h0M189 204.4h0M189 221.1h0M189 237.7h0M189 254.3h0M189 287.5h0M193.5 13.3h0M193.5 30h0M193.5 46.6h0M193.5 63.2h0M193.5 79.8h0M193.5 96.4h0M193.5 113.1h0M193.5 129.7h0M193.5 146.3h0M193.5 162.9h0M193.5 179.5h0M193.5 196.1h0M193.5 212.8h0M193.5 229.4h0M193.5 295.8h0M198 5h0M198 21.7h0M198 38.3h0M198 54.9h0M198 71.5h0M198 88.1h0M198 104.7h0M198 121.4h0M198 138h0M198 154.6h0M198 171.2h0M198 187.8h0M198 204.4h0M198 221.1h0M198 237.7h0M198 287.5h0M198 304.2h0M202.5 13.3h0M202.5 30h0M202.5 46.6h0M202.5 63.2h0M202.5 79.8h0M202.5 96.4h0M202.5 113.1h0M202.5 129.7h0M202.5 146.3h0M202.5 162.9h0M202.5 179.5h0M202.5 196.1h0M202.5 212.8h0M202.5 229.4h0M202.5 246h0M202.5 279.2h0M202.5 312.5h0M207 5h0M207 21.7h0M207 38.3h0M207 54.9h0M207 71.5h0M207 88.1h0M207 104.7h0M207 121.4h0M207 138h0M207 154.6h0M207 171.2h0M207 187.8h0M207 204.4h0M207 221.1h0M207 237.7h0M207 254.3h0M207 320.8h0M211.5 13.3h0M211.5 30h0M211.5 46.6h0M211.5 63.2h0M211.5 79.8h0M211.5 96.4h0M211.5 113.1h0M211.5 129.7h0M211.5 146.3h0M211.5 162.9h0M211.5 179.5h0M211.5 196.1h0M211.5 212.8h0M211.5 229.4h0M211.5 246h0M211.5 262.6h0M211.5 312.5h0M216 5h0M216 21.7h0M216 38.3h0M216 54.9h0M216 71.5h0M216 88.1h0M216 104.7h0M216 121.4h0M216 138h0M216 154.6h0M216 171.2h0M216 187.8h0M216 204.4h0M216 237.7h0M216 254.3h0M220.5 13.3h0M220.5 30h0M220.5 46.6h0M220.5 63.2h0M220.5 79.8h0M220.5 96.4h0M220.5 113.1h0M220.5 129.7h0M220.5 146.3h0M220.5 162.9h0M220.5 179.5h0M220.5 196.1h0M220.5 212.8h0M220.5 246h0M220.5 329.1h0M225 5h0M225 21.7h0M225 38.3h0M225 54.9h0M225 71.5h0M225 88.1h0M225 104.7h0M225 121.4h0M225 138h0M225 154.6h0M225 171.2h0M225 187.8h0M225 204.4h0M225 237.7h0M225 254.3h0M229.5 13.3h0M229.5 30h0M229.5 46.6h0M229.5 63.2h0M229.5 79.8h0M229.5 96.4h0M229.5 113.1h0M229.5 129.7h0M229.5 146.3h0M229.5 162.9h0M229.5 179.5h0M229.5 196.1h0M229.5 295.8h0M234 5h0M234 21.7h0M234 38.3h0M234 54.9h0M234 71.5h0M234 88.1h0M234 104.7h0M234 121.4h0M234 138h0M234 154.6h0M234 171.2h0M234 187.8h0M234 204.4h0M234 221.1h0M234 304.2h0M238.5 13.3h0M238.5 30h0M238.5 46.6h0M238.5 63.2h0M238.5 79.8h0M238.5 96.4h0M238.5 113.1h0M238.5 129.7h0M238.5 146.3h0M238.5 162.9h0M238.5 179.5h0M238.5 196.1h0M238.5 295.8h0M238.5 312.5h0M243 5h0M243 21.7h0M243 38.3h0M243 54.9h0M243 71.5h0M243 88.1h0M243 104.7h0M243 121.4h0M243 138h0M243 154.6h0M243 171.2h0M243 187.8h0M243 204.4h0M243 304.2h0M243 337.4h0M247.5 13.3h0M247.5 30h0M247.5 46.6h0M247.5 63.2h0M247.5 79.8h0M247.5 96.4h0M247.5 113.1h0M247.5 129.7h0M247.5 146.3h0M247.5 162.9h0M247.5 179.5h0M247.5 196.1h0M247.5 295.8h0M247.5 312.5h0M247.5 395.6h0M247.5 412.2h0M252 5h0M252 21.7h0M252 38.3h0M252 54.9h0M252 71.5h0M252 88.1h0M252 104.7h0M252 121.4h0M252 138h0M252 154.6h0M252 171.2h0M252 187.8h0M252 204.4h0M252 287.5h0M252 304.2h0M252 337.4h0M252 403.9h0M252 420.5h0M256.5 13.3h0M256.5 30h0M256.5 46.6h0M256.5 63.2h0M256.5 79.8h0M256.5 96.4h0M256.5 113.1h0M256.5 129.7h0M256.5 146.3h0M256.5 162.9h0M256.5 179.5h0M256.5 196.1h0M256.5 279.2h0M256.5 295.8h0M256.5 312.5h0M256.5 395.6h0M256.5 412.2h0M256.5 428.8h0M256.5 445.4h0M261 5h0M261 21.7h0M261 38.3h0M261 54.9h0M261 71.5h0M261 88.1h0M261 104.7h0M261 121.4h0M261 138h0M261 154.6h0M261 171.2h0M261 187.8h0M261 304.2h0M261 403.9h0M261 420.5h0M261 437.1h0M265.5 13.3h0M265.5 30h0M265.5 46.6h0M265.5 63.2h0M265.5 79.8h0M265.5 96.4h0M265.5 113.1h0M265.5 129.7h0M265.5 146.3h0M265.5 162.9h0M265.5 179.5h0M265.5 196.1h0M265.5 262.6h0M265.5 279.2h0M265.5 395.6h0M265.5 412.2h0M265.5 428.8h0M265.5 445.4h0M270 5h0M270 21.7h0M270 38.3h0M270 54.9h0M270 71.5h0M270 88.1h0M270 104.7h0M270 121.4h0M270 171.2h0M270 187.8h0M270 254.3h0M270 387.2h0M270 403.9h0M270 420.5h0M270 437.1h0M274.5 13.3h0M274.5 30h0M274.5 46.6h0M274.5 63.2h0M274.5 79.8h0M274.5 96.4h0M274.5 113.1h0M274.5 129.7h0M274.5 146.3h0M274.5 162.9h0M274.5 179.5h0M274.5 229.4h0M274.5 246h0M274.5 312.5h0M274.5 395.6h0M274.5 412.2h0M274.5 428.8h0M279 5h0M279 21.7h0M279 38.3h0M279 54.9h0M279 71.5h0M279 88.1h0M279 104.7h0M279 121.4h0M279 138h0M279 171.2h0M279 304.2h0M279 320.8h0M279 387.2h0M279 403.9h0M279 420.5h0M279 437.1h0M283.5 13.3h0M283.5 30h0M283.5 46.6h0M283.5 63.2h0M283.5 79.8h0M283.5 96.4h0M283.5 113.1h0M283.5 129.7h0M283.5 262.6h0M283.5 378.9h0M283.5 395.6h0M283.5 412.2h0M283.5 428.8h0M288 5h0M288 21.7h0M288 38.3h0M288 54.9h0M288 71.5h0M288 88.1h0M288 104.7h0M288 121.4h0M288 337.4h0M288 370.6h0M288 387.2h0M288 403.9h0M288 420.5h0M288 437.1h0M292.5 13.3h0M292.5 30h0M292.5 46.6h0M292.5 63.2h0M292.5 79.8h0M292.5 96.4h0M292.5 113.1h0M292.5 129.7h0M292.5 295.8h0M292.5 378.9h0M292.5 395.6h0M292.5 412.2h0M292.5 428.8h0M297 5h0M297 21.7h0M297 38.3h0M297 54.9h0M297 71.5h0M297 88.1h0M297 104.7h0M297 121.4h0M297 138h0M297 270.9h0M297 370.6h0M297 387.2h0M297 403.9h0M297 420.5h0M297 437.1h0M301.5 13.3h0M301.5 30h0M301.5 46.6h0M301.5 63.2h0M301.5 79.8h0M301.5 96.4h0M301.5 113.1h0M301.5 129.7h0M301.5 146.3h0M301.5 362.3h0M301.5 378.9h0M301.5 395.6h0M301.5 412.2h0M301.5 428.8h0M306 5h0M306 21.7h0M306 38.3h0M306 54.9h0M306 71.5h0M306 88.1h0M306 104.7h0M306 121.4h0M306 154.6h0M306 370.6h0M306 387.2h0M306 403.9h0M306 420.5h0M310.5 13.3h0M310.5 30h0M310.5 46.6h0M310.5 63.2h0M310.5 79.8h0M310.5 96.4h0M310.5 113.1h0M310.5 129.7h0M310.5 362.3h0M310.5 378.9h0M310.5 395.6h0M310.5 412.2h0M310.5 428.8h0M315 5h0M315 21.7h0M315 38.3h0M315 54.9h0M315 71.5h0M315 88.1h0M315 104.7h0M315 121.4h0M315 370.6h0M315 387.2h0M315 403.9h0M315 420.5h0M319.5 13.3h0M319.5 30h0M319.5 46.6h0M319.5 63.2h0M319.5 79.8h0M319.5 96.4h0M319.5 113.1h0M319.5 362.3h0M319.5 378.9h0M319.5 395.6h0M319.5 412.2h0M319.5 428.8h0M324 5h0M324 21.7h0M324 38.3h0M324 54.9h0M324 71.5h0M324 88.1h0M324 104.7h0M324 121.4h0M324 154.6h0M324 304.2h0M324 354h0M324 370.6h0M324 387.2h0M324 403.9h0M324 420.5h0M328.5 13.3h0M328.5 30h0M328.5 46.6h0M328.5 63.2h0M328.5 79.8h0M328.5 96.4h0M328.5 113.1h0M328.5 312.5h0M328.5 329.1h0M328.5 362.3h0M328.5 378.9h0M328.5 395.6h0M328.5 412.2h0M328.5 428.8h0M333 5h0M333 21.7h0M333 38.3h0M333 54.9h0M333 71.5h0M333 88.1h0M333 104.7h0M333 154.6h0M333 320.8h0M333 354h0M333 370.6h0M333 387.2h0M333 403.9h0M333 420.5h0M333 437.1h0M337.5 13.3h0M337.5 30h0M337.5 46.6h0M337.5 63.2h0M337.5 79.8h0M337.5 96.4h0M337.5 113.1h0M337.5 312.5h0M337.5 378.9h0M337.5 395.6h0M337.5 412.2h0M337.5 428.8h0M342 5h0M342 21.7h0M342 38.3h0M342 54.9h0M342 71.5h0M342 88.1h0M342 104.7h0M342 154.6h0M342 320.8h0M342 370.6h0M342 387.2h0M342 403.9h0M342 420.5h0M342 437.1h0M346.5 13.3h0M346.5 30h0M346.5 46.6h0M346.5 79.8h0M346.5 96.4h0M346.5 146.3h0M346.5 312.5h0M346.5 329.1h0M346.5 378.9h0M346.5 395.6h0M346.5 412.2h0M346.5 428.8h0M346.5 445.4h0M351 5h0M351 21.7h0M351 38.3h0M351 54.9h0M351 88.1h0M351 320.8h0M351 387.2h0M351 403.9h0M351 420.5h0M351 437.1h0M351 453.7h0M355.5 13.3h0M355.5 30h0M355.5 46.6h0M355.5 79.8h0M355.5 146.3h0M355.5 329.1h0M355.5 378.9h0M355.5 395.6h0M355.5 412.2h0M355.5 428.8h0M355.5 445.4h0M360 5h0M360 21.7h0M360 38.3h0M360 121.4h0M360 320.8h0M360 337.4h0M360 354h0M360 370.6h0M360 387.2h0M360 403.9h0M360 420.5h0M360 437.1h0M360 453.7h0M364.5 13.3h0M364.5 30h0M364.5 46.6h0M364.5 79.8h0M364.5 329.1h0M364.5 362.3h0M364.5 378.9h0M364.5 395.6h0M364.5 412.2h0M364.5 428.8h0M364.5 445.4h0M364.5 462h0M369 5h0M369 21.7h0M369 38.3h0M369 121.4h0M369 320.8h0M369 370.6h0M369 387.2h0M369 403.9h0M369 420.5h0M369 437.1h0M369 453.7h0M373.5 13.3h0M373.5 30h0M373.5 46.6h0M373.5 329.1h0M373.5 378.9h0M373.5 395.6h0M373.5 412.2h0M373.5 428.8h0M373.5 445.4h0M373.5 462h0M378 5h0M378 21.7h0M378 38.3h0M378 337.4h0M378 387.2h0M378 403.9h0M378 420.5h0M378 437.1h0M378 453.7h0M382.5 13.3h0M382.5 30h0M382.5 46.6h0M382.5 113.1h0M382.5 329.1h0M382.5 395.6h0M382.5 412.2h0M382.5 428.8h0M382.5 445.4h0M387 5h0M387 21.7h0M387 38.3h0M387 387.2h0M387 403.9h0M387 420.5h0M387 437.1h0M387 453.7h0M391.5 13.3h0M391.5 30h0M391.5 46.6h0M391.5 345.7h0M391.5 395.6h0M391.5 412.2h0M391.5 428.8h0M391.5 445.4h0M396 5h0M396 21.7h0M396 38.3h0M396 403.9h0M396 420.5h0M396 437.1h0M400.5 13.3h0M400.5 30h0M400.5 46.6h0M400.5 412.2h0M400.5 428.8h0M405 5h0M405 21.7h0M405 38.3h0M405 420.5h0M409.5 13.3h0M409.5 30h0M409.5 46.6h0M414 5h0M414 21.7h0M414 38.3h0M418.5 13.3h0M418.5 30h0M418.5 63.2h0M418.5 79.8h0M423 5h0M423 21.7h0M423 38.3h0M423 71.5h0M423 337.4h0M427.5 13.3h0M427.5 30h0M427.5 63.2h0M432 21.7h0M432 38.3h0M432 54.9h0M432 71.5h0M436.5 13.3h0M436.5 30h0M436.5 63.2h0M441 21.7h0M441 38.3h0M441 54.9h0M445.5 13.3h0M445.5 30h0M450 21.7h0M450 38.3h0M450 54.9h0M454.5 13.3h0M454.5 30h0M454.5 46.6h0M459 21.7h0M459 38.3h0M463.5 13.3h0M463.5 30h0M463.5 46.6h0M468 21.7h0M468 38.3h0M472.5 30h0M472.5 46.6h0M477 21.7h0M477 38.3h0M481.5 13.3h0M481.5 30h0M486 21.7h0M486 38.3h0M490.5 13.3h0M490.5 30h0M495 21.7h0M495 38.3h0M499.5 13.3h0M499.5 30h0M499.5 462h0M504 21.7h0M504 38.3h0M508.5 13.3h0M508.5 30h0M513 21.7h0M522 21.7h0M531 21.7h0M535.5 30h0M540 21.7h0M571.5 13.3h0M571.5 30h0M576 38.3h0M576 71.5h0M580.5 13.3h0M580.5 30h0M580.5 46.6h0M585 21.7h0M585 38.3h0M585 54.9h0M589.5 13.3h0M589.5 30h0M589.5 46.6h0M594 5h0M594 21.7h0M594 38.3h0M594 54.9h0M598.5 13.3h0M598.5 30h0M598.5 46.6h0M598.5 63.2h0M603 5h0M603 21.7h0M603 38.3h0M603 54.9h0M607.5 13.3h0M607.5 30h0M607.5 46.6h0M612 5h0M612 21.7h0M612 38.3h0M612 54.9h0M616.5 13.3h0M616.5 30h0M616.5 46.6h0M621 5h0M621 21.7h0M621 38.3h0M625.5 13.3h0M625.5 30h0M630 21.7h0M630 38.3h0M634.5 13.3h0M634.5 30h0M639 21.7h0M639 38.3h0M643.5 13.3h0M643.5 30h0M643.5 46.6h0M648 21.7h0M648 38.3h0M652.5 13.3h0M652.5 30h0M652.5 46.6h0M657 21.7h0M657 38.3h0M661.5 13.3h0M661.5 30h0M661.5 46.6h0M666 21.7h0M666 38.3h0M670.5 13.3h0M670.5 30h0M670.5 46.6h0M675 21.7h0M675 38.3h0M679.5 13.3h0M679.5 30h0M679.5 46.6h0M684 21.7h0M684 38.3h0M688.5 13.3h0M688.5 30h0M688.5 46.6h0M693 21.7h0M693 38.3h0M693 54.9h0M697.5 13.3h0M697.5 30h0M697.5 46.6h0M697.5 63.2h0M702 21.7h0M702 38.3h0M702 54.9h0M702 71.5h0M706.5 13.3h0M706.5 30h0M706.5 46.6h0M706.5 63.2h0M711 21.7h0M711 38.3h0M711 54.9h0M711 71.5h0M715.5 13.3h0M715.5 30h0M715.5 46.6h0M715.5 63.2h0M715.5 79.8h0M720 21.7h0M720 38.3h0M720 54.9h0M720 71.5h0M724.5 13.3h0M724.5 30h0M724.5 46.6h0M724.5 63.2h0M724.5 79.8h0M729 21.7h0M729 38.3h0M729 54.9h0M729 71.5h0M729 88.1h0M733.5 13.3h0M733.5 30h0M733.5 46.6h0M733.5 63.2h0M733.5 79.8h0M733.5 96.4h0M738 21.7h0M738 38.3h0M738 54.9h0M738 71.5h0M738 88.1h0M738 104.7h0M738 121.4h0M738 138h0M742.5 13.3h0M742.5 30h0M742.5 46.6h0M742.5 63.2h0M742.5 79.8h0M742.5 96.4h0M742.5 113.1h0M742.5 129.7h0M747 21.7h0M747 38.3h0M747 54.9h0M747 71.5h0M747 88.1h0M747 104.7h0M747 121.4h0M747 138h0M751.5 13.3h0M751.5 30h0M751.5 46.6h0M751.5 63.2h0M751.5 79.8h0M751.5 96.4h0M751.5 113.1h0M751.5 129.7h0M751.5 146.3h0M756 21.7h0M756 38.3h0M756 54.9h0M756 71.5h0M756 88.1h0M756 104.7h0M756 121.4h0M756 138h0M756 154.6h0M760.5 13.3h0M760.5 30h0M760.5 46.6h0M760.5 63.2h0M760.5 79.8h0M760.5 96.4h0M760.5 113.1h0M760.5 129.7h0M760.5 146.3h0M765 5h0M765 21.7h0M765 38.3h0M765 54.9h0M765 71.5h0M765 88.1h0M765 104.7h0M765 121.4h0M765 138h0M765 154.6h0M769.5 13.3h0M769.5 30h0M769.5 46.6h0M769.5 63.2h0M769.5 79.8h0M769.5 96.4h0M769.5 113.1h0M769.5 129.7h0M769.5 146.3h0M769.5 162.9h0M774 5h0M774 21.7h0M774 38.3h0M774 54.9h0M774 71.5h0M774 88.1h0M774 104.7h0M774 121.4h0M774 138h0M774 154.6h0M778.5 13.3h0M778.5 30h0M778.5 46.6h0M778.5 63.2h0M778.5 79.8h0M778.5 96.4h0M778.5 113.1h0M778.5 129.7h0M778.5 146.3h0M778.5 162.9h0M778.5 179.5h0M783 5h0M783 21.7h0M783 38.3h0M783 54.9h0M783 71.5h0M783 88.1h0M783 104.7h0M783 121.4h0M783 138h0M783 154.6h0M783 171.2h0M783 187.8h0M787.5 13.3h0M787.5 30h0M787.5 46.6h0M787.5 63.2h0M787.5 79.8h0M787.5 96.4h0M787.5 113.1h0M787.5 129.7h0M787.5 146.3h0M787.5 162.9h0M787.5 179.5h0M787.5 196.1h0M792 5h0M792 21.7h0M792 38.3h0M792 54.9h0M792 71.5h0M792 88.1h0M792 104.7h0M792 121.4h0M792 138h0M792 154.6h0M792 171.2h0M792 187.8h0M792 204.4h0M796.5 13.3h0M796.5 30h0M796.5 46.6h0M796.5 63.2h0M796.5 79.8h0M796.5 96.4h0M796.5 113.1h0M796.5 129.7h0M796.5 146.3h0M796.5 162.9h0M796.5 179.5h0M801 5h0M801 38.3h0M801 54.9h0M801 71.5h0M801 88.1h0M801 104.7h0M801 121.4h0M801 138h0M801 154.6h0M801 171.2h0M801 187.8h0M805.5 13.3h0M805.5 30h0M805.5 46.6h0M805.5 63.2h0M805.5 79.8h0M805.5 96.4h0M805.5 113.1h0M805.5 129.7h0M805.5 146.3h0M805.5 162.9h0M805.5 179.5h0M805.5 196.1h0M810 5h0M810 21.7h0M810 38.3h0M810 54.9h0M810 71.5h0M810 88.1h0M810 104.7h0M810 121.4h0M810 138h0M810 154.6h0M810 171.2h0M810 187.8h0M810 204.4h0M814.5 30h0M814.5 46.6h0M814.5 63.2h0M814.5 79.8h0M814.5 96.4h0M814.5 113.1h0M814.5 129.7h0M814.5 146.3h0M814.5 162.9h0M814.5 179.5h0M814.5 196.1h0M814.5 212.8h0M819 21.7h0M819 38.3h0M819 54.9h0M819 71.5h0M819 88.1h0M819 104.7h0M819 121.4h0M819 138h0M819 154.6h0M819 171.2h0M819 187.8h0M819 204.4h0M819 221.1h0M823.5 30h0M823.5 46.6h0M823.5 63.2h0M823.5 79.8h0M823.5 96.4h0M823.5 113.1h0M823.5 129.7h0M823.5 146.3h0M823.5 162.9h0M823.5 179.5h0M823.5 196.1h0M823.5 212.8h0M828 21.7h0M828 38.3h0M828 54.9h0M828 71.5h0M828 88.1h0M828 104.7h0M828 121.4h0M828 138h0M828 154.6h0M828 171.2h0M828 187.8h0M828 204.4h0M828 221.1h0M832.5 30h0M832.5 46.6h0M832.5 63.2h0M832.5 79.8h0M832.5 96.4h0M832.5 113.1h0M832.5 129.7h0M832.5 146.3h0M832.5 162.9h0M832.5 179.5h0M832.5 196.1h0M832.5 212.8h0M832.5 229.4h0M837 21.7h0M837 38.3h0M837 54.9h0M837 71.5h0M837 88.1h0M837 104.7h0M837 121.4h0M837 138h0M837 154.6h0M837 171.2h0M837 187.8h0M837 204.4h0M837 221.1h0M841.5 13.3h0M841.5 30h0M841.5 46.6h0M841.5 63.2h0M841.5 79.8h0M841.5 96.4h0M841.5 113.1h0M841.5 129.7h0M841.5 146.3h0M841.5 162.9h0M841.5 179.5h0M841.5 212.8h0M841.5 229.4h0M846 5h0M846 21.7h0M846 38.3h0M846 54.9h0M846 71.5h0M846 88.1h0M846 104.7h0M846 121.4h0M846 138h0M846 154.6h0M846 171.2h0M846 221.1h0M850.5 13.3h0M850.5 30h0M850.5 46.6h0M850.5 63.2h0M850.5 79.8h0M850.5 96.4h0M850.5 113.1h0M850.5 129.7h0M850.5 146.3h0M850.5 162.9h0M850.5 179.5h0M850.5 229.4h0M855 5h0M855 21.7h0M855 38.3h0M855 71.5h0M855 88.1h0M855 104.7h0M855 121.4h0M855 138h0M855 154.6h0M855 171.2h0M859.5 13.3h0M859.5 30h0M859.5 63.2h0M859.5 79.8h0M859.5 96.4h0M859.5 113.1h0M859.5 129.7h0M859.5 146.3h0M859.5 162.9h0M859.5 229.4h0M864 21.7h0M864 38.3h0M864 71.5h0M864 88.1h0M864 104.7h0M864 121.4h0M864 138h0M864 154.6h0M864 171.2h0M864 237.7h0M868.5 13.3h0M868.5 30h0M868.5 63.2h0M868.5 79.8h0M868.5 96.4h0M868.5 113.1h0M868.5 129.7h0M868.5 146.3h0M868.5 162.9h0M868.5 179.5h0M868.5 229.4h0M873 21.7h0M873 71.5h0M873 88.1h0M873 104.7h0M873 121.4h0M873 138h0M873 154.6h0M873 171.2h0M873 221.1h0M873 237.7h0M877.5 13.3h0M877.5 30h0M877.5 79.8h0M877.5 96.4h0M877.5 113.1h0M877.5 129.7h0M877.5 146.3h0M877.5 162.9h0M877.5 212.8h0M877.5 229.4h0M877.5 246h0M882 5h0M882 21.7h0M882 71.5h0M882 88.1h0M882 104.7h0M882 121.4h0M882 138h0M882 154.6h0M882 171.2h0M882 237.7h0M886.5 79.8h0M886.5 96.4h0M886.5 113.1h0M886.5 129.7h0M886.5 146.3h0M886.5 162.9h0M886.5 246h0M891 5h0M891 21.7h0M891 71.5h0M891 88.1h0M891 104.7h0M891 121.4h0M891 138h0M891 154.6h0M891 171.2h0M891 237.7h0M891 254.3h0M895.5 13.3h0M895.5 30h0M895.5 79.8h0M895.5 96.4h0M895.5 113.1h0M895.5 129.7h0M895.5 146.3h0M895.5 162.9h0M895.5 246h0M895.5 262.6h0M900 5h0M900 21.7h0M900 71.5h0M900 88.1h0M900 104.7h0M900 121.4h0M900 138h0M900 154.6h0M900 171.2h0M904.5 13.3h0M904.5 79.8h0M904.5 96.4h0M904.5 113.1h0M904.5 129.7h0M904.5 146.3h0M904.5 162.9h0M904.5 179.5h0M909 5h0M909 88.1h0M909 104.7h0M909 121.4h0M909 138h0M909 154.6h0M909 187.8h0M909 270.9h0M909 320.8h0M913.5 96.4h0M913.5 113.1h0M913.5 129.7h0M913.5 146.3h0M913.5 162.9h0M913.5 262.6h0M913.5 312.5h0M913.5 329.1h0M918 5h0M918 71.5h0M918 88.1h0M918 104.7h0M918 121.4h0M918 138h0M918 154.6h0M918 304.2h0M918 320.8h0M918 337.4h0M922.5 30h0M922.5 46.6h0M922.5 79.8h0M922.5 96.4h0M922.5 113.1h0M922.5 129.7h0M922.5 146.3h0M922.5 212.8h0M922.5 279.2h0M922.5 295.8h0M922.5 312.5h0M922.5 329.1h0M922.5 345.7h0M927 5h0M927 54.9h0M927 71.5h0M927 88.1h0M927 104.7h0M927 121.4h0M927 270.9h0M927 287.5h0M927 304.2h0M927 320.8h0M927 337.4h0M927 354h0M931.5 30h0M931.5 46.6h0M931.5 63.2h0M931.5 79.8h0M931.5 96.4h0M931.5 113.1h0M931.5 129.7h0M931.5 262.6h0M931.5 279.2h0M931.5 295.8h0M931.5 312.5h0M931.5 329.1h0M931.5 345.7h0M931.5 362.3h0M936 5h0M936 54.9h0M936 71.5h0M936 88.1h0M936 104.7h0M936 121.4h0M936 270.9h0M936 287.5h0M936 304.2h0M936 320.8h0M936 337.4h0M936 354h0M940.5 13.3h0M940.5 30h0M940.5 46.6h0M940.5 63.2h0M940.5 79.8h0M940.5 96.4h0M940.5 113.1h0M940.5 262.6h0M940.5 279.2h0M940.5 295.8h0M940.5 312.5h0M940.5 329.1h0M940.5 345.7h0M940.5 362.3h0M940.5 462h0M945 5h0M945 21.7h0M945 54.9h0M945 71.5h0M945 88.1h0M945 104.7h0M945 121.4h0M945 221.1h0M945 270.9h0M945 287.5h0M945 304.2h0M945 320.8h0M945 337.4h0M945 354h0M945 370.6h0M945 453.7h0M949.5 13.3h0M949.5 30h0M949.5 46.6h0M949.5 63.2h0M949.5 79.8h0M949.5 96.4h0M949.5 113.1h0M949.5 262.6h0M949.5 279.2h0M949.5 295.8h0M949.5 312.5h0M949.5 329.1h0M949.5 345.7h0M949.5 362.3h0M949.5 412.2h0M949.5 428.8h0M949.5 445.4h0M949.5 462h0M954 21.7h0M954 38.3h0M954 54.9h0M954 71.5h0M954 88.1h0M954 104.7h0M954 221.1h0M954 254.3h0M954 270.9h0M954 287.5h0M954 304.2h0M954 320.8h0M954 337.4h0M954 354h0M954 370.6h0M954 387.2h0M954 403.9h0M954 420.5h0M954 437.1h0M954 453.7h0M958.5 30h0M958.5 63.2h0M958.5 79.8h0M958.5 113.1h0M958.5 262.6h0M958.5 279.2h0M958.5 295.8h0M958.5 312.5h0M958.5 329.1h0M958.5 345.7h0M958.5 362.3h0M958.5 378.9h0M958.5 395.6h0M958.5 412.2h0M958.5 428.8h0M958.5 445.4h0M958.5 462h0M963 21.7h0M963 38.3h0M963 71.5h0M963 88.1h0M963 104.7h0M963 270.9h0M963 287.5h0M963 304.2h0M963 320.8h0M963 337.4h0M963 354h0M963 370.6h0M963 387.2h0M963 403.9h0M963 420.5h0M963 437.1h0M963 453.7h0M967.5 63.2h0M967.5 79.8h0M967.5 96.4h0M967.5 262.6h0M967.5 279.2h0M967.5 295.8h0M967.5 312.5h0M967.5 329.1h0M967.5 345.7h0M967.5 362.3h0M967.5 378.9h0M967.5 395.6h0M967.5 412.2h0M967.5 428.8h0M967.5 445.4h0M967.5 462h0M972 21.7h0M972 54.9h0M972 71.5h0M972 88.1h0M972 104.7h0M972 270.9h0M972 287.5h0M972 304.2h0M972 320.8h0M972 337.4h0M972 354h0M972 370.6h0M972 387.2h0M972 403.9h0M972 420.5h0M972 437.1h0M972 453.7h0M976.5 63.2h0M976.5 79.8h0M976.5 113.1h0M976.5 262.6h0M976.5 279.2h0M976.5 295.8h0M976.5 312.5h0M976.5 329.1h0M976.5 345.7h0M976.5 362.3h0M976.5 378.9h0M976.5 395.6h0M976.5 412.2h0M976.5 428.8h0M976.5 445.4h0M976.5 462h0M981 21.7h0M981 71.5h0M981 88.1h0M981 270.9h0M981 287.5h0M981 304.2h0M981 320.8h0M981 337.4h0M981 354h0M981 370.6h0M981 387.2h0M981 403.9h0M981 420.5h0M981 437.1h0M981 453.7h0M985.5 63.2h0M985.5 79.8h0M985.5 262.6h0M985.5 279.2h0M985.5 295.8h0M985.5 312.5h0M985.5 329.1h0M985.5 345.7h0M985.5 362.3h0M985.5 378.9h0M985.5 395.6h0M985.5 412.2h0M985.5 428.8h0M985.5 445.4h0M985.5 462h0M990 71.5h0M990 88.1h0M990 270.9h0M990 287.5h0M990 304.2h0M990 320.8h0M990 337.4h0M990 354h0M990 370.6h0M990 387.2h0M990 403.9h0M990 420.5h0M990 437.1h0M990 453.7h0M994.5 79.8h0M994.5 279.2h0M994.5 295.8h0M994.5 312.5h0M994.5 329.1h0M994.5 345.7h0M994.5 362.3h0M994.5 378.9h0M994.5 395.6h0M994.5 412.2h0M994.5 428.8h0M994.5 445.4h0M994.5 462h0M999 287.5h0M999 304.2h0M999 320.8h0M999 337.4h0M999 354h0M999 370.6h0M999 387.2h0M999 403.9h0M999 420.5h0M999 437.1h0M999 453.7h0"/>
+<g class="net-routes"><path style="--i:0" class="net-route r-sea" d="M278 171.2Q518.5 10.5 759 160.5" pathLength="1"/><path style="--i:1" class="net-route r-sea" d="M248.4 207.7Q503.7 10.5 759 160.5" pathLength="1"/><path style="--i:2" class="net-route r-sea" d="M218.8 256.8Q480.8 -31.5 742.8 143.5" pathLength="1"/><path style="--i:3" class="net-route r-sea" d="M207.2 296.7Q483.1 -14.5 759 160.5" pathLength="1"/><path style="--i:4" class="net-route r-sea" d="M83.6 222.4Q421.3 -39.5 759 160.5" pathLength="1"/><path style="--i:5" class="net-route r-sea" d="M308 154.8Q525.4 -17.6 742.8 102.4" pathLength="1"/><path style="--i:6" class="net-route r-air" d="M351.2 152.3Q616.4 -48.7 881.6 126.3" pathLength="1"/><path style="--i:7" class="net-route r-air" d="M194.4 244.7Q565.2 -78.7 936 131.3" pathLength="1"/><path style="--i:8" class="net-route r-land" d="M759 160.5Q820.3 92.3 881.6 126.3" pathLength="1"/><path style="--i:9" class="net-route r-land" d="M759 160.5Q801.9 144.5 844.8 164.5" pathLength="1"/><path style="--i:10" class="net-route r-land" d="M881.6 126.3Q908.8 114.3 936 131.3" pathLength="1"/><path style="--i:11" class="net-route r-land" d="M844.8 164.5Q869.6 150.7 894.4 160.7" pathLength="1"/></g>
+<g class="net-points"><g style="--i:0" class="net-pt" transform="translate(83.6 222.4)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:1" class="net-pt" transform="translate(194.4 244.7)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:2" class="net-pt" transform="translate(207.2 296.7)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:3" class="net-pt" transform="translate(218.8 256.8)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:4" class="net-pt" transform="translate(248.4 207.7)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:5" class="net-pt" transform="translate(278 171.2)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:6" class="net-pt" transform="translate(308 154.8)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:7" class="net-pt" transform="translate(351.2 152.3)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:8" class="net-pt" transform="translate(742.8 102.4)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:9" class="net-pt" transform="translate(742.8 143.5)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:10" class="net-pt" transform="translate(759 160.5)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:11" class="net-pt" transform="translate(844.8 164.5)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:12" class="net-pt" transform="translate(881.6 126.3)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:13" class="net-pt" transform="translate(894.4 160.7)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g><g style="--i:14" class="net-pt" transform="translate(936 131.3)"><circle class="pt-ring" r="7"/><circle class="pt-core" r="3.4"/></g></g>
+<g style="--i:0" class="net-badges"><g style="--i:1" class="net-badge b-ship" transform="translate(518.5 88.2)"><g class="badge-in"><circle class="badge-bg" r="21"/><g class="badge-icon"><path d="M-9 2h18l-3 6h-12z"/><path d="M-6 2v-4h12v4"/><path d="M-3 -2v-3h5v3"/><path d="M-11 11c2 0 2-1.4 4-1.4s2 1.4 4 1.4 2-1.4 4-1.4 2 1.4 4 1.4 2-1.4 4-1.4"/></g></g></g><g style="--i:2" class="net-badge b-plane" transform="translate(574 49.8)"><g class="badge-in"><circle class="badge-bg" r="21"/><g class="badge-icon"><path d="M-11 1.5l8-1.6 6-8.4h2.6l-3.4 8 5.4-1.1 1.8-2.6h1.6l-1.1 4.2 1.1 4.2h-1.6l-1.8-2.6-5.4-1.1 3.4 8h-2.6l-6-8.4z"/></g></g></g><g style="--i:3" class="net-badge b-truck" transform="translate(826.4 116.4)"><g class="badge-in"><circle class="badge-bg" r="21"/><g class="badge-icon"><path d="M-11 -6h13v11h-13z"/><path d="M2 -2.5h5l3.5 4v5.5h-8.5"/><circle cx="-6.5" cy="6.5" r="2.1"/><circle cx="6" cy="6.5" r="2.1"/></g></g></g><g style="--i:4" class="net-badge b-warehouse" transform="translate(757 194.5)"><g class="badge-in"><circle class="badge-bg" r="21"/><g class="badge-icon"><path d="M-10 9v-10l10-6 10 6v10"/><path d="M-5.5 9v-7h11v7"/><path d="M-5.5 5h11"/></g></g></g></g>
+        </svg>
+      </div>
+      <p class="net-caption en">Ocean, air and trucking on one plan, from the factory in Asia to your door in the US, with one team watching every leg.</p>
+      <p class="net-caption zh">海运、空运、卡车派送一个方案打通，从亚洲工厂到美国门口，每一段都有同一个团队盯着。</p>
+      <ul class="net-legend">
+        <li style="--i:0"><svg viewBox="-15 -15 30 30" aria-hidden="true"><circle class="bgc" r="14"/><g class="ic" transform="scale(.82)"><path d="M-9 2h18l-3 6h-12z"/><path d="M-6 2v-4h12v4"/><path d="M-3 -2v-3h5v3"/></g></svg><span class="en">Ocean</span><span class="zh">海运</span></li>
+        <li style="--i:1"><svg viewBox="-15 -15 30 30" aria-hidden="true"><circle class="bgc" r="14"/><g class="ic" transform="scale(.75)"><path d="M-11 1.5l8-1.6 6-8.4h2.6l-3.4 8 5.4-1.1 1.8-2.6h1.6l-1.1 4.2 1.1 4.2h-1.6l-1.8-2.6-5.4-1.1 3.4 8h-2.6l-6-8.4z"/></g></svg><span class="en">Air</span><span class="zh">空运</span></li>
+        <li style="--i:2"><svg viewBox="-15 -15 30 30" aria-hidden="true"><circle class="bgc" r="14"/><g class="ic" transform="scale(.78)"><path d="M-11 -6h13v11h-13z"/><path d="M2 -2.5h5l3.5 4v5.5h-8.5"/><circle cx="-6.5" cy="6.5" r="2.1"/><circle cx="6" cy="6.5" r="2.1"/></g></svg><span class="en">Trucking</span><span class="zh">卡车派送</span></li>
+        <li style="--i:3"><svg viewBox="-15 -15 30 30" aria-hidden="true"><circle class="bgc" r="14"/><g class="ic" transform="scale(.8)"><path d="M-10 9v-10l10-6 10 6v10"/><path d="M-5.5 9v-7h11v7"/><path d="M-5.5 5h11"/></g></svg><span class="en">Warehousing</span><span class="zh">仓储</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 前两屏是“一页一页”滑动的；从这里开始正常滚动（见 styles.css “整屏滑动”） -->
+  <div class="after-intro">
+
+    <!-- ===== 硬数字 ===== -->
+    <section class="docket" aria-label="AWELL in numbers">
+      <div class="wrap">
+        <dl class="bl-grid stats">
+          <div>
+            <dt><span class="en">shipments every week</span><span class="zh">每周出运票数</span></dt>
+            <dd>100+</dd>
+          </div>
+          <div>
+            <dt><span class="en">shipments into the US</span><span class="zh">票美国进口货物</span></dt>
+            <dd>50,000+</dd>
+          </div>
+          <div>
+            <dt><span class="en">containers moved</span><span class="zh">个集装箱</span></dt>
+            <dd>55,000+</dd>
+          </div>
+          <div>
+            <dt><span class="en">FMC-licensed NVOCC</span><span class="zh">FMC 注册 NVOCC 编号</span></dt>
+            <dd>#017712</dd>
+          </div>
+        </dl>
+        <ul class="trust">
+          <li><span class="en">FMC-licensed NVOCC #017712</span><span class="zh">FMC 注册 NVOCC #017712</span></li>
+          <li><span class="en">Cleared by licensed US customs brokers</span><span class="zh">美国持牌报关行清关</span></li>
+          <li><span class="en">English, Mandarin and Cantonese</span><span class="zh">英语、普通话、粤语专人服务</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 实拍照片（公司自己拍的真实操作，点击可放大） =====
+         加照片：把图片放进 photos 文件夹，复制一个 <figure> 改 src 和文字即可 -->
+    <section class="section" id="photos">
+      <div class="wrap">
+        <div class="section-head-row">
+          <h2 class="section-title"><span class="en">Real cargo, shot by our own team</span><span class="zh">真实货物，我们团队现场实拍</span></h2>
+          <a class="btn btn-quiet see-all" href="photos.html"><span class="en">See more</span><span class="zh">查看更多</span></a>
+        </div>
+        <p class="section-sub en">Not stock photos. These are shipments we loaded and secured ourselves.</p>
+        <p class="section-sub zh">不是网上图库，全部是我们亲手装箱、加固的真实货物。</p>
+
+        <h3 class="gallery-head"><span class="en">Vehicles, strapped and blocked inside containers</span><span class="zh">整车出口：集装箱内绑扎加固</span></h3>
+        <div class="gallery gallery-feature">
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-bmw-x5.jpg" alt="BMW X5 secured with wheel blocks inside a shipping container" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-mercedes-ml350.jpg" alt="Mercedes ML350 strapped inside a container" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-mercedes-white-front.jpg" alt="White Mercedes sedan lashed with orange straps in a container" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-mercedes-silver.jpg" alt="Silver Mercedes sedan secured with straps and wood blocking" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-mercedes-white-rear.jpg" alt="White Mercedes sedan loaded at the door end of a container" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/vehicle-mercedes-black.jpg" alt="Black Mercedes sedan loaded in a container" loading="lazy"></button></figure>
+        </div>
+
+        <h3 class="gallery-head"><span class="en">Oversized cargo on flat-rack containers</span><span class="zh">超尺寸货物：框架箱装运</span></h3>
+        <div class="gallery">
+          <figure><button type="button" class="zoom"><img src="photos/flatrack-rv-side.jpg" alt="RV trailer lashed on a flat-rack container at the port" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/flatrack-rv-port.jpg" alt="RV trailer on a flat rack, side view in the terminal yard" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/flatrack-rv-rear.jpg" alt="RV trailer secured on a flat rack, rear view" loading="lazy"></button></figure>
+          <figure><button type="button" class="zoom"><img src="photos/flatrack-rv-loading.jpg" alt="Forklift positioning an RV trailer onto a flat-rack container" loading="lazy"></button></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 痛点 → 我们怎么解决 ===== -->
+    <section class="section" id="why">
+      <div class="wrap two-col">
+        <div class="col-head">
+          <h2><span class="en">Shipping shouldn't be this stressful.</span><span class="zh">这些麻烦，交给我们</span></h2>
+          <p class="en">The problems importers tell us about most, and what we do about them.</p>
+          <p class="zh">进口商最常遇到的问题，以及我们的解决办法。</p>
+        </div>
+        <ul class="pains">
+          <li>
+            <p class="pain en">“I've waited three days and still don't have a quote.”</p>
+            <p class="pain zh">“等了三天还没拿到报价。”</p>
+            <p class="fix en">Send your cargo details and get an all-in quote within 24 hours.</p>
+            <p class="fix zh">发来货物信息，24 小时内给您全包报价。</p>
+          </li>
+          <li>
+            <p class="pain en">“My container is stuck in customs.”</p>
+            <p class="pain zh">“货柜卡在海关出不来。”</p>
+            <p class="fix en">Import entry and ISF filed by licensed US customs brokers, with documents checked before the ship sails.</p>
+            <p class="fix zh">由美国持牌报关行办理进口申报和 ISF，开船前先把单证核对好。</p>
+          </li>
+          <li>
+            <p class="pain en">“The final bill was way higher than the quote.”</p>
+            <p class="pain zh">“到港后账单比报价高一大截。”</p>
+            <p class="fix en">Door-to-door pricing with every fee listed upfront: ocean, port, customs and trucking.</p>
+            <p class="fix zh">门到门报价，海运费、港杂、清关、派送费用提前列清楚。</p>
+          </li>
+          <li>
+            <p class="pain en">“Nobody answers when something goes wrong.”</p>
+            <p class="pain zh">“出了问题找不到人。”</p>
+            <p class="fix en">One contact person follows your shipment from booking to delivery, in English, Mandarin or Cantonese.</p>
+            <p class="fix zh">从订舱到签收，全程专人对接，英语、普通话、粤语都能沟通。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 服务 ===== -->
+    <section class="section section-tint" id="services">
+      <div class="wrap two-col">
+        <div class="col-head">
+          <h2><span class="en">Everything from factory to front door</span><span class="zh">从工厂到门口<br>全程包办</span></h2>
+          <p class="en">Use one service or let us run the whole move.</p>
+          <p class="zh">可以只用一项，也可以全部交给我们。</p>
+        </div>
+        <ul class="services">
+          <li>
+            <h3><span class="en">Ocean freight</span><span class="zh">海运</span></h3>
+            <p class="en">FCL and LCL from Shanghai, Ningbo and other major China ports, booked with major carriers.</p>
+            <p class="zh">整柜（FCL）及拼箱（LCL），上海、宁波等中国主要港口出运，主流船公司订舱。</p>
+          </li>
+          <li>
+            <h3><span class="en">Air freight</span><span class="zh">空运</span></h3>
+            <p class="en">When it can't wait: air cargo between China and the US.</p>
+            <p class="zh">赶时间的货走空运，中美航线快速到达。</p>
+          </li>
+          <li>
+            <h3><span class="en">Customs clearance</span><span class="zh">美国清关</span></h3>
+            <p class="en">Import entry and ISF filing through licensed US customs brokers.</p>
+            <p class="zh">通过美国持牌报关行办理进口申报及 ISF。</p>
+          </li>
+          <li>
+            <h3><span class="en">US trucking and drayage</span><span class="zh">美国卡车派送</span></h3>
+            <p class="en">Port pickup to your warehouse, plus LTL and full-truckload delivery across the US.</p>
+            <p class="zh">港口提柜送到您的仓库，另有全美零担（LTL）和整车派送。</p>
+          </li>
+          <li>
+            <h3><span class="en">Export booking and AES filing</span><span class="zh">出口订舱与 AES 申报</span></h3>
+            <p class="en">Space booking, export documents and AES filing for cargo leaving the US.</p>
+            <p class="zh">美国出口货物的舱位预订、出口单证及 AES 电子申报。</p>
+          </li>
+          <li>
+            <h3><span class="en">Vehicle export</span><span class="zh">整车出口</span></h3>
+            <p class="en">Cars and SUVs loaded, strapped and blocked inside containers for safe ocean transit.</p>
+            <p class="zh">轿车、SUV 装柜，绑带加木块加固，海运途中稳稳当当。</p>
+          </li>
+          <li>
+            <h3><span class="en">Oversized and flat-rack cargo</span><span class="zh">超尺寸货物 / 框架箱</span></h3>
+            <p class="en">RVs, machinery and other cargo too big for a standard container, secured on flat racks.</p>
+            <p class="zh">房车、机械等装不进普通集装箱的货物，用框架箱绑扎运输。</p>
+          </li>
+          <li>
+            <h3><span class="en">Warehouse coordination</span><span class="zh">仓储协调</span></h3>
+            <p class="en">Short-term storage and distribution through partner warehouses.</p>
+            <p class="zh">通过合作仓库安排短期仓储与配送。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 合作流程（真实的先后顺序，所以用编号） ===== -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <h2 class="section-title"><span class="en">Four steps to your door</span><span class="zh">四步送货到门</span></h2>
+        <ol class="steps">
+          <li>
+            <h3><span class="en">Send your cargo details</span><span class="zh">发来货物信息</span></h3>
+            <p class="en">What it is, how much, where from, and when you need it.</p>
+            <p class="zh">品名、数量、起运地，以及期望到达时间。</p>
+          </li>
+          <li>
+            <h3><span class="en">Get your quote</span><span class="zh">收到报价</span></h3>
+            <p class="en">All-in pricing, with ocean and air options.</p>
+            <p class="zh">全包价格，海运、空运方案任选。</p>
+          </li>
+          <li>
+            <h3><span class="en">We book and file</span><span class="zh">我们订舱报关</span></h3>
+            <p class="en">Space, documents, ISF and customs entry, all handled.</p>
+            <p class="zh">舱位、单证、ISF、清关一手包办。</p>
+          </li>
+          <li>
+            <h3><span class="en">Delivered to your door</span><span class="zh">送货到门</span></h3>
+            <p class="en">Port pickup, trucking and delivery confirmation.</p>
+            <p class="zh">港口提柜、卡车派送、签收确认。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 联系我们 ===== -->
+    <section class="section section-ink" id="contact">
+      <div class="wrap two-col">
+        <div class="col-head">
+          <h2><span class="en">Get your free quote today</span><span class="zh">今天就免费获取报价</span></h2>
+          <p class="en">Tell us what you're shipping, where it's coming from, and when it needs to arrive. We'll reply with options and an all-in price.</p>
+          <p class="zh">告诉我们货物品名、起运地和期望到达时间，我们会回复可选方案和全包价格。</p>
+          <a class="btn btn-light btn-big" href="quote.html">
+            <span class="en">Request a quote online</span><span class="zh">在线提交询价</span>
+          </a>
+        </div>
+
+        <!-- 每一行右边的“复制”按钮：点击后把 data-copy 里的内容复制到剪贴板，并弹出“已复制” -->
+        <dl class="contact">
+          <div>
+            <dt><span class="en">Quotes and imports</span><span class="zh">报价 / 进口</span></dt>
+            <dd><a href="mailto:imports@awellus.com?subject=Free%20quote%20request">imports@awellus.com</a></dd>
+            <button type="button" class="copy" data-copy="imports@awellus.com"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">Exports</span><span class="zh">出口</span></dt>
+            <dd><a href="mailto:exports@awellus.com">exports@awellus.com</a></dd>
+            <button type="button" class="copy" data-copy="exports@awellus.com"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">General</span><span class="zh">综合咨询</span></dt>
+            <dd><a href="mailto:awell@awellus.com">awell@awellus.com</a></dd>
+            <button type="button" class="copy" data-copy="awell@awellus.com"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">Phone</span><span class="zh">电话</span></dt>
+            <dd><a href="tel:+14158595706">415-859-5706</a></dd>
+            <button type="button" class="copy" data-copy="415-859-5706"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">Phone</span><span class="zh">电话</span></dt>
+            <dd><a href="tel:+14158595707">415-859-5707</a></dd>
+            <button type="button" class="copy" data-copy="415-859-5707"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">Office</span><span class="zh">地址</span></dt>
+            <dd>
+              AWELL LOGISTICS GROUP, INC.<br>
+              1670 South Amphlett Boulevard, Suite 130<br>
+              San Mateo, CA 94402<br>
+              <a class="small-link" href="https://www.google.com/maps/search/?api=1&amp;query=1670+South+Amphlett+Blvd+Suite+130+San+Mateo+CA+94402" target="_blank" rel="noopener">
+                <span class="en">Open in Google Maps</span><span class="zh">在 Google 地图中打开</span>
+              </a>
+            </dd>
+            <button type="button" class="copy" data-copy="AWELL LOGISTICS GROUP, INC., 1670 South Amphlett Boulevard, Suite 130, San Mateo, CA 94402"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+          <div>
+            <dt><span class="en">Website</span><span class="zh">网站</span></dt>
+            <dd><a href="https://www.awellus.com">www.awellus.com</a></dd>
+            <button type="button" class="copy" data-copy="https://www.awellus.com"><span class="en">Copy</span><span class="zh">复制</span></button>
+          </div>
+        </dl>
+        <ul class="trust">
+          <li><span class="en">FMC-licensed NVOCC #017712</span><span class="zh">FMC 注册 NVOCC #017712</span></li>
+          <li><span class="en">Cleared by licensed US customs brokers</span><span class="zh">美国持牌报关行清关</span></li>
+          <li><span class="en">English, Mandarin and Cantonese</span><span class="zh">英语、普通话、粤语专人服务</span></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-info">
+      <p class="footer-name">AWELL LOGISTICS GROUP, INC.</p>
+      <p>1670 South Amphlett Boulevard, Suite 130, San Mateo, CA 94402</p>
+      <p>
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595706">415-859-5706</a> |
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595707">415-859-5707</a> |
+        <a href="https://www.awellus.com">www.awellus.com</a>
+      </p>
+      <p>
+        <a href="mailto:awell@awellus.com">awell@awellus.com</a> |
+        <a href="mailto:imports@awellus.com">imports@awellus.com</a> |
+        <a href="mailto:exports@awellus.com">exports@awellus.com</a>
+      </p>
+    </div>
+    <div class="footer-meta">
+      <p>FMC NVOCC #017712</p>
+      <p><a href="terms-and-conditions.pdf" target="_blank" rel="noopener"><span class="en">Terms and conditions (PDF)</span><span class="zh">服务条款（PDF）</span></a></p>
+      <p>© <span id="year">2026</span> AWELL Logistics Group, Inc.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- “已复制”提示 -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="site.js"></script>
+<script src="network.js"></script>
+</body>
+</html>
