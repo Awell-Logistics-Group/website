@@ -11,9 +11,17 @@
   if (net) net.classList.add("js");              // 有 JS 才先把地图元素藏起来，没 JS 时直接显示
   if (!("IntersectionObserver" in window)) { if (net) net.classList.add("is-in"); return; }
 
+  var video = hero && hero.querySelector("video");
+  var stillVideo = window.matchMedia("(prefers-reduced-motion: reduce)").matches;   // 设置了“减少动态效果”：视频不播
   function play(el) {
-    if (el === net) el.classList.add("is-in");
-    else el.classList.remove("is-out");          // 首屏：去掉 is-out，CSS 动画重新开始
+    if (el === net) { el.classList.add("is-in"); return; }
+    if (el.classList.contains("is-out") && video && !stillVideo) {
+      // 首屏视频：播完会停在最后一帧（没有 loop）；翻回来时从头再播一遍
+      video.currentTime = 0;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});   // 个别手机省电模式不让自动播放：保持静止画面就行
+    }
+    el.classList.remove("is-out");               // 首屏：去掉 is-out，CSS 动画重新开始
   }
   function reset(el) {
     if (el === net) el.classList.remove("is-in");
