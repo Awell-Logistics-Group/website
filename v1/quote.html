@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get a Free Quote | AWELL Logistics Group</title>
+  <meta name="description" content="Tell AWELL Logistics Group what you're shipping and get an all-in quote for ocean, air, customs clearance and US trucking.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 语言判断：跟首页一模一样，改的话两页一起改 -->
+  <script>
+    (function () {
+      var ok = { en: 1, zh: 1, zht: 1 };
+      var lang = "en";
+      try {
+        var q = new URLSearchParams(location.search).get("lang");
+        var saved = localStorage.getItem("awell-lang");
+        var nav = (navigator.language || "").toLowerCase();
+        if (ok[q]) lang = q;
+        else if (ok[saved]) lang = saved;
+        else if (/^zh-(hk|tw|mo)|hant/.test(nav)) lang = "zht";
+        else if (nav.indexOf("zh") === 0) lang = "zh";
+      } catch (e) {}
+      var html = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", html[lang]);
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html" aria-label="AWELL Logistics Group home">
+      <img src="logo.png" alt="AWELL Logistics Group, Inc." width="117" height="45">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#photos"><span class="en">Photos</span><span class="zh">实拍</span></a>
+      <a href="index.html#services"><span class="en">Services</span><span class="zh">服务</span></a>
+      <a href="index.html#how"><span class="en">How it works</span><span class="zh">合作流程</span></a>
+      <a href="index.html#contact"><span class="en">Contact</span><span class="zh">联系我们</span></a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" data-set-lang="zh" lang="zh-CN" aria-label="简体中文">简</button>
+        <button type="button" data-set-lang="zht" lang="zh-Hant" aria-label="繁體中文">繁</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="quote-page">
+  <div class="wrap quote-layout">
+
+    <!-- 左边：说明 -->
+    <aside class="quote-side">
+      <h1>
+        <span class="en">Get a free quote</span>
+        <span class="zh">免费获取报价</span>
+      </h1>
+      <p class="en">Tell us what you need. Your request goes straight to our import team at imports@awellus.com, and we'll reply with options and an all-in price within 24 hours.</p>
+      <p class="zh">告诉我们您的需求。表单会直接发送到我们进口团队的邮箱 imports@awellus.com，我们会在 24 小时内回复可选方案和全包价格。</p>
+      <ul class="trust">
+        <li><span class="en">FMC-licensed NVOCC #017712</span><span class="zh">FMC 注册 NVOCC #017712</span></li>
+        <li><span class="en">100+ shipments every week</span><span class="zh">每周出运 100+ 票</span></li>
+        <li><span class="en">English, Mandarin and Cantonese</span><span class="zh">英语、普通话、粤语专人服务</span></li>
+      </ul>
+      <p class="quote-alt">
+        <span class="en">Prefer to call?</span><span class="zh">想直接打电话？</span>
+        <a href="tel:+14158595706" data-copy="415-859-5706">415-859-5706</a>
+      </p>
+    </aside>
+
+    <!-- 右边：表单
+         提交方式：用 Web3Forms 免费服务，把表单内容发到 imports@awellus.com。
+         设置在页面最下面的 WEB3FORMS_KEY。 -->
+    <div class="quote-card">
+      <form id="quoteForm" novalidate>
+
+        <fieldset class="field">
+          <legend><span class="en">What do you need?</span><span class="zh">需要什么服务？</span></legend>
+          <div class="chips">
+            <label><input type="checkbox" name="Service" value="Ocean FCL"><span><span class="en">Ocean FCL</span><span class="zh">海运整柜</span></span></label>
+            <label><input type="checkbox" name="Service" value="Ocean LCL"><span><span class="en">Ocean LCL</span><span class="zh">海运拼箱</span></span></label>
+            <label><input type="checkbox" name="Service" value="Air freight"><span><span class="en">Air freight</span><span class="zh">空运</span></span></label>
+            <label><input type="checkbox" name="Service" value="Customs clearance"><span><span class="en">Customs clearance</span><span class="zh">清关</span></span></label>
+            <label><input type="checkbox" name="Service" value="US trucking"><span><span class="en">US trucking</span><span class="zh">美国卡车派送</span></span></label>
+            <label><input type="checkbox" name="Service" value="Vehicle export"><span><span class="en">Vehicle export</span><span class="zh">整车出口</span></span></label>
+            <label><input type="checkbox" name="Service" value="Oversized / flat rack"><span><span class="en">Oversized / flat rack</span><span class="zh">超尺寸 / 框架箱</span></span></label>
+            <label><input type="checkbox" name="Service" value="Not sure"><span><span class="en">Not sure yet</span><span class="zh">还不确定</span></span></label>
+          </div>
+        </fieldset>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="origin"><span class="en">From</span><span class="zh">起运地</span> <em>*</em></label>
+            <input id="origin" name="From" type="text" required autocomplete="off">
+            <small><span class="en">City or port, e.g. Ningbo</span><span class="zh">城市或港口，例如：宁波</span></small>
+          </div>
+          <div class="field">
+            <label for="destination"><span class="en">To</span><span class="zh">目的地</span> <em>*</em></label>
+            <input id="destination" name="To" type="text" required autocomplete="off">
+            <small><span class="en">City, port or ZIP code, e.g. Los Angeles</span><span class="zh">城市、港口或邮编，例如：洛杉矶</span></small>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="details"><span class="en">Tell us about your shipment</span><span class="zh">请描述您的货物和需求</span> <em>*</em></label>
+          <textarea id="details" name="Details" rows="6" required></textarea>
+          <small><span class="en">What the cargo is, quantity or container size, weight, when it's ready, and anything else we should know.</span><span class="zh">货物品名、数量或柜型、重量、货好时间，以及其他需要我们注意的事项。</span></small>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="name"><span class="en">Your name</span><span class="zh">您的姓名</span> <em>*</em></label>
+            <input id="name" name="Name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="company"><span class="en">Company</span><span class="zh">公司名称</span></label>
+            <input id="company" name="Company" type="text" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="email"><span class="en">Email</span><span class="zh">邮箱</span> <em>*</em></label>
+            <input id="email" name="email" type="email" required autocomplete="email">
+            <small><span class="en">We'll send the quote here.</span><span class="zh">报价会发到这个邮箱。</span></small>
+          </div>
+          <div class="field">
+            <label for="phone"><span class="en">Phone or WeChat</span><span class="zh">电话或微信</span></label>
+            <input id="phone" name="Phone / WeChat" type="text" autocomplete="tel">
+          </div>
+        </div>
+
+        <!-- 防垃圾邮件：真人看不到这个框，机器人会填，填了就不会发送 -->
+        <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <p class="form-error" id="formError" hidden>
+          <span class="en">Please fill in the fields marked *.</span><span class="zh">请填写带 * 的必填项。</span>
+        </p>
+        <p class="form-error" id="sendError" hidden>
+          <span class="en">We couldn't send your request. Please try again, or email it to</span><span class="zh">提交没有成功，请再试一次，或直接发邮件到</span>
+          <a href="mailto:imports@awellus.com" data-copy="imports@awellus.com">imports@awellus.com</a>
+          <small class="send-reason" id="sendReason"></small>
+        </p>
+
+        <button type="submit" class="btn btn-primary btn-big btn-submit" id="submitBtn">
+          <span class="idle"><span class="en">Send my request</span><span class="zh">提交询价</span></span>
+          <span class="busy"><span class="en">Sending…</span><span class="zh">正在发送…</span></span>
+        </button>
+      </form>
+
+      <!-- 发送成功后显示 -->
+      <div class="quote-done" id="quoteDone" hidden tabindex="-1">
+        <h2><span class="en">Request sent</span><span class="zh">询价已提交</span></h2>
+        <p class="en">Thanks. Our import team has your request and will reply to your email within 24 hours.</p>
+        <p class="zh">谢谢！我们的进口团队已收到您的询价，会在 24 小时内回复到您的邮箱。</p>
+        <a class="btn btn-quiet" href="index.html"><span class="en">Back to home</span><span class="zh">返回首页</span></a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-info">
+      <p class="footer-name">AWELL LOGISTICS GROUP, INC.</p>
+      <p>1670 South Amphlett Boulevard, Suite 130, San Mateo, CA 94402</p>
+      <p>
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595706">415-859-5706</a> |
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595707">415-859-5707</a> |
+        <a href="https://www.awellus.com">www.awellus.com</a>
+      </p>
+      <p>
+        <a href="mailto:awell@awellus.com">awell@awellus.com</a> |
+        <a href="mailto:imports@awellus.com">imports@awellus.com</a> |
+        <a href="mailto:exports@awellus.com">exports@awellus.com</a>
+      </p>
+    </div>
+    <div class="footer-meta">
+      <p>FMC NVOCC #017712</p>
+      <p><a href="terms-and-conditions.pdf" target="_blank" rel="noopener"><span class="en">Terms and conditions (PDF)</span><span class="zh">服务条款（PDF）</span></a></p>
+      <p>© <span id="year">2026</span> AWELL Logistics Group, Inc.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="site.js"></script>
+<script>
+  // ===== 询价表单 =====
+  // 用 Web3Forms 免费服务把表单内容发到 imports@awellus.com。
+  // 密钥（access key）是在 web3forms.com 用 imports@awellus.com 申请的，
+  // 收件邮箱就是申请时填的那个。要换邮箱，就用新邮箱重新申请一个密钥，替换下面这行。
+  var WEB3FORMS_KEY = "259c9583-4e66-4cb3-9ebc-6764bc5d88cc";
+  var FORM_ENDPOINT = "https://api.web3forms.com/submit";
+
+  var form = document.getElementById("quoteForm");
+  var btn = document.getElementById("submitBtn");
+  var formError = document.getElementById("formError");
+  var sendError = document.getElementById("sendError");
+  var done = document.getElementById("quoteDone");
+  var sendReason = document.getElementById("sendReason");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();               // 不跳转页面，用 JavaScript 在后台发送
+    formError.hidden = true;
+    sendError.hidden = true;
+
+    // 1. 检查必填项，没填的标红，并把光标移到第一个
+    var missing = Array.prototype.filter.call(form.querySelectorAll("[required]"), function (el) {
+      var bad = !el.value.trim() || (el.type === "email" && !el.checkValidity());
+      el.classList.toggle("invalid", bad);
+      return bad;
+    });
+    if (missing.length) {
+      formError.hidden = false;
+      missing[0].focus();
+      return;
+    }
+
+    // 2. 整理要发送的内容（多选的服务合并成一行）
+    var data = {};
+    new FormData(form).forEach(function (value, key) {
+      data[key] = data[key] ? data[key] + ", " + value : value;
+    });
+    if (data._honey) return;          // 机器人填了隐藏框，直接忽略
+    delete data._honey;
+    data.access_key = WEB3FORMS_KEY;
+    data.subject = "Quote request: " + data.From + " to " + data.To + " (" + data.Name + ")";
+    data.from_name = "AWELL website";
+    data.Language = document.documentElement.getAttribute("data-lang");
+    // 表单里叫 email 的字段，Web3Forms 会自动设成回复地址，点“回复”就是回给客户
+
+    // 3. 发送
+    btn.disabled = true;
+    btn.classList.add("is-busy");
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(function (res) {
+        return res.json().catch(function () { throw new Error("HTTP " + res.status); });
+      })
+      .then(function (json) {
+        if (json.success) {
+          form.hidden = true;
+          done.hidden = false;
+          done.focus();
+        } else {
+          throw new Error(json.message || "Unknown error");
+        }
+      })
+      .catch(function (err) {
+        // 把具体原因显示出来，方便排查
+        sendReason.textContent = "Reason: " + (err && err.message ? err.message : err);
+        sendError.hidden = false;
+        console.error("Quote form error:", err);
+      })
+      .then(function () {
+        btn.disabled = false;
+        btn.classList.remove("is-busy");
+      });
+  });
+
+  // 用户开始填写后，去掉红框
+  form.addEventListener("input", function (e) {
+    if (e.target.classList.contains("invalid") && e.target.value.trim()) e.target.classList.remove("invalid");
+  });
+</script>
+</body>
+</html>

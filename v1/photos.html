@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Gallery | AWELL Logistics Group</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 语言判断：跟首页一模一样，改的话两页一起改 -->
+  <script>
+    (function () {
+      var ok = { en: 1, zh: 1, zht: 1 };
+      var lang = "en";
+      try {
+        var q = new URLSearchParams(location.search).get("lang");
+        var saved = localStorage.getItem("awell-lang");
+        var nav = (navigator.language || "").toLowerCase();
+        if (ok[q]) lang = q;
+        else if (ok[saved]) lang = saved;
+        else if (/^zh-(hk|tw|mo)|hant/.test(nav)) lang = "zht";
+        else if (nav.indexOf("zh") === 0) lang = "zh";
+      } catch (e) {}
+      var html = { en: "en", zh: "zh-CN", zht: "zh-Hant-HK" };
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", html[lang]);
+    })();
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html" aria-label="AWELL Logistics Group home">
+      <img src="logo.png" alt="AWELL Logistics Group, Inc." width="117" height="45">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#photos"><span class="en">Photos</span><span class="zh">实拍</span></a>
+      <a href="index.html#services"><span class="en">Services</span><span class="zh">服务</span></a>
+      <a href="index.html#how"><span class="en">How it works</span><span class="zh">合作流程</span></a>
+      <a href="index.html#contact"><span class="en">Contact</span><span class="zh">联系我们</span></a>
+      <a class="nav-cta" href="quote.html"><span class="en">Free quote</span><span class="zh">免费报价</span></a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" data-set-lang="zh" lang="zh-CN" aria-label="简体中文">简</button>
+        <button type="button" data-set-lang="zht" lang="zh-Hant" aria-label="繁體中文">繁</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="gallery-page">
+  <div class="wrap">
+    <p class="crumb"><a href="index.html"><span class="en">Home</span><span class="zh">首页</span></a> / <span class="en">Photos</span><span class="zh">实拍相册</span></p>
+    <h1 class="page-title"><span class="en">Real cargo, shot by our own team</span><span class="zh">真实货物，我们团队现场实拍</span></h1>
+    <p class="section-sub en">Every photo here is a shipment we loaded and secured ourselves. Click any photo to enlarge it.</p>
+    <p class="section-sub zh">每一张都是我们亲手装箱、加固的真实货物。点击照片可以放大查看。</p>
+
+    <!-- 分类筛选：data-filter 对应下面每张照片 figure 上的 data-cat -->
+    <div class="filters" role="group" aria-label="Filter photos">
+      <button type="button" data-filter="all" aria-pressed="true"><span class="en">All</span><span class="zh">全部</span> <b>20</b></button>
+      <button type="button" data-filter="vehicle" aria-pressed="false"><span class="en">Vehicle export</span><span class="zh">整车出口</span> <b>13</b></button>
+      <button type="button" data-filter="flatrack" aria-pressed="false"><span class="en">Oversized / flat rack</span><span class="zh">超尺寸 / 框架箱</span> <b>7</b></button>
+    </div>
+
+    <!-- 加照片：把大图放进 photos/，缩略图（宽 640 左右）放进 photos/thumbs/，然后复制一行 figure 改文件名和描述 -->
+    <div class="gallery gallery-all" id="galleryAll">
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-bmw-x5.jpg" data-full="photos/vehicle-bmw-x5.jpg" alt="BMW X5 secured with wheel blocks inside a container" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-ml350.jpg" data-full="photos/vehicle-mercedes-ml350.jpg" alt="Mercedes ML350 strapped inside a container" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-white-front.jpg" data-full="photos/vehicle-mercedes-white-front.jpg" alt="White Mercedes C250 lashed with orange straps" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-silver.jpg" data-full="photos/vehicle-mercedes-silver.jpg" alt="Silver Mercedes C250 secured with straps and wood blocking" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-white-rear.jpg" data-full="photos/vehicle-mercedes-white-rear.jpg" alt="White Mercedes C250 loaded at the container door" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-black.jpg" data-full="photos/vehicle-mercedes-black.jpg" alt="Black Mercedes C250 loaded in a container" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-black-front.jpg" data-full="photos/vehicle-mercedes-black-front.jpg" alt="Black Mercedes C250 strapped at the front wheels" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-white-front-2.jpg" data-full="photos/vehicle-mercedes-white-front-2.jpg" alt="White Mercedes C250, front view inside the container" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-white-rear-2.jpg" data-full="photos/vehicle-mercedes-white-rear-2.jpg" alt="White Mercedes C250 with rear wheel straps" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-white-rear-3.jpg" data-full="photos/vehicle-mercedes-white-rear-3.jpg" alt="White Mercedes C250 at the far end of a container" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-black-rear.jpg" data-full="photos/vehicle-mercedes-black-rear.jpg" alt="Black Mercedes C250 blocked with wood and straps" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-bmw-x5-detail.jpg" data-full="photos/vehicle-bmw-x5-detail.jpg" alt="Wood blocking under the BMW X5 front wheel" loading="lazy"></button></figure>
+        <figure data-cat="vehicle"><button type="button" class="zoom"><img src="photos/thumbs/vehicle-mercedes-ml350-detail.jpg" data-full="photos/vehicle-mercedes-ml350-detail.jpg" alt="Wood blocking behind the Mercedes ML350" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-side.jpg" data-full="photos/flatrack-rv-side.jpg" alt="RV trailer lashed on a flat-rack container at the port" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-port.jpg" data-full="photos/flatrack-rv-port.jpg" alt="RV trailer on a flat rack in the terminal yard" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-rear.jpg" data-full="photos/flatrack-rv-rear.jpg" alt="RV trailer secured on a flat rack, rear view" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-loading.jpg" data-full="photos/flatrack-rv-loading.jpg" alt="Forklift positioning an RV trailer onto a flat rack" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-yard.jpg" data-full="photos/flatrack-rv-yard.jpg" alt="RV trailer on a flat rack, wide view of the yard" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-profile.jpg" data-full="photos/flatrack-rv-profile.jpg" alt="RV trailer on a flat rack, side profile" loading="lazy"></button></figure>
+        <figure data-cat="flatrack"><button type="button" class="zoom"><img src="photos/thumbs/flatrack-rv-strapping.jpg" data-full="photos/flatrack-rv-strapping.jpg" alt="Straps securing the RV trailer wheels to the flat rack" loading="lazy"></button></figure>
+    </div>
+
+    <div class="gallery-cta">
+      <p class="en">Shipping a vehicle or oversized cargo?</p>
+      <p class="zh">有整车或超尺寸货物要运？</p>
+      <a class="btn btn-primary btn-big" href="quote.html"><span class="en">Get a free quote</span><span class="zh">免费获取报价</span></a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-info">
+      <p class="footer-name">AWELL LOGISTICS GROUP, INC.</p>
+      <p>1670 South Amphlett Boulevard, Suite 130, San Mateo, CA 94402</p>
+      <p>
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595706">415-859-5706</a> |
+        <span class="en">TEL</span><span class="zh">电话</span>: <a href="tel:+14158595707">415-859-5707</a> |
+        <a href="https://www.awellus.com">www.awellus.com</a>
+      </p>
+      <p>
+        <a href="mailto:awell@awellus.com">awell@awellus.com</a> |
+        <a href="mailto:imports@awellus.com">imports@awellus.com</a> |
+        <a href="mailto:exports@awellus.com">exports@awellus.com</a>
+      </p>
+    </div>
+    <div class="footer-meta">
+      <p>FMC NVOCC #017712</p>
+      <p><a href="terms-and-conditions.pdf" target="_blank" rel="noopener"><span class="en">Terms and conditions (PDF)</span><span class="zh">服务条款（PDF）</span></a></p>
+      <p>© <span id="year">2026</span> AWELL Logistics Group, Inc.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="site.js"></script>
+<script>
+  // 分类筛选
+  var filterBtns = document.querySelectorAll("[data-filter]");
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-filter");
+      filterBtns.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+      document.querySelectorAll("#galleryAll figure").forEach(function (fig) {
+        fig.hidden = cat !== "all" && fig.getAttribute("data-cat") !== cat;
+      });
+    });
+  });
+</script>
+</body>
+</html>
