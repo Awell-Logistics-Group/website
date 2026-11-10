@@ -165,9 +165,3 @@
   window.addEventListener("scroll", upd, { passive: true });
   upd();
 })();
-
-// ===== 首屏视频：系统设置了“减少动态效果”的访客，只显示第一帧，不播放 =====
-(function () {
-  var v = document.querySelector(".hero-frame video");
-  if (v && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
-})();
