@@ -724,7 +724,7 @@ body:has(.quote-page) .quote-page { flex: 1; }
 }
 @supports (height: 100dvh) { .hero-frame { --s: min(100dvh / 800, 100vw / 716); } }
 
-/* 背景：之后放视频（见 index.html 里的说明）；现在是深色渐变占位 */
+/* 背景视频（index.html 里的 <video class="bg">） */
 .hero-frame .bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center; background: #0a0b0c;
@@ -970,3 +970,6 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   .net-legend { gap: 14px 20px; }
   .net-legend li { font-size: 14px; }
 }
+
+/* 视频里有亮的晚霞画面：给首屏文字加一点柔和阴影，小字也能看清 */
+.hero-frame .stage, .hero-frame .scroll-cue { text-shadow: 0 1px 14px rgba(0, 0, 0, .45); }

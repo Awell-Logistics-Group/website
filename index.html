@@ -65,11 +65,10 @@
 <main id="top">
 
   <!-- ===== 首屏 =====
-       背景视频：现在是深色占位。有了自己的视频后，把下面的 <div class="bg bg-placeholder"> 换成：
-       <video class="bg" src="hero.mp4" autoplay muted loop playsinline disablepictureinpicture aria-label="（视频内容描述）"></video>
-       （视频文件放在网站文件夹里，建议 1920×1080、10 秒左右、10MB 以内） -->
+       背景视频：hero.mp4（10 秒，无声，循环）。hero-poster.jpg 是视频加载出来之前先显示的第一帧。
+       换视频：把新文件也命名为 hero.mp4 覆盖即可；记得同时更新 hero-poster.jpg。 -->
   <section class="hero-frame" aria-label="AWELL Logistics Group">
-    <div class="bg bg-placeholder" aria-hidden="true"></div>
+    <video class="bg" src="hero.mp4" poster="hero-poster.jpg" autoplay muted loop playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
     <div class="tint"></div>
     <div class="stage">
       <p class="eyebrow"><span><span class="en">Why us</span><span class="zh">为什么选择我们</span></span></p>
