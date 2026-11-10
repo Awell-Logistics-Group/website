@@ -65,10 +65,10 @@
 <main id="top">
 
   <!-- ===== 首屏 =====
-       背景视频：hero.mp4（10 秒，无声）。播完停在最后一帧；翻走再翻回首屏时从头重播（network.js）。hero-poster.jpg 是视频加载出来之前先显示的第一帧。
+       背景视频两份：hero-hd.mp4（高清，约 8MB）和 hero.mp4（标准，约 3MB），network.js 按网速和屏幕自动选，卡了就换成标准版。10 秒，无声。播完停在最后一帧；翻走再翻回首屏时从头重播（network.js）。hero-poster.jpg 是视频加载出来之前先显示的第一帧。
        换视频：把新文件也命名为 hero.mp4 覆盖即可；记得同时更新 hero-poster.jpg。 -->
   <section class="hero-frame" aria-label="AWELL Logistics Group">
-    <video class="bg" src="hero.mp4" poster="hero-poster.jpg" autoplay muted playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
+    <video class="bg" data-hd="hero-hd.mp4" data-sd="hero.mp4" poster="hero-poster.jpg" autoplay muted playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
     <div class="tint"></div>
     <div class="stage">
       <p class="eyebrow"><span><span class="en">Why us</span><span class="zh">为什么选择我们</span></span></p>
