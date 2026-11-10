@@ -1,7 +1,7 @@
 // =========================================================
 // 首页服务动画：海运 / 空运 / 卡车 / 仓储
 //
-// 空运是单独的 3D 镜头（air3d.js）：飞机飞来 → 穿过云层 → 画面变白 → 光点 → 地图。
+// 空运是单独的镜头（air2d.js，线条风格的透视动画）：飞机飞来 → 穿过云层 → 画面变白 → 光点 → 地图。
 //
 // 海运 / 卡车 / 仓储每次切换播放一段约 4 秒的转场：
 //   1. 等轴测小场景出现（船 / 飞机 / 卡车 / 仓库），自带小循环动作
@@ -21,7 +21,7 @@
   var markerScale = svg.querySelector(".marker-scale");
   var spark = root.querySelector(".lane-fx .spark");
   var stage = root.querySelector(".lane-stage");
-  var canvas3d = stage.querySelector(".lane-3d");
+  var airSvg = stage.querySelector(".lane-air");
   var white = stage.querySelector(".lane-white");
   var marker = svg.querySelector(".marker");
   var tabs = Array.prototype.slice.call(root.querySelectorAll("[data-mode]"));
@@ -48,7 +48,7 @@
     rafId = null;
     marker.classList.remove("is-arrived");
     svg.querySelectorAll(".arc-glow").forEach(function (g) { g.style.strokeDashoffset = ""; });
-    canvas3d.classList.remove("is-on");
+    airSvg.classList.remove("is-on");
     svg.querySelectorAll(".vignette.is-live").forEach(function (v) { v.classList.remove("is-live"); });
   }
 
@@ -160,62 +160,59 @@
     }, 2450);
   }
 
-  // ---------- 空运：3D 镜头 + 光点 ----------
+  // ---------- 空运：飞机镜头 + 光点 ----------
   var airModule = null;
   function loadAir() {
-    if (!airModule) airModule = import("./air3d.js").catch(function () { airModule = null; return null; });
+    if (!airModule) airModule = import("./air2d.js").catch(function () { airModule = null; return null; });
     return airModule;
   }
 
   function playAirMode(my, lane, arcs, main, glow, nodes, cities, origin) {
-    var webgl = !!window.WebGLRenderingContext;
+    var from = { x: 500, y: 150 };          // 光点亮起的位置（有飞机时 = 飞机在画面上的位置）
     loadAir().then(function (mod) {
       if (my !== token) return;
-      if (!mod || !webgl) { mapPhase(0); return; }       // 3D 加载失败：直接从光点开始
-      canvas3d.classList.add("is-on");
-      var t0 = performance.now();
+      if (!mod) { sparkIn(0); mapPhase(380); return; }       // 加载失败：直接从光点开始
+      airSvg.classList.add("is-on");
       // 白光：飞机进云时慢慢变白
       anim(white, [{ opacity: 0 }, { opacity: 1 }], { duration: 450, delay: (mod.WHITE_AT - 0.2) * 1000, easing: "ease-in" });
-      mod.playAir(canvas3d, { cancelled: function () { return my !== token; } }).then(function (done) {
-        if (!done || my !== token) return;
-        canvas3d.classList.remove("is-on");
-        mapPhase(performance.now() - t0 - mod.END_AT * 1000);
+      // 飞机在白光里淡出（画面边缘白光盖不到的地方也一起消失）
+      anim(airSvg, [{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: (mod.WHITE_AT - 0.05) * 1000, easing: "ease-in" });
+      mod.playAir(airSvg, {
+        cancelled: function () { return my !== token; },
+        onWhiteout: function (pos) { if (my !== token) return; from = pos; sparkIn(0); }
+      }).then(function (res) {
+        if (!res || my !== token) return;
+        airSvg.classList.remove("is-on");
+        mapPhase(0);
       });
-      // 光点在白光里亮起
-      anim(spark, [
-        { opacity: 0, transform: "translate(500px, 150px) scale(0)" },
-        { opacity: 1, transform: "translate(500px, 150px) scale(2.6)" }
-      ], { duration: 380, delay: (mod.WHITE_AT + 0.05) * 1000, easing: "cubic-bezier(.2,.8,.2,1)" });
     });
 
-    // 地图部分（从白光散开开始算时间）
-    function mapPhase(late) {
-      var d = Math.max(0, -late);
-      if (!canvas3d.classList.contains("is-on")) {
-        // 没有 3D 时：光点直接在中间亮起
-        anim(spark, [
-          { opacity: 0, transform: "translate(500px, 150px) scale(0)" },
-          { opacity: 1, transform: "translate(500px, 150px) scale(2.6)" }
-        ], { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" });
-        d += 380;
-      }
+    // 光点在白光里亮起（飞机“变成”光点）
+    function sparkIn(delay) {
+      var at = "translate(" + from.x + "px, " + from.y + "px)";
+      anim(spark, [
+        { opacity: 0, transform: at + " scale(0)" },
+        { opacity: 1, transform: at + " scale(2.6)" }
+      ], { duration: 380, delay: delay, easing: "cubic-bezier(.2,.8,.2,1)" });
+    }
+
+    // 地图部分：白光散开，光点飞到起点，航线画出，光点沿主航线飞到美国
+    function mapPhase(d) {
       anim(dots, [{ opacity: 0 }, { opacity: 1 }], { duration: 600, delay: d, easing: EASE });
       anim(lane, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: d });
       anim(white, [{ opacity: 1 }, { opacity: 0 }], { duration: 600, delay: d, easing: "ease-out" });
-      // 光点从画面中间飞到起点，同时缩小
+      var at = "translate(" + from.x + "px, " + from.y + "px)";
       anim(spark, [
-        { opacity: 1, transform: "translate(500px, 150px) scale(2.6)" },
+        { opacity: 1, transform: at + " scale(2.6)" },
         { opacity: 1, transform: "translate(" + origin.x + "px, " + origin.y + "px) scale(1)", offset: .85 },
         { opacity: 0, transform: "translate(" + origin.x + "px, " + origin.y + "px) scale(1)" }
       ], { duration: 750, delay: d + 100, easing: EASE });
-      // 其他航线依次画出（主航线留给光点自己画）
       arcs.forEach(function (a, i) {
-        if (a === main) return;
+        if (a === main) return;                 // 主航线留给光点自己画
         anim(a, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 900, delay: d + 300 + i * 55, easing: EASE });
       });
       nodes.forEach(function (n, i) { anim(n, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: d + 300 + i * 30 }); });
       cities.forEach(function (c) { anim(c, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 900 }); });
-      // 光点变成圆点，拖着发光尾迹飞向美国
       var p0 = main.getPointAtLength(0);
       marker.setAttribute("transform", "translate(" + p0.x + " " + p0.y + ")");
       anim(marker, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: d + 760 });
@@ -265,7 +262,7 @@
     });
   });
 
-  // 网页加载完 2 秒后，悄悄预先加载空运的 3D（这样切到空运时马上能播）
+  // 网页加载完 2 秒后，悄悄预先加载空运的镜头（这样切到空运时马上能播）
   window.addEventListener("load", function () { setTimeout(function () { if (!reduce) loadAir(); }, 2000); });
   tabs.forEach(function (t) {
     if (t.getAttribute("data-mode") === "air") t.addEventListener("pointerenter", function () { if (!reduce) loadAir(); });

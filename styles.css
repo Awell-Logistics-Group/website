@@ -775,9 +775,9 @@ html[data-lang="zht"] .lane .city.en { display: none; }
 /* 主航线的发光尾迹：跟着光点一起画出来 */
 .lane .arc-glow { fill: none; stroke: var(--cyan); stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .45; }
 
-/* 空运：3D 画面 + 白光 + 光点 */
-.lane-3d { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity .25s; }
-.lane-3d.is-on { opacity: 1; }
+/* 空运：飞机镜头 + 白光 + 光点 */
+.lane-air { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.lane-air.is-on { opacity: 1; }
 .lane-white {
   position: absolute;
   inset: -8% -4%;
