@@ -8,7 +8,7 @@ Static site, English + Chinese. Dark theme; homepage first screen has a placehol
 - `quote.html` — quote request page. The form sends to imports@awellus.com through Web3Forms (free, 250 submissions/month). The access key is `WEB3FORMS_KEY` near the bottom of the file; the receiving address is whichever email the key was created with.
 - `site.js` — shared script for both pages: language switch, photo zoom, copy buttons.
 - `styles.css` — design. Brand colors are at the top in `:root`.
-- `hero-hd.mp4` — high-quality copy of the homepage video (~8 MB). Big screens on a normal connection get this one; if it is slow to start or stutters, the page switches to `hero.mp4`.
+- `hero-hd.mp4` — high-quality copy of the homepage video (~6 MB). Big screens on a normal connection get this one; if it is slow to start or stutters, the page switches to `hero.mp4`.
 - `hero.mp4` + `hero-poster.jpg` — homepage background video (1920×1080, 10 s, no sound; plays once and holds the last frame, replays when you come back to the first screen) and its first frame shown while it loads.
 - `logo-light.png` — logo recoloured for the dark background (used on every page). `logo.png` is the original.
 - `network.js` — starts the map animation on the homepage when it scrolls into view.
