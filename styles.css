@@ -719,10 +719,10 @@ body:has(.quote-page) .quote-page { flex: 1; }
   min-height: 520px;
   overflow: hidden;
   background: #0a0b0c;
-  --s: min(100vh / 800, 100vw / 716);
+  --s: min((100vh - 56px) / 800, 100vw / 716);   /* 减 56px：给顶栏留位置，矮屏幕上标题不会顶到菜单 */
   --cover: max(100vw / 1280, 100vh / 800);
 }
-@supports (height: 100dvh) { .hero-frame { --s: min(100dvh / 800, 100vw / 716); } }
+@supports (height: 100dvh) { .hero-frame { --s: min((100dvh - 56px) / 800, 100vw / 716); } }
 
 /* 背景视频（index.html 里的 <video class="bg">） */
 .hero-frame .bg {
@@ -742,7 +742,7 @@ body:has(.quote-page) .quote-page { flex: 1; }
     rgba(0,0,0,.062) 73%, rgba(0,0,0,.080) 81%, rgba(0,0,0,.090) 90%, rgba(0,0,0,.095) 100%);
 }
 .hero-frame .stage {
-  position: absolute; left: 50%; top: 50%;
+  position: absolute; left: 50%; top: calc(50% + 28px);
   width: 1280px; height: 800px;
   margin: -400px 0 0 -640px;
   transform: scale(var(--s)); transform-origin: 50% 50%;
@@ -750,10 +750,10 @@ body:has(.quote-page) .quote-page { flex: 1; }
 }
 
 .hero-frame .eyebrow {
-  position: absolute; left: 0; top: 67.8px; width: 1280px; margin: 0;
-  font: 700 7.4px/7.4px var(--ui); word-spacing: .522px; text-align: center; text-transform: uppercase;
+  position: absolute; left: 0; top: 52px; width: 1280px; margin: 0;
+  font: 700 11px/11px var(--ui); word-spacing: .6px; text-align: center; text-transform: uppercase;
   color: var(--ink); text-shadow: 0 1px 3px rgba(0,0,0,.45);
-  letter-spacing: 2.252px; text-indent: 2.252px;
+  letter-spacing: 3.2px; text-indent: 3.2px;
 }
 .hero-frame .eyebrow > span { position: relative; display: block; left: -.9px; }
 
@@ -763,49 +763,36 @@ body:has(.quote-page) .quote-page { flex: 1; }
   color: var(--ink); text-shadow: 0 15px 36px rgba(0,0,0,.5);
 }
 .hero-frame .headline .hl { position: absolute; left: 0; width: 1280px; display: block; white-space: nowrap; }
-.hero-frame .hl1 { top: 83.62px; letter-spacing: -.075px; left: .45px; text-indent: -.075px; }
-.hero-frame .hl2 { top: 137.02px; letter-spacing: -1.237px; text-indent: -1.237px; }
-.hero-frame .hl3 { top: 187.97px; letter-spacing: -.237px; left: 1.8px; text-indent: -.237px; }
-.hero-frame .hl4 { top: 247.92px; letter-spacing: -.487px; left: 1.35px; text-indent: -.487px; }
+.hero-frame .hl1 { top: 78px; letter-spacing: -.075px; left: .45px; text-indent: -.075px; }
+.hero-frame .hl2 { top: 146px; letter-spacing: -1.237px; text-indent: -1.237px; }
+.hero-frame .hl3 { top: 214px; letter-spacing: -.237px; left: 1.8px; text-indent: -.237px; }
+.hero-frame .hl4 { top: 282px; letter-spacing: -.487px; left: 1.35px; text-indent: -.487px; }
 /* 中文：汉字比英文字母高，字号缩小一点，免得上下行碰在一起 */
 html[data-lang="zh"] .hero-frame .headline, html[data-lang="zht"] .hero-frame .headline { font-size: 49px; }
 html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-frame .headline .hl { letter-spacing: .06em; margin-top: 6px; }
 
-.hero-frame .mark { position: absolute; left: 549.5px; top: 493.6px; width: 52px; height: 52px; overflow: visible; }
-
-.hero-frame .feature { position: absolute; top: 0; margin: 0; }
-.hero-frame .f-left { text-align: right; right: 748.5px; }
-.hero-frame .f-right { text-align: left; left: 748.5px; }
-.hero-frame .feature .icon { position: absolute; }
-.hero-frame .f-left .icon { right: -4.5px; top: 549.5px; width: 35px; height: 34px; }
-.hero-frame .f-right .icon { left: -3px; top: 547.5px; width: 35px; height: 38px; }
+/* 左右两块卖点：图标 + 标题 + 三行说明，沿中线左右对称 */
+.hero-frame .feature { position: absolute; top: 500px; margin: 0; }
+.hero-frame .f-left { text-align: right; right: 700px; }
+.hero-frame .f-right { text-align: left; left: 700px; }
+.hero-frame .feature .icon { display: block; width: 52px; height: 52px; margin-bottom: 18px; filter: drop-shadow(0 1px 4px rgba(0,0,0,.45)); }
+.hero-frame .f-left .icon { margin-left: auto; }
 .hero-frame .feature h2 {
-  position: absolute; top: 617.68px; margin: 0;
-  font: 700 19.57px/20px var(--ui); word-spacing: 1.838px; text-transform: uppercase;
-  color: var(--white); text-shadow: 0 1px 4px rgba(0,0,0,.4);
+  margin: 0 0 14px;
+  font: 700 27px/1.06 var(--ui); letter-spacing: .01em; text-transform: uppercase;
+  color: var(--white); text-shadow: 0 1px 6px rgba(0,0,0,.45);
 }
-.hero-frame .f-left h2 { right: 0; }
-.hero-frame .f-right h2 { left: 0; }
 .hero-frame .feature p {
-  position: absolute; top: 681.9px; margin: 0;
-  font: 400 12.28px/15.1px var(--ui); word-spacing: -.194px;
-  color: rgba(255,255,255,.88); text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  margin: 0;
+  font: 500 16.5px/1.45 var(--font);
+  color: rgba(255,255,255,.92); text-shadow: 0 1px 6px rgba(0,0,0,.5);
 }
-.hero-frame .f-left p { right: 12px; }
-.hero-frame .f-right p { left: 12px; }
-.hero-frame .feature .ln { position: relative; display: block; white-space: nowrap; }
-.hero-frame .f-left h2 .t1 { letter-spacing: -.109px; }
-.hero-frame .f-left h2 .t2 { letter-spacing: .246px; }
-.hero-frame .f-left p .b1 { letter-spacing: -.097px; left: .9px; }
-.hero-frame .f-left p .b2 { letter-spacing: -.271px; left: 1.8px; }
-.hero-frame .f-left p .b3 { letter-spacing: -.161px; left: .9px; }
-.hero-frame .f-right h2 .t1 { letter-spacing: -.354px; left: -.9px; }
-.hero-frame .f-right h2 .t2 { letter-spacing: -.154px; }
-.hero-frame .f-right p .b1 { letter-spacing: -.247px; left: -.9px; }
-.hero-frame .f-right p .b2 { letter-spacing: -.15px; left: -.9px; }
-.hero-frame .f-right p .b3 { letter-spacing: -.247px; left: -.9px; }
+.hero-frame .feature .ln { display: block; white-space: nowrap; }
+@media (min-width: 610px) and (min-aspect-ratio: 1001/1000) {   /* 只在电脑横屏上调中文；平板、手机有自己的字号 */
+  html[data-lang="zh"] .hero-frame .feature h2, html[data-lang="zht"] .hero-frame .feature h2 { font-size: 26px; line-height: 1.25; letter-spacing: .04em; }
+  html[data-lang="zh"] .hero-frame .feature p, html[data-lang="zht"] .hero-frame .feature p { font-size: 16px; line-height: 1.7; }
+}
 
-/* 往下滚的小提示 */
 .hero-frame .scroll-cue {
   position: absolute; left: 0; right: 0; width: max-content; margin: 0 auto; bottom: max(20px, env(safe-area-inset-bottom));
   font: 700 11px/1 var(--ui); letter-spacing: .3em; text-transform: uppercase; color: rgba(247,245,239,.6);
@@ -821,9 +808,8 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   .hero-frame .hl2 { animation-delay: .37s; }
   .hero-frame .hl3 { animation-delay: .46s; }
   .hero-frame .hl4 { animation-delay: .55s; }
-  .hero-frame .mark { transform-origin: 50% 50%; animation: markIn .7s cubic-bezier(.2,.9,.25,1) .72s both; }
-  .hero-frame .f-left { animation: blockInL .75s cubic-bezier(.16,1,.3,1) .82s both; }
-  .hero-frame .f-right { animation: blockInR .75s cubic-bezier(.16,1,.3,1) .9s both; }
+  .hero-frame .f-left { animation: blockInL .75s cubic-bezier(.16,1,.3,1) .75s both; }
+  .hero-frame .f-right { animation: blockInR .75s cubic-bezier(.16,1,.3,1) .83s both; }
   .hero-frame .scroll-cue { animation: riseIn .6s ease 1.6s both; }
 }
 .hero-frame.is-out * { animation: none !important; }   /* 首屏离开时复位动画，回来时重新播 */
@@ -834,7 +820,6 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   90%  { clip-path: inset(0% -30% -100% -30%); }
   100% { opacity: 1; transform: none; clip-path: inset(-80% -30% -100% -30%); }
 }
-@keyframes markIn { from { opacity: 0; transform: scale(.88); } to { opacity: 1; transform: none; } }
 @keyframes blockInL { from { opacity: 0; transform: translate(-12px, 8px); } to { opacity: 1; transform: none; } }
 @keyframes blockInR { from { opacity: 0; transform: translate(12px, 8px); } to { opacity: 1; transform: none; } }
 
@@ -851,14 +836,13 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
     grid-template-rows: auto auto 1fr auto auto minmax(0, .38fr);
     padding: calc(46 * var(--u) + 64px) clamp(24px, 5.2vw, 72px) calc(24 * var(--u) + 40px);
   }
-  .hero-frame .eyebrow, .hero-frame .headline, .hero-frame .feature, .hero-frame .feature h2, .hero-frame .feature p, .hero-frame .feature .icon { position: static; }
+  .hero-frame .eyebrow, .hero-frame .headline, .hero-frame .feature { position: static; }
   .hero-frame .eyebrow { grid-area: 1 / 1 / 2 / -1; width: auto; font-size: calc(11 * var(--u)); line-height: 1; letter-spacing: .304em; text-indent: .304em; word-spacing: .07em; margin-bottom: calc(20 * var(--u)); }
-  .hero-frame .headline { grid-area: 2 / 1 / 3 / -1; width: auto; font-size: calc(84 * var(--u)); line-height: .92; word-spacing: .0436em; }
+  .hero-frame .headline { grid-area: 2 / 1 / 3 / -1; width: auto; font-size: calc(84 * var(--u)); line-height: 1.06; word-spacing: .0436em; }
   .hero-frame .headline .hl { position: static; width: auto; letter-spacing: -.012em; text-indent: 0; }
-  .hero-frame .mark { position: relative; grid-area: 4 / 1 / 5 / -1; justify-self: center; left: auto; top: auto; right: 5%; width: calc(64 * var(--u)); height: calc(64 * var(--u)); margin-bottom: calc(16 * var(--u)); }
   .hero-frame .f-left { grid-area: 5 / 1 / 6 / 2; right: auto; }
   .hero-frame .f-right { grid-area: 5 / 3 / 6 / 4; left: auto; }
-  .hero-frame .feature .icon { display: block; width: calc(42 * var(--u)); height: calc(46 * var(--u)); margin-bottom: calc(14 * var(--u)); }
+  .hero-frame .feature .icon { display: block; width: calc(46 * var(--u)); height: calc(46 * var(--u)); margin-bottom: calc(14 * var(--u)); }
   .hero-frame .f-left .icon { margin-left: auto; margin-right: calc(-4.5 * var(--u)); }
   .hero-frame .f-right .icon { margin-right: auto; margin-left: calc(-3 * var(--u)); }
   .hero-frame .feature h2 { font-size: calc(22 * var(--u)); line-height: 1.08; word-spacing: .094em; margin-bottom: calc(12 * var(--u)); }
@@ -880,19 +864,18 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
     grid-template-rows: auto auto 1fr auto auto auto minmax(0, .3fr);
     padding: calc(30 * var(--u) + 60px) max(calc(22 * var(--u)), env(safe-area-inset-right)) max(calc(32 * var(--u) + 28px), env(safe-area-inset-bottom)) max(calc(22 * var(--u)), env(safe-area-inset-left));
   }
-  .hero-frame .eyebrow, .hero-frame .headline, .hero-frame .feature, .hero-frame .feature h2, .hero-frame .feature p, .hero-frame .feature .icon { position: static; }
+  .hero-frame .eyebrow, .hero-frame .headline, .hero-frame .feature { position: static; }
   .hero-frame .eyebrow { grid-row: 1; width: auto; font-size: clamp(8px, calc(9.5 * var(--u)), 11px); line-height: 1; letter-spacing: .304em; text-indent: .304em; margin-bottom: calc(16 * var(--u)); }
-  .hero-frame .headline { grid-row: 2; width: auto; font-size: clamp(26px, min(11.6vw, calc(52 * var(--u))), 64px); line-height: .92; }
+  .hero-frame .headline { grid-row: 2; width: auto; font-size: clamp(26px, min(11.6vw, calc(52 * var(--u))), 64px); line-height: 1.06; }
   .hero-frame .headline .hl { position: static; width: auto; letter-spacing: -.012em; text-indent: 0; }
-  .hero-frame .mark { position: relative; grid-row: 4; justify-self: center; left: auto; top: auto; right: 5%; width: clamp(38px, calc(46 * var(--u)), 54px); height: clamp(38px, calc(46 * var(--u)), 54px); margin-bottom: calc(18 * var(--u)); }
   .hero-frame .f-left { grid-row: 5; right: auto; margin-bottom: calc(26 * var(--u)); }
   .hero-frame .f-right { grid-row: 6; left: auto; }
-  .hero-frame .feature .icon { display: block; width: clamp(26px, calc(34 * var(--u)), 40px); height: clamp(28px, calc(37 * var(--u)), 43px); margin-bottom: 10px; }
+  .hero-frame .feature .icon { display: block; width: clamp(30px, calc(38 * var(--u)), 44px); height: clamp(30px, calc(38 * var(--u)), 44px); margin-bottom: 10px; }
   .hero-frame .f-left .icon { margin-left: auto; margin-right: calc(-4 * var(--u)); }
   .hero-frame .f-right .icon { margin-right: auto; margin-left: calc(-3 * var(--u)); }
-  .hero-frame .feature h2 { font-size: clamp(15px, calc(17 * var(--u)), 20px); line-height: 1.08; margin-bottom: 8px; }
+  .hero-frame .feature h2 { font-size: clamp(16px, calc(19 * var(--u)), 22px); line-height: 1.08; margin-bottom: 8px; }
   .hero-frame .feature h2 .ln { white-space: normal; left: 0; }
-  .hero-frame .feature p { font-size: clamp(11.5px, calc(13.5 * var(--u)), 14.5px); line-height: 1.36; max-width: calc(320 * var(--u)); }
+  .hero-frame .feature p { font-size: clamp(12.5px, calc(14.5 * var(--u)), 16px); line-height: 1.42; max-width: calc(320 * var(--u)); }
   .hero-frame .feature p .ln { display: inline; white-space: normal; left: 0; }
   .hero-frame .f-left p { margin-left: auto; }
   .hero-frame .f-right p { margin-right: auto; }
