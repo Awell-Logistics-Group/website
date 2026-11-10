@@ -975,5 +975,6 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
    ========================================================= */
 html:has(.hero-frame) { scroll-snap-type: y mandatory; }
 .hero-frame, .network { scroll-snap-align: start; scroll-snap-stop: always; }
-.after-intro { scroll-snap-align: start; }
+.after-intro { scroll-snap-align: start; scroll-margin-top: 69px; }   /* 69px = 顶栏高度：停下来时数字那一栏正好在顶栏下面，不被挡住 */
+.has-hero .docket { padding-top: 36px; }
 .has-hero .footer { scroll-snap-align: end; }

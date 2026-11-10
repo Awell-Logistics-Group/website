@@ -26,7 +26,7 @@
       if (!e.isIntersecting || e.intersectionRatio < 0.03) reset(e.target);   // 离开了：复位
       else if (e.intersectionRatio >= 0.6) play(e.target);                    // 露出 60% 以上：播放（已经在播就不会重复）
     });
-  }, { threshold: [0, 0.03, 0.6] });
+  }, { threshold: [0, 0.03, 0.6], rootMargin: "-69px 0px 0px 0px" });   // 顶栏挡住的 69px 不算“看得见”
   [hero, net].forEach(function (el) { if (el) io.observe(el); });
 })();
 
@@ -40,7 +40,9 @@
   var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var busy = false, started = 0, lastWheel = 0;
 
-  function stops() { return [0, net.offsetTop, rest.offsetTop]; }   // 三个停靠位置：首屏、地图、后面的内容
+  var bar = document.querySelector(".topbar");
+  // 三个停靠位置：首屏、地图、后面的内容。第三个要往上让出顶栏的高度，不然数字那一栏的上半截被顶栏挡住
+  function stops() { return [0, net.offsetTop, rest.offsetTop - (bar ? bar.offsetHeight : 0)]; }
   function release() {
     // 触控板松手后还会“惯性”发一阵滚动事件：等它停了再接受下一次翻页，不然一下翻两屏
     var now = Date.now();
