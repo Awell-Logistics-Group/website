@@ -65,13 +65,11 @@
 <main id="top">
 
   <!-- ===== 首屏 =====
-       现在是浅色背景（没有视频）。放视频的方法见下面背景那里的注释。 -->
+       背景是视频；上面盖一层很淡的白色（.tint），底部模糊并渐变成白色，和第二屏接上。 -->
   <section class="hero-frame" aria-label="AWELL Logistics Group">
-    <div class="bg bg-placeholder" aria-hidden="true"></div>
-    <!-- 以后放浅色视频：把上面这一行换成下面这一行（去掉注释符号），视频文件放进文件夹并改好名字。
-         network.js 会自动选高清 / 标准版，卡了自动换。
-    <video class="bg" data-hd="hero-hd.mp4" data-sd="hero.mp4" poster="hero-poster.jpg" autoplay muted playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
-    -->
+    <!-- 背景视频：飞机、船、卡车依次出现，播完停在最后一帧（三样都在画面里）。
+         hero-hd.mp4 / hero.mp4 两份，network.js 自动选；hero-poster.jpg 是第一帧，hero-end.jpg 是最后一帧。 -->
+    <video class="bg" data-hd="hero-hd.mp4" data-sd="hero.mp4" data-end="hero-end.jpg" poster="hero-poster.jpg" autoplay muted playsinline disablepictureinpicture preload="auto" aria-hidden="true"></video>
     <div class="tint"></div>
     <div class="stage">
       <p class="eyebrow"><span><span class="en">Why us</span><span class="zh">为什么选择我们</span></span></p>
@@ -83,6 +81,13 @@
         <span class="hl hl4"><span class="en">delivered.</span><span class="zh">稳稳送到。</span></span>
       </h1>
 
+    </div>
+    <a class="scroll-cue" href="#network"><span class="en">Scroll</span><span class="zh">向下</span></a>
+  </section>
+
+  <!-- 首屏下面的两块卖点：毛玻璃卡片，一半压在视频淡出的地方，把首屏和第二屏接起来 -->
+  <section class="hero-points" aria-label="Why AWELL">
+    <div class="hp-grid">
       <!-- 左：文件齐全、货物安全 -->
       <section class="feature f-left">
         <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#15171A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -117,7 +122,6 @@
         </p>
       </section>
     </div>
-    <a class="scroll-cue" href="#network"><span class="en">Scroll</span><span class="zh">向下</span></a>
   </section>
 
   <!-- ===== 第二屏：物流网络地图 =====

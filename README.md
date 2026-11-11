@@ -1,6 +1,6 @@
 # AWELL Logistics Group website
 
-Static site, English + Chinese. Light theme (white background, blue accents). The homepage first screen has a plain light background for now; the comment there in `index.html` shows how to put a video back.
+Static site, English + Chinese. Light theme (white background, blue accents). The homepage first screen has a background video that fades and blurs into the white second screen.
 
 ## Files
 
@@ -8,7 +8,8 @@ Static site, English + Chinese. Light theme (white background, blue accents). Th
 - `quote.html` — quote request page. The form sends to imports@awellus.com through Web3Forms (free, 250 submissions/month). The access key is `WEB3FORMS_KEY` near the bottom of the file; the receiving address is whichever email the key was created with.
 - `site.js` — shared script for both pages: language switch, photo zoom, copy buttons.
 - `styles.css` — design. Brand colors are at the top in `:root`.
-- `hero-hd.mp4`, `hero.mp4`, `hero-poster.jpg` — the old dark train video (not used right now). When a light video is ready, replace these three files and un-comment the `<video>` line in `index.html`; big screens get the HD copy, and the page switches to the standard one if it stutters.
+- `hero-hd.mp4`, `hero.mp4` — homepage background video (plane, ship and truck; 5 s, no sound). Plays once and stops on the last frame; replays when you come back to the first screen. Big screens get the HD copy; the page switches to the standard copy if it stutters.
+- `hero-poster.jpg`, `hero-end.jpg` — first and last frames of the video (shown while it loads, and to visitors who turned off motion).
 - `logo.png` — the company logo (used on every page). `logo-light.png` was for the old dark theme and isn't used.
 - `network.js` — starts the map animation on the homepage when it scrolls into view.
 - `favicon.svg` — browser tab icon.
