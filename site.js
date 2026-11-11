@@ -165,3 +165,49 @@
   window.addEventListener("scroll", upd, { passive: true });
   upd();
 })();
+
+// ===== 第一次来的访客：在右上角语言按钮下面弹一个小提示 =====
+// 只出现一次（记在浏览器里）；已经自己选过语言的人不弹。
+// 显示 SHOW_MS 毫秒后自动淡出；鼠标停在上面时不会消失；点 × 立刻关掉。
+(function () {
+  var SHOW_MS = 2500;
+  var sw = document.querySelector(".lang-switch");
+  if (!sw) return;
+  try {
+    if (localStorage.getItem("awell-lang") || localStorage.getItem("awell-lang-tip")) return;
+    localStorage.setItem("awell-lang-tip", "1");
+  } catch (e) { return; }   // 浏览器不让存东西（隐私模式等）：干脆不弹，免得每次都弹
+
+  var tip = document.createElement("div");
+  tip.className = "lang-tip";
+  tip.setAttribute("role", "status");
+  tip.innerHTML =
+    '<p><span lang="en">Switch language here</span>' +
+    '<span lang="zh-CN">在这里切换语言</span>' +
+    '<span lang="zh-Hant">在這裡切換語言</span></p>' +
+    '<button type="button" class="lang-tip-x" aria-label="Close">×</button>';
+  document.body.appendChild(tip);
+
+  function place() {   // 对准语言按钮：在它正下方，小箭头指着按钮中间
+    var r = sw.getBoundingClientRect();
+    tip.style.top = (r.bottom + 12) + "px";
+    tip.style.right = Math.max(12, window.innerWidth - r.right) + "px";
+    tip.style.setProperty("--arrow", Math.min(r.width / 2, 120) + "px");
+  }
+  var timer;
+  function hide() {
+    clearTimeout(timer);
+    tip.classList.remove("show");
+    setTimeout(function () { tip.remove(); }, 400);
+    window.removeEventListener("resize", place);
+  }
+  function startTimer() { clearTimeout(timer); timer = setTimeout(hide, SHOW_MS); }
+
+  place();
+  window.addEventListener("resize", place);
+  setTimeout(function () { tip.classList.add("show"); startTimer(); }, 900);   // 等页面先出来一下再弹
+  tip.addEventListener("mouseenter", function () { clearTimeout(timer); });
+  tip.addEventListener("mouseleave", startTimer);
+  tip.querySelector(".lang-tip-x").addEventListener("click", hide);
+  sw.addEventListener("click", hide);   // 点了语言按钮，提示就没用了
+})();

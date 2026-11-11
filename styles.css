@@ -978,3 +978,31 @@ html:has(.hero-frame) { scroll-snap-type: y mandatory; }
 .after-intro { scroll-snap-align: start; scroll-margin-top: 69px; }   /* 69px = 顶栏高度：停下来时数字那一栏正好在顶栏下面，不被挡住 */
 .has-hero .docket { padding-top: 36px; }
 .has-hero .footer { scroll-snap-align: end; }
+
+/* ===== 语言提示小窗（第一次访问时，语言按钮下面） ===== */
+.lang-tip {
+  position: fixed; z-index: 60;
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 10px 12px 16px;
+  background: var(--white); color: #15171A;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  opacity: 0; transform: translateY(-6px); pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease;
+}
+.lang-tip.show { opacity: 1; transform: none; pointer-events: auto; }
+.lang-tip::before {   /* 指向语言按钮的小三角 */
+  content: ""; position: absolute; top: -7px; right: calc(var(--arrow, 40px) - 7px);
+  border: 7px solid transparent; border-top: 0; border-bottom-color: var(--white);
+}
+.lang-tip p { margin: 0; font: 600 14px/1.45 var(--font); }
+.lang-tip p span { display: block; }
+.lang-tip p span:first-child { color: var(--btn); }
+.lang-tip-x {
+  flex: none; width: 26px; height: 26px; margin: -4px 0 0;
+  border: 0; border-radius: 50%; background: transparent;
+  font: 400 20px/26px var(--font); color: #6B6E73; cursor: pointer;
+}
+.lang-tip-x:hover { background: #ECEAE4; color: #15171A; }
+.lang-tip-x:focus-visible { outline: 2px solid var(--btn); outline-offset: 1px; }
+@media (prefers-reduced-motion: reduce) { .lang-tip { transition: none; } }
