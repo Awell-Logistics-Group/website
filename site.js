@@ -172,7 +172,7 @@
 // 鼠标停在上面时不会消失；点 × 立刻关掉。
 (function () {
   var BLINK_MS = 1600;   // 淡入 + 闪两下的时间，和 styles.css 里 tipBlink 动画对应
-  var SHOW_MS = 2800;    // 闪完以后再停留多久
+  var SHOW_MS = 4800;    // 闪完以后再停留多久
   var sw = document.querySelector(".lang-switch");
   if (!sw) return;
   try {
