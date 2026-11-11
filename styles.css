@@ -1013,3 +1013,58 @@ html[data-lang="zh"] .hero-points .feature h2 .ln + .ln::before, html[data-lang=
   .hero-points .feature h2 { font-size: 23px; }
   .hero-points .feature p { font-size: 16.5px; }
 }
+
+/* ===== 出运国家/地区：一大串数字 + 其他国家 ===== */
+.origins { background: var(--mist); padding: 40px 0 8px; }
+.origins-inner { display: flex; align-items: center; gap: 24px 56px; flex-wrap: wrap; }
+.origins-lead { margin: 0; display: flex; align-items: baseline; gap: 12px; }
+.origins-lead strong { font: 700 52px/1 var(--display); color: var(--blue); letter-spacing: .01em; }
+.origins-lead span { font-size: 19px; font-weight: 650; }
+.origins-rest { flex: 1; min-width: 280px; }
+.origins-label { margin: 0 0 10px; color: var(--steel); font-size: 16px; }
+.origins-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.origins-list li { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: 16px; font-weight: 600; }
+.origins + .docket { padding-top: 28px; }
+
+/* ===== FDA ===== */
+.fda-cats { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fda-cats li { padding: 18px 20px; border-radius: 12px; background: var(--mist); border-left: 4px solid var(--blue); }
+.fda-cats h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.fda-cats p { margin: 0; color: var(--steel); font-size: 16px; line-height: 1.5; }
+.fda-services { margin: 0; }
+.fda-services > div { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 4px 24px; padding: 14px 0; border-top: 1px solid var(--line); }
+.fda-services > div:last-child { border-bottom: 1px solid var(--line); }
+.fda-services dt { font-weight: 700; }
+.fda-services dd { margin: 0; color: var(--steel); }
+.fda-note { margin: 20px 0 0; padding: 14px 18px; background: #EEF4FB; border-radius: 10px; color: #2B3B52; font-size: 16px; line-height: 1.6; }
+
+/* ===== 合作仓库 ===== */
+.wh-types { width: 100%; border-collapse: collapse; font-size: 17px; }
+.wh-types th { text-align: left; font-size: 15px; color: var(--steel); font-weight: 600; padding: 0 12px 10px 0; border-bottom: 1.5px solid var(--ink); }
+.wh-types td { padding: 14px 12px 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.wh-types td:first-child { width: 42%; }
+.wh-types td:last-child { color: var(--steel); }
+.wh-example-title { margin: 64px 0 24px; font-size: 22px; font-weight: 700; }
+
+@media (max-width: 600px) {
+  .origins-lead strong { font-size: 42px; }
+  .fda-cats { grid-template-columns: 1fr; }
+  .fda-services > div { grid-template-columns: 1fr; }
+  .wh-types td:first-child { width: 46%; }
+  .wh-example-title { margin-top: 48px; font-size: 20px; }
+}
+
+/* 首屏背景图：电脑上稍微往右取景，飞机机头不被切掉 */
+.hero-frame .bg { object-position: 58% 55%; }
+/* 平板竖屏、手机：屏幕是竖的，铺满会把飞机切掉。改成整张图放在下半部分，
+   上面用和图片天空一样的蓝色补满，飞机、船、卡车都看得到 */
+@media (max-aspect-ratio: 3/4) {
+  .hero-frame { background: linear-gradient(to bottom, #67A3E6 0%, #75AEEB 45%, #86B3E0 70%); }
+  .hero-frame .bg {
+    inset: auto; left: -46%; bottom: 13%; width: 160%; height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%); mask-image: linear-gradient(to bottom, transparent 0, #000 18%);
+  }
+}
+@media (max-aspect-ratio: 3/4) and (min-width: 610px) {   /* 平板竖屏：图小一点，飞机不会顶到标题 */
+  .hero-frame .bg { left: -12%; width: 122%; bottom: 12%; }
+}
