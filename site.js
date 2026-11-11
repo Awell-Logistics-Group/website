@@ -168,9 +168,11 @@
 
 // ===== 第一次来的访客：在右上角语言按钮下面弹一个小提示 =====
 // 只出现一次（记在浏览器里）；已经自己选过语言的人不弹。
-// 显示 SHOW_MS 毫秒后自动淡出；鼠标停在上面时不会消失；点 × 立刻关掉。
+// 出现后先“暗-亮”闪两下（BLINK_MS），再停留 SHOW_MS 毫秒，然后淡出。
+// 鼠标停在上面时不会消失；点 × 立刻关掉。
 (function () {
-  var SHOW_MS = 2500;
+  var BLINK_MS = 1600;   // 淡入 + 闪两下的时间，和 styles.css 里 tipBlink 动画对应
+  var SHOW_MS = 2800;    // 闪完以后再停留多久
   var sw = document.querySelector(".lang-switch");
   if (!sw) return;
   try {
@@ -197,15 +199,18 @@
   var timer;
   function hide() {
     clearTimeout(timer);
-    tip.classList.remove("show");
-    setTimeout(function () { tip.remove(); }, 400);
+    tip.classList.add("hide");   // 淡出（styles.css 的 tipOut）
+    setTimeout(function () { tip.remove(); }, 450);
     window.removeEventListener("resize", place);
   }
   function startTimer() { clearTimeout(timer); timer = setTimeout(hide, SHOW_MS); }
 
   place();
   window.addEventListener("resize", place);
-  setTimeout(function () { tip.classList.add("show"); startTimer(); }, 900);   // 等页面先出来一下再弹
+  setTimeout(function () {   // 等页面先出来一下再弹
+    tip.classList.add("show");
+    clearTimeout(timer); timer = setTimeout(hide, BLINK_MS + SHOW_MS);
+  }, 900);
   tip.addEventListener("mouseenter", function () { clearTimeout(timer); });
   tip.addEventListener("mouseleave", startTimer);
   tip.querySelector(".lang-tip-x").addEventListener("click", hide);

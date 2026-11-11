@@ -982,27 +982,43 @@ html:has(.hero-frame) { scroll-snap-type: y mandatory; }
 /* ===== 语言提示小窗（第一次访问时，语言按钮下面） ===== */
 .lang-tip {
   position: fixed; z-index: 60;
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 12px 10px 12px 16px;
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 14px 18px 22px;
   background: var(--white); color: #15171A;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-  opacity: 0; transform: translateY(-6px); pointer-events: none;
-  transition: opacity .35s ease, transform .35s ease;
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .4);
+  opacity: 0; transform: translateY(-8px); pointer-events: none;
+  transition: opacity .4s ease, transform .4s ease;
 }
 .lang-tip.show { opacity: 1; transform: none; pointer-events: auto; }
-.lang-tip::before {   /* 指向语言按钮的小三角 */
-  content: ""; position: absolute; top: -7px; right: calc(var(--arrow, 40px) - 7px);
-  border: 7px solid transparent; border-top: 0; border-bottom-color: var(--white);
+/* 出现后“暗-亮”闪两下，引起注意；之后保持亮着 */
+@media (prefers-reduced-motion: no-preference) {
+  .lang-tip.show { animation: tipBlink 1.6s ease-in-out both; }
 }
-.lang-tip p { margin: 0; font: 600 14px/1.45 var(--font); }
+.lang-tip.show.hide { animation: tipOut .4s ease forwards; pointer-events: none; }   /* 淡出消失 */
+@keyframes tipOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-8px); } }
+@keyframes tipBlink {   /* 淡入 → 暗 → 亮 → 暗 → 亮 */
+  0% { opacity: 0; transform: translateY(-8px); }
+  20%, 50%, 80%, 100% { opacity: 1; transform: none; }
+  35%, 65% { opacity: .3; transform: none; }
+}
+.lang-tip::before {   /* 指向语言按钮的小三角 */
+  content: ""; position: absolute; top: -9px; right: calc(var(--arrow, 40px) - 9px);
+  border: 9px solid transparent; border-top: 0; border-bottom-color: var(--white);
+}
+.lang-tip p { margin: 0; font: 600 18px/1.5 var(--font); }
 .lang-tip p span { display: block; }
-.lang-tip p span:first-child { color: var(--btn); }
+.lang-tip p span:first-child { color: var(--btn); font-size: 19px; }
 .lang-tip-x {
-  flex: none; width: 26px; height: 26px; margin: -4px 0 0;
+  flex: none; width: 34px; height: 34px; margin: -6px 0 0;
   border: 0; border-radius: 50%; background: transparent;
-  font: 400 20px/26px var(--font); color: #6B6E73; cursor: pointer;
+  font: 400 26px/34px var(--font); color: #6B6E73; cursor: pointer;
 }
 .lang-tip-x:hover { background: #ECEAE4; color: #15171A; }
 .lang-tip-x:focus-visible { outline: 2px solid var(--btn); outline-offset: 1px; }
+@media (max-width: 609px) {
+  .lang-tip { padding: 14px 10px 14px 18px; }
+  .lang-tip p { font-size: 16px; }
+  .lang-tip p span:first-child { font-size: 17px; }
+}
 @media (prefers-reduced-motion: reduce) { .lang-tip { transition: none; } }
