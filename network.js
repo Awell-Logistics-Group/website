@@ -1,7 +1,7 @@
 // =========================================================
 // 首屏视频：高清 / 标准两份，自动选
-//   电脑大屏、网速正常 → 先试高清（hero-hd.mp4）
-//   手机小屏、省流量模式、网速慢 → 直接用标准（hero.mp4）
+//   默认都用高清（hero-hd.mp4，2560 宽），电脑、手机都一样
+//   省流量模式、网速慢 → 直接用标准版（hero.mp4，1080p）
 //   高清 2.5 秒还没开始播，或者播的时候卡住（缓冲）→ 立刻换成标准版，
 //   并且记住：这次访问后面都用标准版
 // =========================================================
@@ -15,8 +15,7 @@
 
   var SD = v.getAttribute("data-sd"), HD = v.getAttribute("data-hd");
   var c = navigator.connection || {};
-  var slowNet = c.saveData || /(^|-)2g|3g/.test(c.effectiveType || "") || (c.downlink && c.downlink < 5);
-  var bigScreen = Math.max(screen.width, screen.height) * (window.devicePixelRatio || 1) >= 1600;
+  var slowNet = c.saveData || /(^|-)2g|3g/.test(c.effectiveType || "") || (c.downlink && c.downlink < 3);
   var hadTrouble = false;
   try { hadTrouble = sessionStorage.getItem("awell-video-sd") === "1"; } catch (e) {}
 
@@ -32,7 +31,7 @@
     });
   }
 
-  if (!HD || slowNet || !bigScreen || hadTrouble) { v.src = SD; return; }
+  if (!HD || slowNet || hadTrouble) { v.src = SD; return; }
 
   v.src = HD;
   var started = false;

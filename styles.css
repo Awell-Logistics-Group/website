@@ -117,6 +117,16 @@ section[id] { scroll-margin-top: 72px; }   /* 点菜单跳转时不被顶栏挡�
 }
 .nav a.nav-cta { color: var(--white); }
 .nav a.nav-cta:hover { background: var(--blue); color: var(--white); }
+/* 联系我们 + 免费报价：两个方块按钮，一样大，联系我们白底蓝框，免费报价蓝底白字 */
+.nav-actions { display: inline-flex; gap: 10px; }
+.nav a.nav-cta, .nav a.nav-contact {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 42px; padding: 0 18px; border-radius: 8px;
+  font-weight: 700; font-size: 16px; white-space: nowrap;
+}
+.nav a.nav-contact { background: var(--paper); color: var(--btn); border: 2px solid var(--btn); }
+.nav a.nav-contact:hover { background: #EEF4FB; color: var(--btn); }
+.nav a.nav-cta { border: 2px solid var(--btn); }
 
 .lang-switch {
   display: inline-flex;
@@ -465,7 +475,7 @@ html[data-lang="zht"] .pain { font-style: normal; }
   .section { padding: 72px 0; }
   .steps { grid-template-columns: 1fr 1fr; }
   .pains li { grid-template-columns: 1fr; }
-  .nav a:not(.nav-cta) { display: none; }
+  .nav > a { display: none; }   /* 小屏只留“联系我们”“免费报价”两个按钮和语言切换 */
   .gallery, .gallery-feature { grid-template-columns: 1fr 1fr; }
 }
 
@@ -473,7 +483,14 @@ html[data-lang="zht"] .pain { font-style: normal; }
   :root { --gutter: 16px; }
   body { font-size: 17px; }
   .nav { gap: 14px; }
-  .nav a.nav-cta { padding: 6px 12px; font-size: 14px; }
+  /* 手机：logo 和语言切换在第一行，两个按钮占满第二行，一眼就能看到 */
+  .topbar-inner { flex-wrap: wrap; row-gap: 8px; padding-top: 8px; padding-bottom: 10px; min-height: 0; }
+  .nav { display: contents; }
+  .lang-switch { margin-left: auto; }
+  .nav-actions { order: 3; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .network { padding-top: calc(112px + clamp(8px, 2vh, 24px)); }   /* 手机顶栏变高了，地图标题往下让一点 */
+  section[id] { scroll-margin-top: 116px; }
+  .nav a.nav-cta, .nav a.nav-contact { min-height: 44px; font-size: 16px; }
   .lang-switch button { padding: 5px 9px; }
   .services { grid-template-columns: 1fr; }
   .bl-grid { grid-template-columns: 1fr; }
@@ -738,7 +755,7 @@ body:has(.quote-page) .quote-page { flex: 1; }
   position: absolute; inset: 0; pointer-events: none;
   /* 一层很淡的白色：顶栏下面和标题后面亮一点，看字更清楚 */
   background:
-    radial-gradient(ellipse 42% 30% at 50% 29%, rgba(255,255,255,.62), rgba(255,255,255,0) 72%),
+    radial-gradient(ellipse 40% 22% at 50% 42%, rgba(255,255,255,.55), rgba(255,255,255,0) 72%),
     linear-gradient(to bottom, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 15%);
 }
 /* 底部先“毛玻璃”模糊，越往下越糊…… */
@@ -761,7 +778,7 @@ body:has(.quote-page) .quote-page { flex: 1; }
 }
 
 .hero-frame .eyebrow { text-shadow: 0 0 12px rgba(255,255,255,.95);
-  position: absolute; left: 0; top: 84px; width: 1280px; margin: 0;
+  position: absolute; left: 0; top: 206px; width: 1280px; margin: 0;
   font: 700 13px/13px var(--ui); word-spacing: .6px; text-align: center; text-transform: uppercase;
   color: var(--steel);
   letter-spacing: 3.2px; text-indent: 3.2px;
@@ -775,10 +792,14 @@ body:has(.quote-page) .quote-page { flex: 1; }
   text-shadow: 0 0 26px rgba(255,255,255,.9), 0 0 3px rgba(255,255,255,.7);   /* 白色光晕：压在天空和飞机上也看得清 */
 }
 .hero-frame .headline .hl { position: absolute; left: 0; width: 1280px; display: block; white-space: nowrap; }
-.hero-frame .hl1 { top: 110px; letter-spacing: -.075px; left: .45px; text-indent: -.075px; }
-.hero-frame .hl2 { top: 178px; letter-spacing: -1.237px; text-indent: -1.237px; }
-.hero-frame .hl3 { top: 246px; letter-spacing: -.237px; left: 1.8px; text-indent: -.237px; }
-.hero-frame .hl4 { top: 314px; letter-spacing: -.487px; left: 1.35px; text-indent: -.487px; }
+/* 电脑上标题排成两行，放在飞机和船中间那条空白天空里（视频最后一帧飞机在上方、船在下方）：
+   第一行 = hl1 + hl2，第二行 = hl3 + hl4；每行左半句靠右、右半句靠左，拼在中线两边 */
+@media (min-width: 610px) and (min-aspect-ratio: 1001/1000) {
+  .hero-frame .headline .hl1, .hero-frame .headline .hl3 { width: 640px; left: 0; text-align: right; padding-right: .14em; }
+  .hero-frame .headline .hl2, .hero-frame .headline .hl4 { width: 640px; left: 640px; text-align: left; padding-left: .14em; }
+  .hero-frame .headline .hl1, .hero-frame .headline .hl2 { top: 234px; }
+  .hero-frame .headline .hl3, .hero-frame .headline .hl4 { top: 302px; }
+}
 /* 中文：汉字比英文字母高，字号缩小一点，免得上下行碰在一起 */
 html[data-lang="zh"] .hero-frame .headline, html[data-lang="zht"] .hero-frame .headline { font-size: 56px; }
 html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-frame .headline .hl { letter-spacing: .06em; margin-top: 6px; }
@@ -801,6 +822,7 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   .hero-frame .hl4 { animation-delay: .23s; }
   .hero-points .f-left { animation: blockInL .55s cubic-bezier(.16,1,.3,1) .35s both; }
   .hero-points .f-right { animation: blockInR .55s cubic-bezier(.16,1,.3,1) .42s both; }
+  .hero-points .f-team { animation: blockInR .55s cubic-bezier(.16,1,.3,1) .49s both; }
   .hero-frame .scroll-cue { display: none; text-shadow: 0 0 10px #fff; animation: riseIn .5s ease .9s both; }
 }
 .hero-frame.is-out * { animation: none !important; }   /* 首屏离开时复位动画，回来时重新播 */
@@ -842,7 +864,7 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: auto auto 1fr auto auto auto minmax(0, .3fr);
-    padding: calc(30 * var(--u) + 60px) max(calc(22 * var(--u)), env(safe-area-inset-right)) max(calc(32 * var(--u) + 28px), env(safe-area-inset-bottom)) max(calc(22 * var(--u)), env(safe-area-inset-left));
+    padding: calc(20 * var(--u) + 118px) max(calc(22 * var(--u)), env(safe-area-inset-right))   /* 118px：手机顶栏两行（logo + 两个按钮）的高度 */ max(calc(32 * var(--u) + 28px), env(safe-area-inset-bottom)) max(calc(22 * var(--u)), env(safe-area-inset-left));
   }
   .hero-frame .eyebrow, .hero-frame .headline { position: static; }
   .hero-frame .eyebrow { text-shadow: 0 0 12px rgba(255,255,255,.95); grid-row: 1; width: auto; font-size: clamp(8px, calc(9.5 * var(--u)), 11px); line-height: 1; letter-spacing: .304em; text-indent: .304em; margin-bottom: calc(16 * var(--u)); }
@@ -991,7 +1013,7 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
 
 /* ===== 首屏下面的两块卖点（毛玻璃卡片，往上压住视频淡出的那一段） ===== */
 .hero-points { position: relative; z-index: 2; margin-top: -96px; padding: 0 var(--gutter) 24px; }
-.hp-grid { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.hp-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .hero-points .feature {
   margin: 0; padding: 28px 32px 30px;
   background: rgba(255, 255, 255, .78);
@@ -1001,11 +1023,15 @@ html[data-lang="zh"] .hero-frame .headline .hl, html[data-lang="zht"] .hero-fram
   box-shadow: 0 14px 40px rgba(20, 45, 90, .12);
 }
 .hero-points .feature .icon { display: block; width: 48px; height: 48px; margin-bottom: 14px; }
-.hero-points .feature h2 { margin: 0 0 10px; font: 700 27px/1.1 var(--ui); letter-spacing: .01em; text-transform: uppercase; color: var(--ink); }
+.hero-points .feature h2 { margin: 0 0 10px; font: 700 25px/1.1 var(--ui); letter-spacing: .01em; text-transform: uppercase; color: var(--ink); }
 .hero-points .feature p { margin: 0; font-size: 17.5px; line-height: 1.55; color: #3A3E44; }
 .hero-points .feature .ln { display: inline; }   /* 卡片里文字自然换行 */
 html[data-lang="zh"] .hero-points .feature h2, html[data-lang="zht"] .hero-points .feature h2 { font-size: 25px; letter-spacing: .04em; }
 html[data-lang="zh"] .hero-points .feature h2 .ln + .ln::before, html[data-lang="zht"] .hero-points .feature h2 .ln + .ln::before { content: " · "; color: var(--steel); }
+@media (max-width: 1000px) and (min-width: 721px) {
+  .hp-grid { grid-template-columns: 1fr 1fr; }
+  .hero-points .f-team { grid-column: 1 / -1; }
+}
 @media (max-width: 720px) {
   .hero-points { margin-top: -64px; }
   .hp-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -1055,7 +1081,7 @@ html[data-lang="zh"] .hero-points .feature h2 .ln + .ln::before, html[data-lang=
 }
 
 /* 首屏背景图：电脑上稍微往右取景，飞机机头不被切掉 */
-.hero-frame .bg { object-position: 58% 55%; }
+.hero-frame .bg { object-position: 55% 20%; }   /* 宽屏需要裁上下时，多保留上面（飞机在上方） */
 /* 平板竖屏、手机：屏幕是竖的，铺满会把飞机切掉。改成整张图放在下半部分，
    上面用和图片天空一样的蓝色补满，飞机、船、卡车都看得到 */
 @media (max-aspect-ratio: 3/4) {
