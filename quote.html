@@ -113,16 +113,16 @@
         </div>
 
         <div class="field">
-          <label for="details"><span class="en">Tell us about your shipment</span><span class="zh">请描述您的货物和需求</span></label>
-          <textarea id="details" name="Details" rows="6"></textarea>
+          <label for="details"><span class="en">Tell us about your shipment</span><span class="zh">请描述您的货物和需求</span> <em>*</em></label>
+          <textarea id="details" name="Details" rows="6" required></textarea>
           <small><span class="en">What the cargo is, quantity or container size, weight, when it's ready, and anything else we should know.</span><span class="zh">货物品名、数量或柜型、重量、货好时间，以及其他需要我们注意的事项。</span></small>
         </div>
 
-        <!-- 只有邮箱必填，其他都可以不填 -->
+        <!-- 必填：货物描述、姓名、邮箱；起运地和目的地可以不填 -->
         <div class="field-row">
           <div class="field">
-            <label for="name"><span class="en">Your name</span><span class="zh">您的姓名</span></label>
-            <input id="name" name="Name" type="text" autocomplete="name">
+            <label for="name"><span class="en">Your name</span><span class="zh">您的姓名</span> <em>*</em></label>
+            <input id="name" name="Name" type="text" required autocomplete="name">
           </div>
           <div class="field">
             <label for="email"><span class="en">Email</span><span class="zh">邮箱</span> <em>*</em></label>
@@ -135,7 +135,7 @@
         <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <p class="form-error" id="formError" hidden>
-          <span class="en">Please enter a valid email so we can send you the quote.</span><span class="zh">请填写正确的邮箱，我们会把报价发到这里。</span>
+          <span class="en">Please fill in the fields marked *, with a valid email so we can send you the quote.</span><span class="zh">请填写带 * 的项目，邮箱要填正确，我们会把报价发到这里。</span>
         </p>
         <p class="form-error" id="sendError" hidden>
           <span class="en">We couldn't send your request. Please try again, or email it to</span><span class="zh">提交没有成功，请再试一次，或直接发邮件到</span>
