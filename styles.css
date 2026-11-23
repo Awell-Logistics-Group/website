@@ -1094,3 +1094,6 @@ html[data-lang="zh"] .hero-points .feature h2 .ln + .ln::before, html[data-lang=
 @media (max-aspect-ratio: 3/4) and (min-width: 610px) {   /* 平板竖屏：图小一点，飞机不会顶到标题 */
   .hero-frame .bg { left: -12%; width: 122%; bottom: 12%; }
 }
+
+/* 人机验证框 */
+.captcha { margin: 8px 0 4px; min-height: 78px; }

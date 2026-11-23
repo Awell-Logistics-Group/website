@@ -125,14 +125,24 @@
             <input id="name" name="Name" type="text" required autocomplete="name">
           </div>
           <div class="field">
-            <label for="email"><span class="en">Email</span><span class="zh">邮箱</span> <em>*</em></label>
+            <label for="email"><span class="en">Your email</span><span class="zh">您的邮箱</span> <em>*</em></label>
             <input id="email" name="email" type="email" required autocomplete="email">
-            <small><span class="en">We'll send the quote here.</span><span class="zh">报价会发到这个邮箱。</span></small>
           </div>
         </div>
 
         <!-- 防垃圾邮件：真人看不到这个框，机器人会填，填了就不会发送 -->
         <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <!-- 人机验证（hCaptcha，Web3Forms 免费提供）：点一下“我是人类”的勾。
+             需要在 app.web3forms.com 里给这个表单打开 hCaptcha，服务器才会真正检查 -->
+        <div class="h-captcha captcha" data-captcha="true"></div>
+        <p class="form-error" id="captchaError" hidden>
+          <span class="en">Please tick the box above to confirm you're not a robot.</span><span class="zh">请先勾选上面的人机验证。</span>
+        </p>
+        <p class="form-error" id="tooMany" hidden>
+          <span class="en">You've already sent a few requests. Please wait a while before sending another, or email us at</span><span class="zh">您刚刚已经提交过几次了，请稍等一会儿再提交，或直接发邮件到</span>
+          <a href="mailto:imports@awellus.com" data-copy="imports@awellus.com">imports@awellus.com</a>
+        </p>
 
         <p class="form-error" id="formError" hidden>
           <span class="en">Please fill in the fields marked *, with a valid email so we can send you the quote.</span><span class="zh">请填写带 * 的项目，邮箱要填正确，我们会把报价发到这里。</span>
@@ -188,6 +198,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="site.js"></script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 <script>
   // ===== 询价表单 =====
   // 用 Web3Forms 免费服务把表单内容发到 imports@awellus.com。
@@ -202,11 +213,38 @@
   var sendError = document.getElementById("sendError");
   var done = document.getElementById("quoteDone");
   var sendReason = document.getElementById("sendReason");
+  var captchaError = document.getElementById("captchaError");
+  var tooMany = document.getElementById("tooMany");
+
+  // 防轰炸：同一个浏览器 1 分钟内只能发 1 次，1 小时内最多 3 次。
+  // 发送时间记在 localStorage 里（只在这台电脑上），真正挡住机器人的是上面的人机验证。
+  var SENT_KEY = "awell-quote-sent";
+  function recentSends() {
+    try {
+      var list = JSON.parse(localStorage.getItem(SENT_KEY) || "[]");
+      var hourAgo = Date.now() - 3600 * 1000;
+      return list.filter(function (t) { return t > hourAgo; });
+    } catch (e) { return []; }
+  }
+  function tooManySends() {
+    var list = recentSends();
+    var last = list.length ? Math.max.apply(null, list) : 0;
+    return list.length >= 3 || Date.now() - last < 60 * 1000;
+  }
+  function rememberSend() {
+    try {
+      var list = recentSends();
+      list.push(Date.now());
+      localStorage.setItem(SENT_KEY, JSON.stringify(list));
+    } catch (e) {}
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();               // 不跳转页面，用 JavaScript 在后台发送
     formError.hidden = true;
     sendError.hidden = true;
+    captchaError.hidden = true;
+    tooMany.hidden = true;
 
     // 1. 检查必填项，没填的标红，并把光标移到第一个
     var missing = Array.prototype.filter.call(form.querySelectorAll("[required]"), function (el) {
@@ -217,6 +255,19 @@
     if (missing.length) {
       formError.hidden = false;
       missing[0].focus();
+      return;
+    }
+
+    // 人机验证：没勾就提示（hCaptcha 勾上后会把一串令牌放进这个隐藏框）
+    var token = form.querySelector('[name="h-captcha-response"]');
+    if (token && !token.value) {
+      captchaError.hidden = false;
+      return;
+    }
+
+    // 短时间内发太多次就先不发
+    if (tooManySends()) {
+      tooMany.hidden = false;
       return;
     }
 
@@ -248,6 +299,7 @@
       })
       .then(function (json) {
         if (json.success) {
+          rememberSend();
           form.hidden = true;
           done.hidden = false;
           done.focus();
@@ -260,6 +312,8 @@
         sendReason.textContent = "Reason: " + (err && err.message ? err.message : err);
         sendError.hidden = false;
         console.error("Quote form error:", err);
+        // 每个验证令牌只能用一次，失败后重置，让用户重新勾选
+        if (window.hcaptcha) { try { window.hcaptcha.reset(); } catch (e) {} }
       })
       .then(function () {
         btn.disabled = false;
